@@ -35,7 +35,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./WebshopFrontend
-          file: /Dockerfile
+          context: .
+          file: ./WebshopFrontend/Dockerfile
           push: true
           tags: homelabhost.de/webshop/frontend
