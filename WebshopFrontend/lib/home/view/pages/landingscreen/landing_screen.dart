@@ -22,7 +22,6 @@ class _LandingScreenState extends State<LandingScreen>{
     final fontSize = screenWidth * 0.05;
     const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
-    final ItemScrollController itemScrollController;
 
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints){

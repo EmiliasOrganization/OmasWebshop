@@ -22,10 +22,9 @@ class WebShop extends StatelessWidget {
     
     return MaterialApp(
         title: 'Oma\'s Webshop',
-        color: Colors.orange,
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+          colorScheme: ColorScheme.fromSeed(seedColor: schemeColorMistyRose),
         ),
         home: HomePage(),
     );
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage>{
           appBar: TopBar(itemScrollController: itemScrollController ),
           body: Stack(children: [
             Vitality.randomly(
-              background: Color(0xFFF6DEE0),
+              background: schemeColorMistyRose,
               height: 1080 *3,
               width: 1920,
               itemsCount: 15,

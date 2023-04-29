@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/constats.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget{
@@ -16,11 +17,11 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget{
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4),
           child: Container(
-            color: Color(0xff4A6840),
+            color: schemeColorGreen,
             height: 2,
           ),
         ),
-        backgroundColor: Color(0xFFFFA54F),
+        backgroundColor: schemeColorOrange,
         // backgroundColor: Colors.amber,
         actions: [
           ElevatedButton(
