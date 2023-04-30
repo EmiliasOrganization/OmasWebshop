@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/home/view/pages/shop/only_shop_screen.dart';
 
 import '../constats.dart';
 
@@ -10,17 +11,22 @@ class RoundetTextPicture extends StatelessWidget {
     required this.pictureSizeHeight,
     required this.picture,
     required this.headLineText,
+    required this.routePath,
   });
 
   final pictureSizeWidth;
   final pictureSizeHeight;
   final picture;
   final headLineText;
+  final routePath;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: ()
+      {
+        Navigator.pushNamed(context, routePath);
+      },
       child: Container(
         width: pictureSizeWidth,
         height: pictureSizeHeight,
@@ -34,7 +40,7 @@ class RoundetTextPicture extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 10,
+                top: 15,
                 left: 0,
                 right: 0,
                 child: Row(
@@ -44,15 +50,17 @@ class RoundetTextPicture extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       child: Container(
                         width: pictureSizeWidth -30,
+                        height: pictureSizeHeight -250,
                         color: schemeColorGreen,
-                        child: Text(
-                          headLineText,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: schemeColorOrange,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          )
+                        child: Center(
+                          child: Text(
+                            headLineText,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            )
+                          ),
                         ),
                       ),
                     ),

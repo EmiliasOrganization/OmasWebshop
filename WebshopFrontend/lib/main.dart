@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/home/view/pages/shop/only_shop_screen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'package:vitality/models/ItemBehaviour.dart';
@@ -26,7 +27,11 @@ class WebShop extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: schemeColorMistyRose),
         ),
-        home: HomePage(),
+      initialRoute: '/',
+    routes: {
+      '/': (context) => HomePage(),
+      '/shop': (context) => OnlyShopScreen(),
+    },
     );
   }
 }
@@ -39,7 +44,6 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => _HomePageState();
   }
 
-
 class _HomePageState extends State<HomePage>{
 
   final ItemScrollController itemScrollController = ItemScrollController();
@@ -49,7 +53,7 @@ class _HomePageState extends State<HomePage>{
 
       CenteredView(
         child: Scaffold(
-          appBar: TopBar(itemScrollController: itemScrollController ),
+          appBar: TopBar(itemScrollController: itemScrollController, ueberUns: true ),
           body: Stack(children: [
             Vitality.randomly(
               background: schemeColorMistyRose,

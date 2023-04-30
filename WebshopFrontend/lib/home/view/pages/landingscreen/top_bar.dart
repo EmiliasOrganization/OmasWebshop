@@ -3,9 +3,10 @@ import 'package:flutterfrontend/constats.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget{
-  const TopBar({Key? key, required this.itemScrollController}) : super(key: key);
+  const TopBar({Key? key, required this.itemScrollController, required this.ueberUns}) : super(key: key);
 
   final ItemScrollController itemScrollController;
+  final ueberUns;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget{
         backgroundColor: schemeColorOrange,
         // backgroundColor: Colors.amber,
         actions: [
+          if(ueberUns)
           ElevatedButton(
             child: (Text('Über uns')),
             onPressed: () {
