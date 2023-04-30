@@ -49,7 +49,7 @@ class RoundetTextPicture extends StatelessWidget {
                           headLineText,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: schemeColorOrange,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           )
