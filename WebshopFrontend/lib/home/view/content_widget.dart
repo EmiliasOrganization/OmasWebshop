@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../view/pages/aboutus/about_us.dart';
-import '../view/pages/landingscreen/landing_screen.dart';
-import '../view/pages/shop/first_shopscreen.dart';
+import 'pages/aboutus/about_us.dart';
+import 'pages/landingscreen/landing_screen.dart';
+import 'pages/shop/first_shopscreen.dart';
 
 
 class ContentsWidget extends StatelessWidget {
