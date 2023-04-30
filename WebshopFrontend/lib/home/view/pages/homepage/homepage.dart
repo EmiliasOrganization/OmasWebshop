@@ -6,7 +6,7 @@ import 'package:vitality/vitality.dart';
 
 import '../../../../constats.dart';
 import '../../../../globalwidget/centered_view.dart';
-import '../../../widget/content_widget.dart';
+import '../../content_widget.dart';
 import '../../../../globalwidget/top_bar.dart';
 
 class HomePage extends StatefulWidget {
