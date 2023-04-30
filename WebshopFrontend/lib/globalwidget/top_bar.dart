@@ -3,10 +3,11 @@ import 'package:flutterfrontend/constats.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget{
-  const TopBar({Key? key, required this.itemScrollController, required this.ueberUns}) : super(key: key);
+  const TopBar({Key? key, required this.itemScrollController, required this.ueberUns, this.title}) : super(key: key);
 
   final ItemScrollController itemScrollController;
-  final ueberUns;
+  final bool ueberUns;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget{
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: AppBar(
+        title: title != null ? Text(title!) : null,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4),
           child: Container(
