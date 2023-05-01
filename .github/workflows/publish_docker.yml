@@ -45,10 +45,64 @@ jobs:
          username: ${{ secrets.REGISTRY_USERNAME }}
          password: ${{ secrets.REGISTRY_PASSWORD }}
          
-      - name: Build and push
+      - name: Build and push Frontend
         uses: docker/build-push-action@v3
         with:
           context: ./WebshopFrontend
           file: ./WebshopFrontend/Dockerfile
           push: true
           tags: ${{ secrets.REGISTRY }}/frontend
+       
+      - name: Push Backend
+        run: |
+            MVN_VERSION=$( cd ./WebshopBackend
+            mvn -q \
+            -Dexec.executable=echo \
+            -Dexec.args='${project.version}' \
+            --non-recursive \
+            exec:exec)
+            
+            docker push ${{ secrets.REGISTRY }}/backend:$MVN_VERSION
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
