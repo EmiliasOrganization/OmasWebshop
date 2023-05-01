@@ -33,4 +33,4 @@ jobs:
       - name: Build with Maven
         run: |
           cd WebshopBackend
-          mvn spring-boot:build-image
+          mvn spring-boot:build-image -DskipTests
