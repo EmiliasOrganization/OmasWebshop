@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-public class Pictures {
+public class Picture {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -26,34 +26,14 @@ public class Pictures {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Lob
-    byte[] picture1;
+    private String filename;
 
     @Lob
-    byte[] picture2;
+    private byte[] data;
 
-    @Lob
-    byte[] picture3;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductModel productModel;
 
-    @Lob
-    byte[] picture4;
-
-    @Lob
-    byte[] picture5;
-
-    @Lob
-    byte[] picture6;
-
-    @Lob
-    byte[] picture7;
-
-    @Lob
-    byte[] picture8;
-
-    @Lob
-    byte[] picture9;
-
-
-    byte[] picture10;
 
 }

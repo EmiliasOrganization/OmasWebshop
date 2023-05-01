@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class PurchaseObjectModel {
+public class ProductModel {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -27,8 +27,8 @@ public class PurchaseObjectModel {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @OneToMany
-    private List<Pictures> pictures;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Picture> pictures;
 
     @Column(name = "Name", nullable = false)
     private String name;

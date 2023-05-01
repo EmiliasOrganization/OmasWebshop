@@ -1,22 +1,22 @@
 package de.webshop.webshopbackend.service;
 
-import de.webshop.webshopbackend.model.PurchaseObjectModel;
+import de.webshop.webshopbackend.model.ProductModel;
 import de.webshop.webshopbackend.repo.PurchaseObjectsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class CreatePurchaseObjectService {
 
 
-    @Autowired
-    public CreatePurchaseObjectService(PurchaseObjectsRepository purchaseObjectsRepository) {
-        this.purchaseObjectsRepository = purchaseObjectsRepository;
-    }
+    PurchaseObjectsRepository purchaseObjectsRepository;
 
-    private final PurchaseObjectsRepository purchaseObjectsRepository;
 
-    public PurchaseObjectModel createPurchaseObject(PurchaseObjectModel purchaseObjectModel) {
-        return purchaseObjectsRepository.save(purchaseObjectModel);
+    public void createPurchaseObject(ProductModel productModel) {
+        purchaseObjectsRepository.save(productModel);
     }
 }
