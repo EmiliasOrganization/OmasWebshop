@@ -29,5 +29,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          
       - name: Build with Maven
-        run: ./WebshopBackend mvn spring-boot:build-image
+        run: |
+          cd WebshopBackend
+          mvn spring-boot:build-image
