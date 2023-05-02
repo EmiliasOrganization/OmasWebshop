@@ -2,7 +2,7 @@ package de.webshop.webshopbackend.controller;
 
 import de.webshop.webshopbackend.Utils.ImageCompressionUtil;
 import de.webshop.webshopbackend.model.Categorie;
-import de.webshop.webshopbackend.model.Picture;
+import de.webshop.webshopbackend.model.PictureModel;
 import de.webshop.webshopbackend.model.ProductModel;
 import de.webshop.webshopbackend.service.*;
 import lombok.AccessLevel;
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,16 +76,13 @@ public class ShopController {
         return ResponseEntity.ok(findPurchaseObjectService.findPurchaseObjectByCategory(category));
     }
     @GetMapping("/all")
-    ResponseEntity<List<ProductModel>> findPurchaseObjectByPrice() {
-        return ResponseEntity.ok(findPurchaseObjectService.findAllPurchaseObjectModel());
+    ResponseEntity<List<?>> findAllSummary() {
+        return ResponseEntity.ok(findPurchaseObjectService.findAllSummary());
     }
-    @GetMapping("/picture/{id}")
-    ResponseEntity<?> findPictureById(@PathVariable UUID id) {
-
-        Picture picture = pictureService.getPicturebyFilenameAndProductId("image1.png", id);
-        byte[] data = ImageCompressionUtil.decompressImage(picture.getData());
-//        String dataUrl = "data:image/png;base64," + Base64.getEncoder().encodeToString(ImageCompressionUtil.decompressImage(picture.getData()));
-//        String html = "<html><body><img src='" + dataUrl +  "' /></body></html>";
+    @GetMapping("/picture/{id}/{pictureName}")
+    ResponseEntity<?> findPictureById(@PathVariable String pictureName, @PathVariable UUID id) {
+        PictureModel pictureModel = pictureService.getPicturebyFilenameAndProductId(pictureName, id);
+        byte[] data = ImageCompressionUtil.decompressImage(pictureModel.getData());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
         return new ResponseEntity<>(data, headers, HttpStatus.OK);

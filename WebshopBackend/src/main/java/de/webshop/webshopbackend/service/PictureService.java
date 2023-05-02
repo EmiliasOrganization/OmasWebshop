@@ -1,8 +1,8 @@
 package de.webshop.webshopbackend.service;
 
 import de.webshop.webshopbackend.Exceptions.ElementNotFoundException;
-import de.webshop.webshopbackend.model.Picture;
-import de.webshop.webshopbackend.repo.PictureRepo;
+import de.webshop.webshopbackend.model.PictureModel;
+import de.webshop.webshopbackend.repo.PictureRepository;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +16,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PictureService {
 
-    PictureRepo pictureRepo;
+    PictureRepository pictureRepository;
 
     @Transactional
-    public Picture getPicturebyFilenameAndProductId(String filename, UUID id) {
+    public PictureModel getPicturebyFilenameAndProductId(String filename, UUID id) {
 
 
-        return pictureRepo.findPicturesByFilenameAndProductModelId(filename, id).orElseThrow(() -> new ElementNotFoundException("Picture not found!"));
+        return pictureRepository.findPicturesByFilenameAndProductModelId(filename, id).orElseThrow(() -> new ElementNotFoundException("Picture not found!"));
     }
 
 

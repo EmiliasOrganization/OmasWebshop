@@ -1,6 +1,6 @@
 package de.webshop.webshopbackend.service;
 
-import de.webshop.webshopbackend.repo.PurchaseObjectsRepository;
+import de.webshop.webshopbackend.repo.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,9 +13,9 @@ import java.util.UUID;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class DeletePurchaseObjectService {
 
-    PurchaseObjectsRepository purchaseObjectsRepository;
+    ProductRepository productRepository;
 
     public void deletePurchaseObjectById(UUID id) {
-        purchaseObjectsRepository.deleteById(id);
+        productRepository.deleteById(id);
     }
 }

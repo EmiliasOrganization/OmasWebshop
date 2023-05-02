@@ -3,7 +3,8 @@ package de.webshop.webshopbackend.service;
 import de.webshop.webshopbackend.Exceptions.ElementNotFoundException;
 import de.webshop.webshopbackend.model.Categorie;
 import de.webshop.webshopbackend.model.ProductModel;
-import de.webshop.webshopbackend.repo.PurchaseObjectsRepository;
+import de.webshop.webshopbackend.model.ProductSummary;
+import de.webshop.webshopbackend.repo.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,19 +19,19 @@ import java.util.UUID;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class FindPurchaseObjectService {
 
-    PurchaseObjectsRepository purchaseObjectsRepository;
+    ProductRepository productRepository;
 
     @Transactional
     public ProductModel findPurchaseObjectById(UUID id) {
-        return purchaseObjectsRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product with id: " + id + " not found!"));
+        return productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product with id: " + id + " not found!"));
     }
     @Transactional
     public ProductModel findPurchaseObjectByCategory(Categorie category) {
-        return purchaseObjectsRepository.findByCategory(category).orElseThrow(() -> new ElementNotFoundException("Product with category: " + category + " not found!"));
+        return productRepository.findByCategory(category).orElseThrow(() -> new ElementNotFoundException("Product with category: " + category + " not found!"));
     }
     @Transactional
-    public List<ProductModel> findAllPurchaseObjectModel() {
-        return purchaseObjectsRepository.findAll();
+    public List<ProductSummary> findAllSummary() {
+        return productRepository.findAllProjectedBy();
     }
 
 
