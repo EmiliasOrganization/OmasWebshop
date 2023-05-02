@@ -47,8 +47,8 @@ class _LandingScreenState extends State<LandingScreen>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              '../assets/StartScreen.png',
+            Image.network(
+              'http://localhost:8080/api/shop/picture/c0a8982c-87d8-1f83-8187-d80f95c20000',
               fit: BoxFit.cover,
             ),
             SizedBox(height: 30),
@@ -60,10 +60,13 @@ class _LandingScreenState extends State<LandingScreen>{
               ),
             ),
             SizedBox(height: 30),
-            Text(
-              'Dieser Text befindet sich in arbeit: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-              style: TextStyle(
-                fontSize: fontSize.clamp(0, maxFontSizeText) * 0.8,
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Text(
+                'Dieser Text befindet sich in arbeit: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+                style: TextStyle(
+                  fontSize: fontSize.clamp(0, maxFontSizeText) * 0.8,
+                ),
               ),
             ),
         ElevatedButton(

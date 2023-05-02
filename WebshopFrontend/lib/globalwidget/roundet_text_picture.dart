@@ -1,41 +1,48 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfrontend/home/view/pages/shop/only_shop_screen.dart';
 
 import '../constats.dart';
 
-class RoundetTextPicture extends StatelessWidget {
-  const RoundetTextPicture({
-    super.key,
+class RoundetTextPictureProperties {
+  final double pictureSizeWidth;
+  final double pictureSizeHeight;
+  final String picture;
+  final String headLineText;
+  final String routePath;
+
+  const RoundetTextPictureProperties({
     required this.pictureSizeWidth,
     required this.pictureSizeHeight,
     required this.picture,
     required this.headLineText,
     required this.routePath,
   });
+}
 
-  final pictureSizeWidth;
-  final pictureSizeHeight;
-  final picture;
-  final headLineText;
-  final routePath;
+class RoundetTextPicture extends StatelessWidget {
+  const RoundetTextPicture({
+    super.key, required this.properties,
+
+  });
+
+  final RoundetTextPictureProperties properties;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: ()
       {
-        Navigator.pushNamed(context, routePath);
+        Navigator.pushNamed(context, properties.routePath);
       },
       child: Container(
-        width: pictureSizeWidth,
-        height: pictureSizeHeight,
+        width: properties.pictureSizeWidth,
+        height: properties.pictureSizeHeight,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Stack(
             children: [
               Positioned.fill(
-                child: Image.asset( picture,
+                child: Image.asset( properties.picture,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -49,12 +56,12 @@ class RoundetTextPicture extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Container(
-                        width: pictureSizeWidth -30,
-                        height: pictureSizeHeight -250,
+                        width: properties.pictureSizeWidth -30,
+                        height: properties.pictureSizeHeight -250,
                         color: schemeColorGreen,
                         child: Center(
                           child: Text(
-                            headLineText,
+                            properties.headLineText,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
