@@ -26,7 +26,7 @@ class ContentsWidget extends StatelessWidget {
             {
               case 'LandingPage': return  LandingScreen(itemScrollController: itemScrollController);
               case 'Shop': return FirstShopScreen();
-              case 'AboutUs': return AboutUs();
+              case 'AboutUs': return ManuallyControlledSlider();
               default: return Container();
             }
           }),
