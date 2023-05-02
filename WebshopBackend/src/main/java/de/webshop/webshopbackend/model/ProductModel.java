@@ -42,6 +42,7 @@ public class ProductModel {
 //    private MonetaryAmount pice;
 
     @Column()
+    @Enumerated(EnumType.STRING)
     private Categorie category;
 
 }
