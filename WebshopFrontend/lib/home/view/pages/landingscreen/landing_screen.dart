@@ -60,10 +60,13 @@ class _LandingScreenState extends State<LandingScreen>{
               ),
             ),
             SizedBox(height: 30),
-            Text(
-              'Dieser Text befindet sich in arbeit: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-              style: TextStyle(
-                fontSize: fontSize.clamp(0, maxFontSizeText) * 0.8,
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Text(
+                'Dieser Text befindet sich in arbeit: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+                style: TextStyle(
+                  fontSize: fontSize.clamp(0, maxFontSizeText) * 0.8,
+                ),
               ),
             ),
         ElevatedButton(

@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: shop
+      POSTGRES_PASSWORD: Start123
+      POSTGRES_DB: db1
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/data:/var/lib/postgresql/data
+
+  backend:
+    image: homelabhost.de/webshop/backend:0.0.1
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
