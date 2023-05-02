@@ -9,4 +9,5 @@ public interface ProductSummary {
     UUID getId();
     String getName();
     String getDescription();
+    String getCategory();
 }

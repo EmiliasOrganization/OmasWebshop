@@ -14,8 +14,8 @@ public class ImageUploaderUtil {
 
     public static void imageUpload( MultipartFile[] files, ProductModel productModel) throws IOException {
         List<PictureModel> pictureModelList = new ArrayList<>();
+        int imageNumber = 1;
         for (MultipartFile file : files){
-            int imageNumber = 1;
             String str = file.getOriginalFilename();
             String extension = Objects.requireNonNull(str).substring(str.lastIndexOf(".") + 1);
 
@@ -23,8 +23,6 @@ public class ImageUploaderUtil {
             pictureModel.setProductModel(productModel);
             pictureModel.setFilename("image"+ imageNumber + "." + extension);
             pictureModel.setData(ImageCompressionUtil.compressImage(file.getBytes()));
-
-
             pictureModelList.add(pictureModel);
             imageNumber++;
         }

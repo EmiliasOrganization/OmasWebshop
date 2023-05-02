@@ -49,7 +49,7 @@ public class ShopController {
     }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ProductModel> deletePurchaseObjectById(@PathVariable UUID id) {
+    ResponseEntity<?> deletePurchaseObjectById(@PathVariable UUID id) {
         deletePurchaseObjectService.deletePurchaseObjectById(id);
         return ResponseEntity.noContent().build();
     }
@@ -68,11 +68,11 @@ public class ShopController {
     }
 
     @GetMapping("/id/{id}")
-    ResponseEntity<ProductModel> findPurchaseObjectById(@PathVariable UUID id) {
+    ResponseEntity<?> findPurchaseObjectById(@PathVariable UUID id) {
         return ResponseEntity.ok(findPurchaseObjectService.findPurchaseObjectById(id));
     }
     @GetMapping("/category/{category}")
-    ResponseEntity<ProductModel> findPurchaseObjectByCategory(@PathVariable Categorie category) {
+    ResponseEntity<?> findPurchaseObjectByCategory(@PathVariable Categorie category) {
         return ResponseEntity.ok(findPurchaseObjectService.findPurchaseObjectByCategory(category));
     }
     @GetMapping("/all")

@@ -4,7 +4,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'pages/aboutus/about_us.dart';
 import 'pages/landingscreen/landing_screen.dart';
-import 'pages/shop/first_shopscreen.dart';
+import 'pages/shop/landing_shop_overview.dart';
 
 
 class ContentsWidget extends StatelessWidget {
