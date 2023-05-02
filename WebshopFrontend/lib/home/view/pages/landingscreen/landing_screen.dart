@@ -47,8 +47,8 @@ class _LandingScreenState extends State<LandingScreen>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              '../assets/StartScreen.png',
+            Image.network(
+              'http://localhost:8080/api/shop/picture/c0a8982c-87d8-1f83-8187-d80f95c20000',
               fit: BoxFit.cover,
             ),
             SizedBox(height: 30),

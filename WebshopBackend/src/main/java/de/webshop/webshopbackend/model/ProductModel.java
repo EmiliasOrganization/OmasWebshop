@@ -1,7 +1,9 @@
 package de.webshop.webshopbackend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -24,22 +26,22 @@ public class ProductModel {
                     )
             }
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private UUID id;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Picture> pictures;
+    private List<PictureModel> pictureModels;
 
-    @Column(name = "Name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "Beschreibung")
+    @Column()
     private String description;
 
 //    @Column(name = "Preis", nullable = false)
 //    private MonetaryAmount pice;
 
-    @Column(name = "Kategorie")
+    @Column()
     private Categorie category;
 
 }

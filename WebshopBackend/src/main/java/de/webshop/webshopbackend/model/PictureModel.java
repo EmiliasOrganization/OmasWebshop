@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-public class Picture {
+public class PictureModel {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -23,7 +23,7 @@ public class Picture {
                     )
             }
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private UUID id;
 
     private String filename;
