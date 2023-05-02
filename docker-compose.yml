@@ -1,8 +1,9 @@
 version: '3.8'
 
 services:
-  db:
+  database:
     image: postgres:13
+    container_name: postgres
     restart: always
     environment:
       POSTGRES_USER: shop
@@ -13,10 +14,13 @@ services:
     volumes:
       - ./volumes/data:/var/lib/postgresql/data
 
+
   backend:
     image: homelabhost.de/webshop/backend:0.0.1
     restart: always
     ports:
       - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-test"
     depends_on:
       - db
