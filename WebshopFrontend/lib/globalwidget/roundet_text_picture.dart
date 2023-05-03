@@ -9,6 +9,7 @@ class RoundetTextPictureProperties {
   final String picture;
   final String headLineText;
   final String routePath;
+  final Category? category;
 
   const RoundetTextPictureProperties({
     required this.pictureSizeWidth,
@@ -16,13 +17,14 @@ class RoundetTextPictureProperties {
     required this.picture,
     required this.headLineText,
     required this.routePath,
+    this.category,
   });
 }
 
 class RoundetTextPicture extends StatelessWidget {
   const RoundetTextPicture({
-    super.key, required this.properties,
-
+    super.key,
+    required this.properties,
   });
 
   final RoundetTextPictureProperties properties;
@@ -32,7 +34,11 @@ class RoundetTextPicture extends StatelessWidget {
     return InkWell(
       onTap: ()
       {
-        Navigator.pushNamed(context, properties.routePath);
+        Navigator.pushNamed(
+            context,
+            properties.routePath,
+            arguments: properties.category
+        );
       },
       child: Container(
         width: properties.pictureSizeWidth,

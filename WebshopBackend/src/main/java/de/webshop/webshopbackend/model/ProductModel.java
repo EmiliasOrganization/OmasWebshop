@@ -1,9 +1,7 @@
 package de.webshop.webshopbackend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -43,6 +41,6 @@ public class ProductModel {
 
     @Column()
     @Enumerated(EnumType.STRING)
-    private Categorie category;
+    private Category category;
 
 }

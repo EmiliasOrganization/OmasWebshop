@@ -1,7 +1,7 @@
 package de.webshop.webshopbackend.service;
 
 import de.webshop.webshopbackend.Exceptions.ElementNotFoundException;
-import de.webshop.webshopbackend.model.Categorie;
+import de.webshop.webshopbackend.model.Category;
 import de.webshop.webshopbackend.model.ProductModel;
 import de.webshop.webshopbackend.model.ProductSummary;
 import de.webshop.webshopbackend.repo.ProductRepository;
@@ -26,7 +26,7 @@ public class FindPurchaseObjectService {
         return productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product with id: " + id + " not found!"));
     }
     @Transactional
-    public ProductModel findPurchaseObjectByCategory(Categorie category) {
+    public ProductModel findPurchaseObjectByCategory(Category category) {
         return productRepository.findByCategory(category).orElseThrow(() -> new ElementNotFoundException("Product with category: " + category + " not found!"));
     }
     @Transactional

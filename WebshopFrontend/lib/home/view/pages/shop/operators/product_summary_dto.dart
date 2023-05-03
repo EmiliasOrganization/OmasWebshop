@@ -17,5 +17,4 @@ class ProductSummary {
       category: json['category'],
     );
   }
-
 }

@@ -9,17 +9,15 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 @Getter
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public enum Categorie {
+public enum Category {
 
-    BAGS("Bags"),
-    CHILDREN("Children"),
-    BACKPACKS("Backpacks"),
-    GLOVES("Gloves"),
-    HATS("Hats"),
-    PILLOWS("Pillows"),
-    SOCKS("Socks"),
-    STUFFED_ANIMALS("Stuffed Animals");
-
-    String categorie;
+    BAGS,
+    CHILDREN,
+    BACKPACKS,
+    GLOVES,
+    HATS,
+    CUSHIONS,
+    SOCKS,
+    CUDDLY_TOYS;
 
 }
