@@ -63,11 +63,21 @@ class _ProductListScreenState extends State<ProductListScreen> {
         ),
         Expanded(
           child: Container(
-              alignment: Alignment.bottomCenter,
-              height: 75,
-              child: SubCategory(category: newCategory)
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    alignment: Alignment.bottomCenter,
+                      height: 90,
+                      child: SubCategory(category: newCategory)),
+                  Expanded(
+                    child: ShopList(productListFuture: _productListFuture),
+                  ),
+                ],
+              )
           ),
         ),
+
       ],
     );
   }
@@ -84,21 +94,19 @@ class ShopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 30,top: 20),
-
+    return  Padding(
+        padding: const EdgeInsets.only(left: 140, right: 140,top: 80),
         child: FutureBuilder<List<ProductSummary>>(
             future: _productListFuture,
-            builder: (context, snapshot) {
+             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return GridView.builder(
                   itemCount: snapshot.data!.length,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 300,
-                    childAspectRatio: 2 / 3,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 45,
+                     mainAxisExtent: 380,
+                     mainAxisSpacing: 60,
+                     crossAxisSpacing: 45,
                   ),
                   itemBuilder: (context, index) {
                     final product = snapshot.data![index];
@@ -116,7 +124,6 @@ class ShopList extends StatelessWidget {
               }
             },
           ),
-      ),
     );
   }
 }
