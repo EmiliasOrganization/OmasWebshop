@@ -119,6 +119,7 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.center,
         // appBar: AppBar(title: Text('Über uns')),
         // body: Stack(
           children: <Widget>[
@@ -131,6 +132,7 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
               ),
             ),
             Container(
+              width: 1500,
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,7 +145,34 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
                     onPressed: () => _controller.nextPage(),
                     child: Text('→'),
                   ),
-
+                ],
+              ),
+            ),
+            Container(
+              width: 800,
+              alignment: Alignment(0.0, 0.5),
+              child: Row(
+                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                children:<Widget>[
+                  Flexible(
+                    child:ElevatedButton(
+                      onPressed:()=>_controller.animateToPage(1),
+                      child:Text('Wie alles begann...'),
+                    ),
+                  ),
+                  Flexible(
+                    child:ElevatedButton(
+                      onPressed:()=>_controller.animateToPage(2),
+                      style: ElevatedButton.styleFrom(primary: schemeColorMistyRose),
+                      child:Text('Wer sind wir?'),
+                    ),
+                  ),
+                  Flexible(
+                    child:ElevatedButton(
+                      onPressed:()=>_controller.animateToPage(3),
+                      child:Text('Unsere Philosophie'),
+                    ),
+                  ),
                 ],
               ),
             )
