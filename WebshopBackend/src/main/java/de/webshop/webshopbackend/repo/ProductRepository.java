@@ -1,7 +1,7 @@
 package de.webshop.webshopbackend.repo;
 
 
-import de.webshop.webshopbackend.model.Categorie;
+import de.webshop.webshopbackend.model.Category;
 import de.webshop.webshopbackend.model.ProductModel;
 import de.webshop.webshopbackend.model.ProductSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<ProductModel, UUID> {
 
     Optional<ProductModel> findById(UUID uuid);
 
-    Optional<ProductModel> findByCategory(Categorie category);
+    Optional<ProductModel> findByCategory(Category category);
 
 
 }

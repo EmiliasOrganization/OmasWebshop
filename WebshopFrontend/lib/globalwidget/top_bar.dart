@@ -37,16 +37,16 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget{
           ),
           SizedBox(width: 8),
           IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: Icon(Icons.shopping_cart, color: schemeColorGreen),
               onPressed: (){}
           ),
           SizedBox(width: 8),
           IconButton(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person, color: schemeColorGreen),
             onPressed: (){},
           ),
           SizedBox(width: 8),
-          IconButton(icon: Icon(Icons.mail), onPressed: () {}
+          IconButton(icon: Icon(Icons.mail, color: schemeColorGreen), onPressed: () {}
           ),
         ],
       ),

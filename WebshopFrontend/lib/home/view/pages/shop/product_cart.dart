@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfrontend/home/view/pages/shop/product_summary.dart';
+import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
 
 import '../../../../constats.dart';
 
@@ -35,7 +35,7 @@ class ProductCard extends StatelessWidget {
                 Text(product.name),
                 Padding(
                   padding: const EdgeInsets.only(right: 5),
-                  child: Text('€ ' + '/Price/', style: TextStyle(fontWeight: FontWeight.bold),),
+                  child: Text('€ ' + '0.00', style: TextStyle(fontWeight: FontWeight.bold),),
                 ),
               ],
             ),
