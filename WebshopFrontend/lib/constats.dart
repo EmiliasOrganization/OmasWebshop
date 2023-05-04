@@ -116,4 +116,36 @@ enum Category {
   BACKPACKS,
 }
 
+enum SubCategory
+{
+  EMPTY,
+  // BAGS
+  BAGS_SHOPPINGBAGS,
+  BAGS_SHOULDERBAGS,
+  BAGS_CROSSOVER,
+  //HATS
+  HATS_HAT,
+  HATS_HEADBAND,
+  HATS_TOQUE,
+}
 
+extension CategoryExtension on Category {
+  List<SubCategory>? get subcategories {
+    switch (this) {
+      case Category.BAGS:
+        return [
+          SubCategory.BAGS_CROSSOVER,
+          SubCategory.BAGS_SHOPPINGBAGS,
+          SubCategory.BAGS_SHOULDERBAGS,
+        ];
+      case Category.HATS:
+        return [
+          SubCategory.HATS_HAT,
+          SubCategory.HATS_HEADBAND,
+          SubCategory.HATS_TOQUE
+        ];
+      default:
+        return [SubCategory.EMPTY];
+    }
+  }
+}

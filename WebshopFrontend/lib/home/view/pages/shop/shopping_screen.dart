@@ -21,9 +21,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
       .of(context)!
       .settings
       .arguments as Category? ?? Category.EMPTY;
-  var isFirstLoad = true;
 
+  var isFirstLoad = true;
+  SubCategory subCategory = SubCategory.EMPTY;
+  SubCategory newSubCategory = SubCategory.EMPTY;
   Category newCategory = Category.EMPTY;
+
+  void _onSubCategorySelected(SubCategory subCategory) {
+    setState(() {
+      newSubCategory = subCategory;
+    });
+  }
 
   void _onCategorySelected(Category category) {
     setState(() {
@@ -69,10 +77,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     color: Colors.white,
                     alignment: Alignment.bottomCenter,
                       height: 90,
-                      child: SubCategory(category: newCategory)),
+                      child: SubCategoryButtonList(category: newCategory, onSubCategorySelected: _onSubCategorySelected, )),
                   Expanded(
                     child: ShopList(productListFuture: _productListFuture),
                   ),
+                  Text(newSubCategory.toString()),
                 ],
               )
           ),
