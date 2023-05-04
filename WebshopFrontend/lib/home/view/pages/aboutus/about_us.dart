@@ -94,6 +94,9 @@ class ManuallyControlledSlider extends StatefulWidget {
 }
 
 class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
+  bool pressed1 = true;
+  bool pressed2 = false;
+  bool pressed3 = false;
   final CarouselController _controller = CarouselController();
 
   @override
@@ -137,14 +140,38 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  ElevatedButton(
+                  FloatingActionButton(
+                    shape: CircleBorder(),
+                    backgroundColor: Colors.white,
                     onPressed: () => _controller.previousPage(),
-                    child: Text('←'),
+                    child: Icon(Icons.arrow_back_ios_rounded, color: schemeColorOrange, size:35),
                   ),
-                  ElevatedButton(
+                  // OutlinedButton(
+                  //   onPressed: () => _controller.previousPage(),
+                  //   style: OutlinedButton.styleFrom(
+                  //       shape: CircleBorder(),
+                  //       padding: EdgeInsets.all(25),
+                  //       backgroundColor: Colors.white,
+                  //       side: BorderSide(color: schemeColorGreen)
+                  //   ),
+                  //   child: Text('←'),
+                  // ),
+                  FloatingActionButton(
+                    shape: CircleBorder(),
+                    backgroundColor: Colors.white,
                     onPressed: () => _controller.nextPage(),
-                    child: Text('→'),
+                    child: Icon(Icons.arrow_forward_ios_rounded, color: schemeColorOrange, size:35),
                   ),
+                  // OutlinedButton(
+                  //   onPressed: () => _controller.nextPage(),
+                  //   style: OutlinedButton.styleFrom(
+                  //     shape: CircleBorder(),
+                  //     padding: EdgeInsets.all(25),
+                  //     backgroundColor: Colors.white,
+                  //     side: BorderSide(color: schemeColorGreen)
+                  //   ),
+                  //   child: Text('→'),
+                  // ),
                 ],
               ),
             ),
@@ -155,22 +182,42 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                 children:<Widget>[
                   Flexible(
-                    child:ElevatedButton(
-                      onPressed:()=>_controller.animateToPage(1),
-                      child:Text('Wie alles begann...'),
+                    child:TextButton(
+                      onPressed:()=> {setState(() {
+                        pressed1 = true;
+                        pressed2 = false;
+                        pressed3 = false;
+                      }),
+                        _controller.animateToPage(1)},
+                      child:Text('Wie alles begann...', style:
+                        pressed1 ? TextStyle(color: schemeColorGreen, fontWeight: FontWeight.bold, decoration: TextDecoration.underline, decorationColor: schemeColorGreen)
+                                : TextStyle(fontWeight: FontWeight.normal)),
                     ),
                   ),
                   Flexible(
-                    child:ElevatedButton(
-                      onPressed:()=>_controller.animateToPage(2),
-                      style: ElevatedButton.styleFrom(primary: schemeColorMistyRose),
-                      child:Text('Wer sind wir?'),
+                    child:TextButton(
+                      onPressed:()=> {setState(() {
+                        pressed2 = true;
+                        pressed1 = false;
+                        pressed3 = false;
+                      }),
+                        _controller.animateToPage(2)},
+                      child:Text('Wer sind wir?', style:
+                        pressed2 ? TextStyle(color: schemeColorGreen, fontWeight: FontWeight.bold, decoration: TextDecoration.underline, decorationColor: schemeColorGreen)
+                                 : TextStyle(fontWeight: FontWeight.normal)),
                     ),
                   ),
                   Flexible(
-                    child:ElevatedButton(
-                      onPressed:()=>_controller.animateToPage(3),
-                      child:Text('Unsere Philosophie'),
+                    child:TextButton(
+                      onPressed:()=> {setState(() {
+                        pressed3 = true;
+                        pressed1 = false;
+                        pressed2 = false;
+                      }),
+                        _controller.animateToPage(3)},
+                      child:Text('Unsere Philosophie', style:
+                      pressed3 ? TextStyle(color: schemeColorGreen, fontWeight: FontWeight.bold, decoration: TextDecoration.underline, decorationColor: schemeColorGreen)
+                               : TextStyle(fontWeight: FontWeight.normal)),
                     ),
                   ),
                 ],
