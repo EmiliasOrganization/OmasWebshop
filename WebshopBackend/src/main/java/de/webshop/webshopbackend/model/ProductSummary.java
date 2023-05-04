@@ -10,4 +10,5 @@ public interface ProductSummary {
     String getName();
     String getDescription();
     String getCategory();
+    String getSubCategory();
 }

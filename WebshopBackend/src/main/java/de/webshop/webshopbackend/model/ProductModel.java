@@ -43,4 +43,8 @@ public class ProductModel {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Column()
+    @Enumerated(EnumType.STRING)
+    private SubCategory subCategory;
+
 }

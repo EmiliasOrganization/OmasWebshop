@@ -39,7 +39,7 @@ public class ShopController {
 
         if (files == null || files.length == 0){
             createPurchaseObjectService.createPurchaseObject(productModel);
-            return ResponseEntity.ok("Only ObjectData uploaded successfully!");
+            return ResponseEntity.ok("Uploadet Data with no Picture");
         }
 
         imageUpload(files, productModel);

@@ -26,8 +26,8 @@ public class FindPurchaseObjectService {
         return productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product with id: " + id + " not found!"));
     }
     @Transactional
-    public ProductModel findPurchaseObjectByCategory(Category category) {
-        return productRepository.findByCategory(category).orElseThrow(() -> new ElementNotFoundException("Product with category: " + category + " not found!"));
+    public List<ProductSummary> findPurchaseObjectByCategory(Category category) {
+        return productRepository.findAllProjectedByCategory(category);
     }
     @Transactional
     public List<ProductSummary> findAllSummary() {

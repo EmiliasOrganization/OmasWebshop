@@ -16,6 +16,7 @@ Future<List<ProductSummary>> fetchAllProducts() async {
             description: json['description'],
             id: json['id'],
             category: json['category'],
+            subCategory: json['subCategory']
         )).toList();
   } else {
     throw Exception('Failed to fetch products');
