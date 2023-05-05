@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,8 +37,8 @@ public class ProductModel {
     @Column()
     private String description;
 
-//    @Column(name = "Preis", nullable = false)
-//    private MonetaryAmount pice;
+    @Column(nullable = false)
+    private BigDecimal price;
 
     @Column()
     @Enumerated(EnumType.STRING)

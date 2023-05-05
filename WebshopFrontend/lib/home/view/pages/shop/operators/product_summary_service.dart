@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:decimal/decimal.dart';
 import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,7 +17,8 @@ Future<List<ProductSummary>> fetchAllProducts() async {
             description: json['description'],
             id: json['id'],
             category: json['category'],
-            subCategory: json['subCategory']
+            subCategory: json['subCategory'],
+            price: Decimal.parse(json['price']),
         )).toList();
   } else {
     throw Exception('Failed to fetch products');

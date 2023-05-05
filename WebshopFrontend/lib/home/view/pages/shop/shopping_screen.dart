@@ -124,7 +124,7 @@ class ShopList extends StatelessWidget {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text('Failed to fetch products'),
+                  child: Text('Failed to fetch products' + snapshot.error.toString()),
                 );
               } else {
                 return Center(
