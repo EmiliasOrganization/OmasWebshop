@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class DeletePurchaseObjectService {
+public class DeleteProductService {
 
     ProductRepository productRepository;
 

@@ -23,12 +23,11 @@ public interface ProductRepository extends JpaRepository<ProductModel, UUID> {
 
     List<ProductSummary> findAllProjectedByCategoryAndSubCategory(Category category, SubCategory subCategory);
 
+    List<ProductSummary> findAllProjectedBySubCategory(SubCategory subCategory);
+
     @Override
     void deleteById(UUID uuid);
 
     Optional<ProductModel> findById(UUID uuid);
-
-    Optional<ProductModel> findByCategory(Category category);
-
 
 }
