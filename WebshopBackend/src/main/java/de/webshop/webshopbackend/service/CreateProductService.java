@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class CreatePurchaseObjectService {
+public class CreateProductService {
 
 
     ProductRepository productRepository;

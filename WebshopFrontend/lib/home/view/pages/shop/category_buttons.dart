@@ -30,7 +30,6 @@ class _ButtonListState extends State<ButtonList> {
       children: [
         CategoryButton(
           buttonName: 'Alles',
-          category: Category.EMPTY,
           selected: selectedCategory == Category.EMPTY,
           onPressed: () {
             setState(() {
@@ -43,7 +42,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 20),
         CategoryButton(
           buttonName: 'Taschen',
-          category: Category.BAGS,
           selected: selectedCategory == Category.BAGS,
           onPressed: () {
             setState(() {
@@ -56,7 +54,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 20),
         CategoryButton(
           buttonName: 'Kopfbedeckungen',
-          category: Category.HATS,
           selected: selectedCategory == Category.HATS,
           onPressed: () {
             setState(() {
@@ -69,7 +66,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 20),
         CategoryButton(
           buttonName: 'Kinder',
-          category: Category.CHILDREN,
           selected: selectedCategory == Category.CHILDREN,
           onPressed: () {
             setState(() {
@@ -82,7 +78,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 20),
         CategoryButton(
           buttonName: 'Socken',
-          category: Category.SOCKS,
           selected: selectedCategory == Category.SOCKS,
           onPressed: () {
             setState(() {
@@ -95,7 +90,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 20),
         CategoryButton(
           buttonName: 'Kuscheltiere',
-          category: Category.CUDDLY_TOYS,
           selected: selectedCategory == Category.CUDDLY_TOYS,
           onPressed: () {
             setState(() {
@@ -108,7 +102,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 20),
         CategoryButton(
           buttonName: 'Handschuhe',
-          category: Category.GLOVES,
           selected: selectedCategory == Category.GLOVES,
           onPressed: () {
             setState(() {
@@ -121,7 +114,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 20),
         CategoryButton(
           buttonName: 'Kissen & Decken',
-          category: Category.CUSHIONS,
           selected: selectedCategory == Category.CUSHIONS,
           onPressed: () {
             setState(() {
@@ -134,7 +126,6 @@ class _ButtonListState extends State<ButtonList> {
         SizedBox(height: 15),
         CategoryButton(
           buttonName: 'Rucksäcke',
-          category: Category.BACKPACKS,
           selected: selectedCategory == Category.BACKPACKS,
           onPressed: () {
             setState(() {
@@ -150,7 +141,6 @@ class _ButtonListState extends State<ButtonList> {
 }
 
 class CategoryButton extends StatelessWidget {
-  final Category category;
   final bool selected;
   final VoidCallback onPressed;
   final String buttonName;
@@ -158,7 +148,6 @@ class CategoryButton extends StatelessWidget {
 
   const CategoryButton({
     Key? key,
-    required this.category,
     required this.selected,
     required this.onPressed,
     required this.buttonName,
