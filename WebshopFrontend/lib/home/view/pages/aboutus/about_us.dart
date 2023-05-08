@@ -3,89 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-
-// class AboutUs extends StatelessWidget {
-//   const AboutUs({Key? key}) : super(key: key);
-//
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final screenWidth = MediaQuery.of(context).size.width;
-//     final screenHeight = MediaQuery.of(context).size.height;
-//     return SizedBox(
-//       width: 500,
-//       height: 500,
-//       child: CarouselSlider(
-//         options: CarouselOptions(
-//             height: 400.0,
-//             autoPlay: true, enlargeCenterPage: true,
-//           enlargeFactor: 0.1,),
-//
-//         items: [1,2,3,4,5].map((i) {
-//           return Builder(
-//             builder: (BuildContext context) {
-//               return Container(
-//                   width: MediaQuery.of(context).size.width,
-//                   margin: EdgeInsets.symmetric(horizontal: 5.0),
-//                   decoration: BoxDecoration(
-//                       color: Colors.amber
-//                   ),
-//                   child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-//               );
-//             },
-//           );
-//         }).toList(),
-//       ),
-//     );
-//     // return Stack(
-//     //   // alignment: AlignmentDirectional.center,
-//     //   children: [
-//     //     Positioned(
-//     //       top: screenHeight*0.1,
-//     //       left: screenWidth*0.05,
-//     //       right: 0,
-//     //         child: Column(
-//     //           children: [
-//     //             Row(
-//     //               children: [
-//     //                 Text('Über uns', textAlign: TextAlign.left, style: TextStyle(
-//     //                   fontSize: 30, fontWeight: FontWeight.bold, color: schemeColorGreen,
-//     //                 ),),
-//     //               ],
-//     //             ),
-//     //             Row(
-//     //               children: [
-//     //                 Image(image: AssetImage('assets/StartScreen.png'), width: screenWidth*0.3, height: screenHeight*0.4,)
-//     //               ]
-//     //             )
-//     //           ],
-//     //         ),
-//     //     ),
-//     //     Positioned(
-//     //       top: screenHeight*0.5,
-//     //       left: screenWidth*0.05,
-//     //       child: Column(
-//     //         children: [
-//     //           Row(
-//     //             children: [
-//     //               Center(
-//     //                 child: IconButton(onPressed: (){},
-//     //                   color: schemeColorOrange,
-//     //                   icon: const Icon(Icons.arrow_back_ios_sharp),
-//     //                   style: IconButton.styleFrom(backgroundColor: Colors.white,
-//     //                       side: BorderSide(color: schemeColorGreen)),),
-//     //               )
-//     //             ],
-//     //           ),
-//     //         ],
-//     //       ),
-//     //     )
-//     //   ],
-//     // );
-//   }
-// }
-
 class ManuallyControlledSlider extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -94,6 +11,10 @@ class ManuallyControlledSlider extends StatefulWidget {
 }
 
 class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
+  List <String> elementName = ['Wie alles begann...', 'Wer sind wir?', 'Unsere Philosophie'];
+  late String buttonState = elementName.first;
+
+
   final CarouselController _controller = CarouselController();
 
   @override
@@ -119,9 +40,16 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.center,
         // appBar: AppBar(title: Text('Über uns')),
         // body: Stack(
           children: <Widget>[
+            Container(
+                width: 1500,
+                height:700,
+                alignment: Alignment.topLeft,
+                child: Text('Über uns', style: TextStyle(color: schemeColorGreen, fontSize: 40, fontWeight: FontWeight.bold),)
+            ),
             Container(
               alignment: Alignment.center,
               child: CarouselSlider(
@@ -131,19 +59,62 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
               ),
             ),
             Container(
+              width: 1500,
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  ElevatedButton(
+                  FloatingActionButton(
+                    shape: CircleBorder(),
+                    backgroundColor: Colors.white,
                     onPressed: () => _controller.previousPage(),
-                    child: Text('←'),
+                    child: Icon(Icons.arrow_back_ios_rounded, color: schemeColorOrange, size:35),
                   ),
-                  ElevatedButton(
+                  FloatingActionButton(
+                    shape: CircleBorder(),
+                    backgroundColor: Colors.white,
                     onPressed: () => _controller.nextPage(),
-                    child: Text('→'),
+                    child: Icon(Icons.arrow_forward_ios_rounded, color: schemeColorOrange, size:35),
                   ),
-
+                ],
+              ),
+            ),
+            Container(
+              width: 800,
+              alignment: Alignment(0.0, 0.5),
+              child: Row(
+                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                children:<Widget>[
+                  AboutUsCarouselButton(
+                    text: elementName[0],
+                    selected: elementName[0] == buttonState,
+                    onPressed: () => {
+                      _controller.animateToPage(1),
+                      setState ((){
+                        buttonState = elementName[0];
+                      }),
+                    },
+                  ),
+                  AboutUsCarouselButton(
+                    text: elementName[1],
+                    selected: elementName[1] == buttonState,
+                    onPressed: () => {
+                      _controller.animateToPage(2),
+                      setState ((){
+                        buttonState = elementName[1];
+                      }),
+                    },
+                  ),
+                  AboutUsCarouselButton(
+                    text: elementName[2],
+                    selected: elementName[2] == buttonState,
+                    onPressed: () => {
+                      _controller.animateToPage(3),
+                      setState ((){
+                        buttonState = elementName[2];
+                      }),
+                    },
+                  ),
                 ],
               ),
             )
@@ -151,5 +122,27 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
         );
   }
 }
+
+class AboutUsCarouselButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final bool selected;
+  final String text;
+  const AboutUsCarouselButton({Key? key,
+    required this.onPressed, required this.selected, required this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child:TextButton(
+        onPressed: onPressed,
+        child:Text(text, style:
+        selected ? TextStyle(color: schemeColorGreen, fontWeight: FontWeight.bold, decoration: TextDecoration.underline, decorationColor: schemeColorGreen)
+            : TextStyle(fontWeight: FontWeight.normal)),
+      ),
+    );
+  }
+}
+
 
 
