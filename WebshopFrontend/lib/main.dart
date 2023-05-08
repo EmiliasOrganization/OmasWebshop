@@ -7,6 +7,7 @@ import 'home/view/pages/checkout/checkout.dart';
 import 'home/view/pages/homepage/homepage.dart';
 import 'constats.dart';
 import 'home/view/pages/login/login.dart';
+import 'home/view/pages/produkt/product_page.dart';
 
 void main() {
   runApp(WebShop());
@@ -27,6 +28,7 @@ class WebShop extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
+        '/product': (context) => ProductPage(),
         '/shop': (context) => OnlyShopScreen(),
         '/cart': (context) => Cart(),
         '/login': (context) => Login(),

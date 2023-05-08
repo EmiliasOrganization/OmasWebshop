@@ -42,14 +42,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _productListFuture = fetchAllProducts();
-  }
-
-  @override
   Widget build(BuildContext context) {
-
+    _productListFuture = fetchProducts(category: newCategory, subCategory: newSubCategory);
     setState(() {
       if (isFirstLoad) {
         isFirstLoad = false;
@@ -130,7 +124,7 @@ class ShopList extends StatelessWidget {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text('Failed to fetch products'),
+                  child: Text('Failed to fetch products${snapshot.error}'),
                 );
               } else {
                 return Center(

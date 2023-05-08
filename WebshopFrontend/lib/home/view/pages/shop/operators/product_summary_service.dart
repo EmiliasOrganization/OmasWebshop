@@ -7,8 +7,23 @@ import 'package:http/http.dart' as http;
 import '../../../../../constats.dart';
 
 
-Future<List<ProductSummary>> fetchAllProducts() async {
-  final response = await http.get(Uri.parse(apiPathProductSummary));
+Future<List<ProductSummary>> fetchProducts({Category category = Category.EMPTY,SubCategory subCategory = SubCategory.EMPTY}) async {
+  String subCategoryEnumName = subCategory.toString().split('.').last;
+  String categoryEnumName = category.toString().split('.').last;
+  http.Response response;
+
+  if(subCategory != SubCategory.EMPTY){
+    if(category != Category.EMPTY){
+      response = await http.get(Uri.parse('$apiPathCategoryAndOrSubCategory/$categoryEnumName/$subCategoryEnumName'));
+    }
+    else {response = await http.get(Uri.parse('$apiPathOnlySubCategory/$subCategoryEnumName'));}
+  } else
+    if(category != Category.EMPTY){
+    response = await http.get(Uri.parse('$apiPathCategoryAndOrSubCategory/$categoryEnumName'));
+  }
+  else {response = await http.get(Uri.parse(apiPathProductSummary));}
+
+  print(' $category" "$subCategory');
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
     return data.map((json) =>
@@ -21,6 +36,6 @@ Future<List<ProductSummary>> fetchAllProducts() async {
             price: Decimal.parse(json['price']),
         )).toList();
   } else {
-    throw Exception('Failed to fetch products');
+    throw Exception('Failed to fetch products${response.statusCode}');
   }
 }
