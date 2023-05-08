@@ -62,7 +62,7 @@ class _SubCategoryState extends State<SubCategoryButtonList> {
         buttons.addAll([
           buildSubSelectionButton(SubCategory.EMPTY, "Alle"),
           buildSubSelectionButton(SubCategory.BAGS_SHOPPINGBAGS, "Einkaufstaschen"),
-          buildSubSelectionButton(SubCategory.BAGS_CROSSOVER, "Umhängetaschen"),
+          buildSubSelectionButton(SubCategory.BAGS_CROSSOVERS, "Umhängetaschen"),
           buildSubSelectionButton(SubCategory.BAGS_SHOULDERBAGS, "Schultertaschen"),
         ]);
         break;

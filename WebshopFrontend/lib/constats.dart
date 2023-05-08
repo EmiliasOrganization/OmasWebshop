@@ -124,7 +124,7 @@ enum SubCategory
   // BAGS
   BAGS_SHOPPINGBAGS,
   BAGS_SHOULDERBAGS,
-  BAGS_CROSSOVER,
+  BAGS_CROSSOVERS,
   //HATS
   HATS_HATS,
   HATS_HEADBANDS,
@@ -136,7 +136,7 @@ extension CategoryExtension on Category {
     switch (this) {
       case Category.BAGS:
         return [
-          SubCategory.BAGS_CROSSOVER,
+          SubCategory.BAGS_CROSSOVERS,
           SubCategory.BAGS_SHOPPINGBAGS,
           SubCategory.BAGS_SHOULDERBAGS,
         ];

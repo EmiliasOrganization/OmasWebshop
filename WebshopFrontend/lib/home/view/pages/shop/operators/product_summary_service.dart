@@ -23,7 +23,6 @@ Future<List<ProductSummary>> fetchProducts({Category category = Category.EMPTY,S
   }
   else {response = await http.get(Uri.parse(apiPathProductSummary));}
 
-  print(' $category" "$subCategory');
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
     return data.map((json) =>

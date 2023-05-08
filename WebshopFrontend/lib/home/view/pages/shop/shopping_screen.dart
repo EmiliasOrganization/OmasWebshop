@@ -43,7 +43,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _productListFuture = fetchProducts(category: newCategory, subCategory: newSubCategory);
     setState(() {
       if (isFirstLoad) {
         isFirstLoad = false;
@@ -52,7 +51,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
             .settings
             .arguments as Category? ?? Category.EMPTY;
       }
+
     });
+    _productListFuture = fetchProducts(category: newCategory, subCategory: newSubCategory);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
