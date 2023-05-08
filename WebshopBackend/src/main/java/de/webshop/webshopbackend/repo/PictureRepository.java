@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface PictureRepository extends JpaRepository<PictureModel, UUID> {
 
-    Optional<PictureModel> findPicturesByFilenameAndProductModelId(String filename, UUID id);
+    Optional<PictureModel> findPicturesByFilenameContainingAndProductModelId(String filename, UUID id);
 }

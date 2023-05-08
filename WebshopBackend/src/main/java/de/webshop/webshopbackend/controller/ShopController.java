@@ -87,13 +87,16 @@ public class ShopController {
     ResponseEntity<List<?>> findAllSummary() {
         return ResponseEntity.ok(findProductService.findAllSummary());
     }
+
     @GetMapping("/picture/{id}/{pictureName}")
     ResponseEntity<?> findPictureById(@PathVariable String pictureName, @PathVariable UUID id) {
-        PictureModel pictureModel = pictureService.getPicturebyFilenameAndProductId(pictureName, id);
-        byte[] data = ImageCompressionUtil.decompressImage(pictureModel.getData());
+        byte[] data = pictureService.getPicturebyFilenameAndProductId(pictureName, id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
         return new ResponseEntity<>(data, headers, HttpStatus.OK);
-
+    }
+    @GetMapping ("/picture/count/{id}")
+    ResponseEntity<?> countPictureByProductId(@PathVariable UUID id) {
+        return ResponseEntity.ok(pictureService.countAllByProductModelId(id));
     }
 }

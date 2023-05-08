@@ -2,13 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/home/view/pages/shop/category_buttons.dart';
 import 'package:flutterfrontend/home/view/pages/shop/shop_screen.dart';
+import 'package:url_strategy/url_strategy.dart';
 import 'home/view/pages/cart/cart.dart';
 import 'home/view/pages/checkout/checkout.dart';
 import 'home/view/pages/homepage/homepage.dart';
 import 'constats.dart';
 import 'home/view/pages/login/login.dart';
+import 'home/view/pages/produkt/product_page.dart';
 
 void main() {
+  setPathUrlStrategy();
   runApp(WebShop());
 }
 class WebShop extends StatelessWidget {
@@ -31,6 +34,15 @@ class WebShop extends StatelessWidget {
         '/cart': (context) => Cart(),
         '/login': (context) => Login(),
         '/checkout': (context) => Checkout(),
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        if (settings.name!.startsWith('/product/')) {
+          final productId = settings.name!.split('/').last;
+          return MaterialPageRoute(
+            builder: (context) => ProductPage(productId: productId),
+          );
+        }
+        return null;
       },
     );
   }

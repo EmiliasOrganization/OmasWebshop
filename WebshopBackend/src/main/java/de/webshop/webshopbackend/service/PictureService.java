@@ -22,7 +22,7 @@ public class PictureService {
     public PictureModel getPicturebyFilenameAndProductId(String filename, UUID id) {
 
 
-        return pictureRepository.findPicturesByFilenameAndProductModelId(filename, id).orElseThrow(() -> new ElementNotFoundException("Picture not found!"));
+        return pictureRepository.findPicturesByFilenameContainingAndProductModelId(filename, id).orElseThrow(() -> new ElementNotFoundException("Picture not found!"));
     }
 
 

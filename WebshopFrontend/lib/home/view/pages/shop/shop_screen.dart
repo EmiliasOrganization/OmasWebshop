@@ -12,9 +12,7 @@ class OnlyShopScreen extends StatelessWidget {
     return CenteredView(
       child: Scaffold(
         appBar: TopBar(itemScrollController: itemScrollController, ueberUns: false, title: 'Oma\'s Webshop',),
-        body: Container(
-          child: ProductListScreen(),
-        ),
+        body: ProductListScreen(),
       ),
     );
   }

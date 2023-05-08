@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/cart', arguments: product);
+        Navigator.pushNamed(context, '/product/${product.id}', arguments: product);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +21,7 @@ class ProductCard extends StatelessWidget {
           Container(
             height: 345,
             width:  275,
-            child: CachedNetworkImage(imageUrl: apiPathPicture + product.id +'/image1',
+            child: CachedNetworkImage(imageUrl: '$apiPathPicture${product.id}/image1',
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,),
@@ -35,7 +35,7 @@ class ProductCard extends StatelessWidget {
                 Text(product.name),
                 Padding(
                   padding: const EdgeInsets.only(right: 5),
-                  child: Text('€ ' + product.price.toString(), style: TextStyle(fontWeight: FontWeight.bold),),
+                  child: Text('€ ${product.price}', style: TextStyle(fontWeight: FontWeight.bold),),
                 ),
               ],
             ),

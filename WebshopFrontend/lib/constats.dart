@@ -18,6 +18,8 @@ const Color schemeColorMistyRose= Color(0xFFF6DEE0);
 // Api Paths
 
 const String apiPathProductSummary = 'http://localhost:8080/api/shop/all';
+const String apiPathCategoryAndOrSubCategory = 'http://localhost:8080/api/shop/category';
+const String apiPathOnlySubCategory = 'http://localhost:8080/api/shop/subcategory';
 const String apiPathPicture = 'http://localhost:8080/api/shop/picture/';
 
 
@@ -119,11 +121,11 @@ enum SubCategory
   // BAGS
   BAGS_SHOPPINGBAGS,
   BAGS_SHOULDERBAGS,
-  BAGS_CROSSOVER,
+  BAGS_CROSSOVERS,
   //HATS
-  HATS_HAT,
-  HATS_HEADBAND,
-  HATS_TOQUE,
+  HATS_HATS,
+  HATS_HEADBANDS,
+  HATS_TOQUES,
 }
 
 extension CategoryExtension on Category {
@@ -131,15 +133,15 @@ extension CategoryExtension on Category {
     switch (this) {
       case Category.BAGS:
         return [
-          SubCategory.BAGS_CROSSOVER,
+          SubCategory.BAGS_CROSSOVERS,
           SubCategory.BAGS_SHOPPINGBAGS,
           SubCategory.BAGS_SHOULDERBAGS,
         ];
       case Category.HATS:
         return [
-          SubCategory.HATS_HAT,
-          SubCategory.HATS_HEADBAND,
-          SubCategory.HATS_TOQUE
+          SubCategory.HATS_HATS,
+          SubCategory.HATS_HEADBANDS,
+          SubCategory.HATS_TOQUES
         ];
       default:
         return [SubCategory.EMPTY];
