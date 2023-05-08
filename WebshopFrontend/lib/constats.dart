@@ -21,6 +21,7 @@ const String apiPathProductSummary = 'http://localhost:8080/api/shop/all';
 const String apiPathCategoryAndOrSubCategory = 'http://localhost:8080/api/shop/category';
 const String apiPathOnlySubCategory = 'http://localhost:8080/api/shop/subcategory';
 const String apiPathPicture = 'http://localhost:8080/api/shop/picture/';
+const String apiPathProductData = 'http://localhost:8080/api/shop/productSummary/';
 
 
 //LandingPage AboutUs Elements
