@@ -4,6 +4,7 @@ import de.webshop.webshopbackend.Utils.ImageCompressionUtil;
 import de.webshop.webshopbackend.model.Category;
 import de.webshop.webshopbackend.model.PictureModel;
 import de.webshop.webshopbackend.model.ProductModel;
+import de.webshop.webshopbackend.model.SubCategory;
 import de.webshop.webshopbackend.service.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,56 +29,63 @@ import static de.webshop.webshopbackend.Utils.ImageUploaderUtil.imageUpload;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ShopController {
 
-    CreatePurchaseObjectService createPurchaseObjectService;
-    DeletePurchaseObjectService deletePurchaseObjectService;
-    FindPurchaseObjectService findPurchaseObjectService;
-    UpdatePurchaseObjectService updatePurchaseObjectService;
+    CreateProductService createProductService;
+    DeleteProductService deleteProductService;
+    FindProductService findProductService;
+    UpdateProductService updateProductService;
     PictureService pictureService;
 
     @PostMapping("/create")
-    ResponseEntity<?> createPurchaseObject(@RequestPart(name = "Files", required = false) MultipartFile[] files, @RequestPart("ObjectData") ProductModel productModel) throws IOException {
+    ResponseEntity<?> createProduct(@RequestPart(name = "Files", required = false) MultipartFile[] files, @RequestPart("ObjectData") ProductModel productModel) throws IOException {
 
         if (files == null || files.length == 0){
-            createPurchaseObjectService.createPurchaseObject(productModel);
-            return ResponseEntity.ok("Only ObjectData uploaded successfully!");
+            createProductService.createPurchaseObject(productModel);
+            return ResponseEntity.ok("Uploadet Data with no Picture");
         }
 
         imageUpload(files, productModel);
-        createPurchaseObjectService.createPurchaseObject(productModel);
+        createProductService.createPurchaseObject(productModel);
 
         return ResponseEntity.ok("Files uploaded successfully!");
     }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<?> deletePurchaseObjectById(@PathVariable UUID id) {
-        deletePurchaseObjectService.deletePurchaseObjectById(id);
+    ResponseEntity<?> deleteProduct(@PathVariable UUID id) {
+        deleteProductService.deletePurchaseObjectById(id);
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/update")
-    ResponseEntity<?> updatePurchaseObject(@RequestPart(name = "Files", required = false) MultipartFile[] files, @RequestPart("ObjectData") ProductModel productModel) throws IOException {
+    ResponseEntity<?> updateProduct(@RequestPart(name = "Files", required = false) MultipartFile[] files, @RequestPart("ObjectData") ProductModel productModel) throws IOException {
 
         if (files == null || files.length == 0){
-            createPurchaseObjectService.createPurchaseObject(productModel);
+            createProductService.createPurchaseObject(productModel);
             return ResponseEntity.ok("Data updated successfully!");
         }
 
         imageUpload(files, productModel);
-        updatePurchaseObjectService.updatePurchaseObject(productModel);
+        updateProductService.updatePurchaseObject(productModel);
 
         return ResponseEntity.ok("Files updated successfully!");
     }
-
     @GetMapping("/id/{id}")
-    ResponseEntity<?> findPurchaseObjectById(@PathVariable UUID id) {
-        return ResponseEntity.ok(findPurchaseObjectService.findPurchaseObjectById(id));
+    ResponseEntity<?> findProductById(@PathVariable UUID id) {
+        return ResponseEntity.ok(findProductService.findProductById(id));
     }
     @GetMapping("/category/{category}")
-    ResponseEntity<?> findPurchaseObjectByCategory(@PathVariable Category category) {
-        return ResponseEntity.ok(findPurchaseObjectService.findPurchaseObjectByCategory(category));
+    ResponseEntity<?> findProductByCategory(@PathVariable Category category) {
+        return ResponseEntity.ok(findProductService.findProductCategory(category));
+    }
+    @GetMapping("/category/sub/{subCategory}")
+    ResponseEntity<?> findProductBySubCategory(@PathVariable SubCategory subCategory) {
+        return ResponseEntity.ok(findProductService.findProductBySubCategory(subCategory));
+    }
+    @GetMapping("/category/{category}/{subCategory}")
+    ResponseEntity<?> findProductByCategoryAndSubCategory(@PathVariable Category category, @PathVariable SubCategory subCategory) {
+        return ResponseEntity.ok(findProductService.findProductByCategoryAndSubCategory(category, subCategory));
     }
     @GetMapping("/all")
     ResponseEntity<List<?>> findAllSummary() {
-        return ResponseEntity.ok(findPurchaseObjectService.findAllSummary());
+        return ResponseEntity.ok(findProductService.findAllSummary());
     }
     @GetMapping("/picture/{id}/{pictureName}")
     ResponseEntity<?> findPictureById(@PathVariable String pictureName, @PathVariable UUID id) {
