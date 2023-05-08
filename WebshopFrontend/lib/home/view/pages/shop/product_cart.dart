@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/product', arguments: product);
+        Navigator.pushNamed(context, '/product/${product.id}', arguments: product);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

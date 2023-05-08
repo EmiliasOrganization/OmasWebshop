@@ -3,16 +3,14 @@ import 'package:flutterfrontend/constats.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget{
-  const TopBar({Key? key, required this.itemScrollController, required this.ueberUns, this.title}) : super(key: key);
+  const TopBar({Key? key, this.itemScrollController, required this.ueberUns, this.title}) : super(key: key);
 
-  final ItemScrollController itemScrollController;
+  final ItemScrollController? itemScrollController;
   final bool ueberUns;
   final String? title;
-
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
+    bool isHovered = false; //Todo: Make widget stateful and use this variable to change the color of the icon
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: AppBar(
@@ -31,14 +29,19 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget{
           ElevatedButton(
             child: (Text('Über uns')),
             onPressed: () {
-              itemScrollController.scrollTo(
+              itemScrollController?.scrollTo(
                   index: 2, duration: Duration(seconds: 1), curve: Curves.easeInOut);
             },
           ),
           SizedBox(width: 8),
-          IconButton(
-              icon: Icon(Icons.shopping_cart, color: schemeColorGreen),
-              onPressed: (){}
+          MouseRegion(
+            onEnter: (event) =>  isHovered = true, //Todo: Make widget stateful and use this variable to change the color of the icon
+            onExit: (event) => isHovered = false, //Todo: Make widget stateful and use this variable to change the color of the icon
+            child: IconButton(
+                icon: Icon(Icons.shopping_cart, color: schemeColorGreen),
+                onPressed: (){},
+            ),
+
           ),
           SizedBox(width: 8),
           IconButton(
