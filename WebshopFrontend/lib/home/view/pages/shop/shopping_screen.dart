@@ -25,6 +25,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   var isFirstLoad = true;
   SubCategory subCategory = SubCategory.EMPTY;
   SubCategory newSubCategory = SubCategory.EMPTY;
+
   Category newCategory = Category.EMPTY;
 
   void _onSubCategorySelected(SubCategory subCategory) {
@@ -35,6 +36,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   void _onCategorySelected(Category category) {
     setState(() {
+      newSubCategory = SubCategory.EMPTY;
       newCategory = category;
     });
   }
@@ -47,6 +49,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     setState(() {
       if (isFirstLoad) {
         isFirstLoad = false;
@@ -64,7 +67,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 40),
-              child: ButtonList(category: category,
+              child: ButtonList(
+                  category: category,
                   onCategorySelected: _onCategorySelected),),
             //  ShopList(productListFuture: _productListFuture),
           ],
@@ -77,7 +81,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     color: Colors.white,
                     alignment: Alignment.bottomCenter,
                       height: 90,
-                      child: SubCategoryButtonList(category: newCategory, onSubCategorySelected: _onSubCategorySelected, )),
+                      child: SubCategoryButtonList(
+                        category: newCategory,
+                        onSubCategorySelected: _onSubCategorySelected, )),
                   Expanded(
                     child: ShopList(productListFuture: _productListFuture),
                   ),
@@ -124,7 +130,7 @@ class ShopList extends StatelessWidget {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text('Failed to fetch products' + snapshot.error.toString()),
+                  child: Text('Failed to fetch products'),
                 );
               } else {
                 return Center(

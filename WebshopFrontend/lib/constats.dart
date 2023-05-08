@@ -124,9 +124,9 @@ enum SubCategory
   BAGS_SHOULDERBAGS,
   BAGS_CROSSOVER,
   //HATS
-  HATS_HAT,
-  HATS_HEADBAND,
-  HATS_TOQUE,
+  HATS_HATS,
+  HATS_HEADBANDS,
+  HATS_TOQUES,
 }
 
 extension CategoryExtension on Category {
@@ -140,9 +140,9 @@ extension CategoryExtension on Category {
         ];
       case Category.HATS:
         return [
-          SubCategory.HATS_HAT,
-          SubCategory.HATS_HEADBAND,
-          SubCategory.HATS_TOQUE
+          SubCategory.HATS_HATS,
+          SubCategory.HATS_HEADBANDS,
+          SubCategory.HATS_TOQUES
         ];
       default:
         return [SubCategory.EMPTY];

@@ -5,139 +5,108 @@ import '../../../../constats.dart';
 
 
 class SubCategoryButtonList extends StatefulWidget {
-  const SubCategoryButtonList({Key? key, required this.category, required this.onSubCategorySelected}) : super(key: key);
+  const SubCategoryButtonList({Key? key, required this.category, required this.onSubCategorySelected})
+      : super(key: key);
+
   final Category category;
   final void Function(SubCategory) onSubCategorySelected;
+
   @override
   State<SubCategoryButtonList> createState() => _SubCategoryState();
 }
 
 class _SubCategoryState extends State<SubCategoryButtonList> {
   late SubCategory selectedSubCategory = SubCategory.EMPTY;
+
+  @override
+  void didUpdateWidget(covariant SubCategoryButtonList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.category != oldWidget.category) {
+      setState(() {
+        selectedSubCategory = SubCategory.EMPTY;
+      });
+    }
+  }
+
+  void updateSelectedSubCategory(SubCategory subCategory) {
+    setState(() {
+      selectedSubCategory = selectedSubCategory == subCategory ? SubCategory.EMPTY : subCategory;
+      widget.onSubCategorySelected(selectedSubCategory);
+    });
+  }
+
+  Widget buildSubSelectionButton(SubCategory subCategory, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: SubSelectionButton(
+        onPressed: () => updateSelectedSubCategory(subCategory),
+        text: text,
+        selected: selectedSubCategory == subCategory,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: buildSubCategoryButtons(),
+    );
+  }
+
+  List<Widget> buildSubCategoryButtons() {
+    final buttons = <Widget>[];
+
     switch (widget.category) {
       case Category.BAGS:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SubSelectionButton(
-              selected: selectedSubCategory == SubCategory.EMPTY,
-              text: "Alle",
-              onPressed: () {
-                setState(() {
-                  selectedSubCategory =
-                  selectedSubCategory == SubCategory.EMPTY ? SubCategory.EMPTY : SubCategory.EMPTY;
-                  widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },),
-            SizedBox(width: 10,),
-            SubSelectionButton(
-              selected: selectedSubCategory == SubCategory.BAGS_SHOPPINGBAGS,
-              onPressed: () {
-                setState(() {
-                  selectedSubCategory =
-                  selectedSubCategory == SubCategory.BAGS_SHOPPINGBAGS ? SubCategory.EMPTY : SubCategory.BAGS_SHOPPINGBAGS;
-                  widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },
-              text: 'Einkaufstaschen',
-            ),
-            SizedBox(width: 10,),
-            SubSelectionButton(
-              selected:  selectedSubCategory == SubCategory.BAGS_CROSSOVER,
-              onPressed: () {
-                setState(() {
-                  selectedSubCategory =
-                  selectedSubCategory == SubCategory.BAGS_CROSSOVER ? SubCategory.EMPTY : SubCategory.BAGS_CROSSOVER;
-                  widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },
-              text: 'Umhängetaschen',
-            ),
-            SizedBox(width: 10,),
-            SubSelectionButton(
-              selected: selectedSubCategory == SubCategory.BAGS_SHOULDERBAGS,
-              onPressed: () {
-                setState(() {
-                selectedSubCategory =
-                selectedSubCategory == SubCategory.BAGS_SHOULDERBAGS ? SubCategory.EMPTY : SubCategory.BAGS_SHOULDERBAGS;
-                widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },
-              text: 'Schultertaschen',
-            ),
-          ],
-        );
+        buttons.addAll([
+          buildSubSelectionButton(SubCategory.EMPTY, "Alle"),
+          buildSubSelectionButton(SubCategory.BAGS_SHOPPINGBAGS, "Einkaufstaschen"),
+          buildSubSelectionButton(SubCategory.BAGS_CROSSOVER, "Umhängetaschen"),
+          buildSubSelectionButton(SubCategory.BAGS_SHOULDERBAGS, "Schultertaschen"),
+        ]);
+        break;
       case Category.HATS:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SubSelectionButton(
-              selected: true,
-              text: "Alle",
-              onPressed: () {
-                setState(() {
-                  widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },),
-            SizedBox(width: 10,),
-            SubSelectionButton(
-              selected: true,
-              onPressed: () {
-                setState(() {
-                  widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },
-              text: 'Hüte',
-            ),
-            SizedBox(width: 10,),
-            SubSelectionButton(
-              selected: true,
-              onPressed: () {
-                setState(() {
-                  widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },
-              text: 'Mützen',
-            ),
-            SizedBox(width: 10,),
-            SubSelectionButton(
-              selected: true,
-              onPressed: () {
-                setState(() {
-                  widget.onSubCategorySelected(selectedSubCategory);
-                });
-              },
-              text: 'Stirnbänder',
-            ),
-          ],
-        );
+        buttons.addAll([
+          buildSubSelectionButton(SubCategory.EMPTY, "Alle"),
+          buildSubSelectionButton(SubCategory.HATS_HATS, "Hüte"),
+          buildSubSelectionButton(SubCategory.HATS_TOQUES, "Mützen"),
+          buildSubSelectionButton(SubCategory.HATS_HEADBANDS, "Stirnbänder"),
+        ]);
+        break;
       case Category.CHILDREN:
-        return Text('No output available for this category');
+        buttons.add(Text('No output available for this category'));
+        break;
       case Category.SOCKS:
-        return Text('No output available for this category');
+        buttons.add(Text('No output available for this category'));
+        break;
       case Category.CUDDLY_TOYS:
-        return Text('No output available for this category');
+        buttons.add(Text('No output available for this category'));
+        break;
       case Category.GLOVES:
-        return Text('No output available for this category');
+        buttons.add(Text('No output available for this category'));
+        break;
       case Category.CUSHIONS:
-        return Text('No output available for this category');
+        buttons.add(Text('No output available for this category'));
+        break;
       case Category.BACKPACKS:
-        return Text('No output available for this category');
+        buttons.add(Text('No output available for this category'));
+        break;
       default:
-        return Text('');
+        buttons.add(Text('No output available for this category'));
+        break;
     }
+
+    return buttons;
   }
 }
 
 class SubSelectionButton extends StatelessWidget {
-  final text;
-   final bool selected;
-   final VoidCallback onPressed;
+  final String text;
+  final bool selected;
+  final VoidCallback onPressed;
 
   const SubSelectionButton({
-    super.key,
     required this.onPressed,
     required this.text,
     required this.selected,
@@ -148,9 +117,16 @@ class SubSelectionButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
       ),
-      child: Text(text, style: TextStyle( fontSize: 24, decoration: selected ? TextDecoration.underline : TextDecoration.none,
-        color: selected ? schemeColorOrange : schemeColorGreen,),),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 24,
+          decoration: selected ? TextDecoration.underline : TextDecoration.none,
+          color: selected ? schemeColorOrange : schemeColorGreen,
+        ),
+      ),
     );
   }
 }

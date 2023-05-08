@@ -6,11 +6,15 @@ import '../../../../constats.dart';
 
 
 class ButtonList extends StatefulWidget {
-
   final Category? category;
   final void Function(Category) onCategorySelected;
 
-  const ButtonList({super.key, required this.category, required this.onCategorySelected,});
+  const ButtonList({
+    Key? key,
+    required this.category,
+    required this.onCategorySelected,
+  }) : super(key: key);
+
   @override
   _ButtonListState createState() => _ButtonListState();
 }
@@ -24,117 +28,46 @@ class _ButtonListState extends State<ButtonList> {
     selectedCategory = widget.category ?? Category.EMPTY;
   }
 
+  void updateSelectedCategory(Category category) {
+    setState(() {
+      selectedCategory = selectedCategory == category ? Category.EMPTY : category;
+      widget.onCategorySelected(selectedCategory);
+    });
+  }
+
+  Widget buildCategoryButton(String buttonName, Category category) {
+    return SizedBox(
+      height: 80,
+      width: 210,
+      child: CategoryButton(
+        buttonName: buttonName,
+        selected: selectedCategory == category,
+        onPressed: () => updateSelectedCategory(category),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CategoryButton(
-          buttonName: 'Alles',
-          selected: selectedCategory == Category.EMPTY,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.EMPTY ? Category.EMPTY : Category.EMPTY;
-            widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Alles', Category.EMPTY),
         SizedBox(height: 20),
-        CategoryButton(
-          buttonName: 'Taschen',
-          selected: selectedCategory == Category.BAGS,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.BAGS ? Category.EMPTY : Category.BAGS;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Taschen', Category.BAGS),
         SizedBox(height: 20),
-        CategoryButton(
-          buttonName: 'Kopfbedeckungen',
-          selected: selectedCategory == Category.HATS,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.HATS ? Category.EMPTY : Category.HATS;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Kopfbedeckungen', Category.HATS),
         SizedBox(height: 20),
-        CategoryButton(
-          buttonName: 'Kinder',
-          selected: selectedCategory == Category.CHILDREN,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.CHILDREN ? Category.EMPTY : Category.CHILDREN;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Kinder', Category.CHILDREN),
         SizedBox(height: 20),
-        CategoryButton(
-          buttonName: 'Socken',
-          selected: selectedCategory == Category.SOCKS,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.SOCKS ? Category.EMPTY : Category.SOCKS;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Socken', Category.SOCKS),
         SizedBox(height: 20),
-        CategoryButton(
-          buttonName: 'Kuscheltiere',
-          selected: selectedCategory == Category.CUDDLY_TOYS,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.CUDDLY_TOYS ? Category.EMPTY : Category.CUDDLY_TOYS;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Kuscheltiere', Category.CUDDLY_TOYS),
         SizedBox(height: 20),
-        CategoryButton(
-          buttonName: 'Handschuhe',
-          selected: selectedCategory == Category.GLOVES,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.GLOVES ? Category.EMPTY : Category.GLOVES;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Handschuhe', Category.GLOVES),
         SizedBox(height: 20),
-        CategoryButton(
-          buttonName: 'Kissen & Decken',
-          selected: selectedCategory == Category.CUSHIONS,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.CUSHIONS ? Category.EMPTY : Category.CUSHIONS;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Kissen & Decken', Category.CUSHIONS),
         SizedBox(height: 15),
-        CategoryButton(
-          buttonName: 'Rucksäcke',
-          selected: selectedCategory == Category.BACKPACKS,
-          onPressed: () {
-            setState(() {
-              selectedCategory =
-              selectedCategory == Category.BACKPACKS ? Category.EMPTY: Category.BACKPACKS;
-              widget.onCategorySelected(selectedCategory);
-            });
-          },
-        ),
+        buildCategoryButton('Rucksäcke', Category.BACKPACKS),
       ],
     );
   }
@@ -144,7 +77,6 @@ class CategoryButton extends StatelessWidget {
   final bool selected;
   final VoidCallback onPressed;
   final String buttonName;
-
 
   const CategoryButton({
     Key? key,
@@ -159,7 +91,8 @@ class CategoryButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         minimumSize: Size(210, 80),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,),
+          borderRadius: BorderRadius.zero,
+        ),
         foregroundColor: schemeColorMistyRose,
         backgroundColor: selected ? schemeColorOrange : schemeColorGreen,
       ),
