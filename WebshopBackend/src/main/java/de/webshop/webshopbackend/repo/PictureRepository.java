@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface PictureRepository extends JpaRepository<PictureModel, UUID> {
 
     Optional<PictureModel> findPicturesByFilenameContainingAndProductModelId(String filename, UUID id);
+
+    int countAllByProductModelId(UUID id);
 }

@@ -1,6 +1,7 @@
 package de.webshop.webshopbackend.service;
 
 import de.webshop.webshopbackend.Exceptions.ElementNotFoundException;
+import de.webshop.webshopbackend.Utils.ImageCompressionUtil;
 import de.webshop.webshopbackend.model.PictureModel;
 import de.webshop.webshopbackend.repo.PictureRepository;
 import jakarta.transaction.Transactional;
@@ -19,10 +20,16 @@ public class PictureService {
     PictureRepository pictureRepository;
 
     @Transactional
-    public PictureModel getPicturebyFilenameAndProductId(String filename, UUID id) {
+    public byte[] getPicturebyFilenameAndProductId(String filename, UUID id) {
 
+        PictureModel pictureModel = pictureRepository.findPicturesByFilenameContainingAndProductModelId(filename, id).orElseThrow(() -> new ElementNotFoundException("Picture not found!"));
+        return ImageCompressionUtil.decompressImage(pictureModel.getData());
 
-        return pictureRepository.findPicturesByFilenameContainingAndProductModelId(filename, id).orElseThrow(() -> new ElementNotFoundException("Picture not found!"));
+    }
+
+    @Transactional
+    public int countAllByProductModelId(UUID id) {
+        return pictureRepository.countAllByProductModelId(id);
     }
 
 
