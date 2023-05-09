@@ -18,12 +18,14 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   late Future <ProductSummary> productData;
+  late Future <int> numberOfImages;
 
 
   @override
   void initState() {
     super.initState();
     productData = fetchProduct(widget.productId);
+    numberOfImages = imageCount(widget.productId);
   }
 
   @override
@@ -33,102 +35,114 @@ class _ProductPageState extends State<ProductPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final productSummary = snapshot.data!;
-          return CenteredView(
-            child:
-            Scaffold(
-              appBar: TopBar(ueberUns: false,),
-              body: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: double.infinity),
-                  // Image Selection
-                  Container(
-                    width: 90,
-                    height: 600,
-                    child: ListView.builder(
-                      itemCount: 7,
-                      // Replace with the actual number of images
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 80,
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          color: Colors.grey[300], // Placeholder color
-                          child: Center(
-                            child: Text('Image ${index + 1}'),
+          return FutureBuilder<int>(
+            future: numberOfImages,
+            builder: (context, imageSnapshot) {
+              if (imageSnapshot.hasData) {
+                final int imageCount = imageSnapshot.data!;
+                return CenteredView(
+                child:
+                Scaffold(
+                  appBar: TopBar(ueberUns: false,),
+                  body: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: double.infinity),
+                      // Image Selection
+                      Container(
+                        width: 90,
+                        height: 600,
+                        child: ListView.builder(
+                          itemCount: imageCount,
+                          // Replace with the actual number of images
+                          itemBuilder: (context, index) {
+                            return CachedNetworkImage(
+                                imageUrl: '$apiPathPicture${widget
+                                    .productId}/image${index + 1}',
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                                fit: BoxFit.scaleDown);
+                          })),
+                      SizedBox(width: 20),
+                      // Big Product Image
+                      CachedNetworkImage(
+                        imageUrl: '$apiPathPicture${widget.productId}/image1',
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        height: 600,
+                        width: 450,
+                        fit: BoxFit.fitHeight,),
+                      SizedBox(width: 80),
+                      // Product Details
+                      Container(
+                        height: 600,
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                productSummary.name,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                '${productSummary.price}€',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: schemeColorGreen,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                '${productSummary.description}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // TODO: Implement add to basket functionality
+                                },
+                                child: Text('Dem Warenkorb hinzufügen'),
+                              ),
+                              SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // TODO: Implement quick checkout functionality
+                                },
+                                child: Text('Direkt zur Kasse'),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  // Big Product Image
-                  CachedNetworkImage(
-                    imageUrl: '$apiPathPicture${widget.productId}/image1',
-                    placeholder: (context, url) =>
-                        CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                    height: 600,
-                    width: 450,
-                    fit: BoxFit.fitHeight,),
-                  SizedBox(width: 80),
-                  // Product Details
-                  Container(
-                    height: 600,
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            productSummary.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            '${productSummary.price}€',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: schemeColorGreen,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            '${productSummary.description}',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              // TODO: Implement add to basket functionality
-                            },
-                            child: Text('Dem Warenkorb hinzufügen'),
-                          ),
-                          SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              // TODO: Implement quick checkout functionality
-                            },
-                            child: Text('Direkt zur Kasse'),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+              }
+              else if (imageSnapshot.hasError) {
+                return Text('Error: ${imageSnapshot.error}');
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
           );
-        } else if (snapshot.hasError) {
+          } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
           return CircularProgressIndicator();
         }
-      });
+      },
+    );
   }
 }

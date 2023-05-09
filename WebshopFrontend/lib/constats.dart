@@ -22,6 +22,7 @@ const String apiPathCategoryAndOrSubCategory = 'http://localhost:8080/api/shop/c
 const String apiPathOnlySubCategory = 'http://localhost:8080/api/shop/subcategory';
 const String apiPathPicture = 'http://localhost:8080/api/shop/picture/';
 const String apiPathProductData = 'http://localhost:8080/api/shop/productSummary/';
+const String apiPathImageCount = 'http://localhost:8080/api/shop/picture/count/';
 
 
 //LandingPage AboutUs Elements
