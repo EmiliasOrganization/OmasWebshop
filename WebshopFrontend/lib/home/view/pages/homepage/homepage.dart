@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:vitality/models/ItemBehaviour.dart';
 import 'package:vitality/vitality.dart';

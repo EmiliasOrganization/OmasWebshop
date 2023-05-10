@@ -1,0 +1,27 @@
+
+
+# Flutter build artifacts
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-plugins-version
+.flutter-plugins-dependencies
+.packages
+
+# Flutter development files
+*.iml
+*.lock
+*.log
+.idea/
+.vscode/
+
+# Dart-specific files
+.dart_tool/
+.pub/
+.packages
+.dart_tool/
+
+# Git-related files
+.git/
+.gitignore
+
