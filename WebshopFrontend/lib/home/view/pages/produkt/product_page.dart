@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/globalwidget/top_bar.dart';
+import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
 import 'package:flutterfrontend/home/view/pages/produkt/poduct_service.dart';
+import 'package:provider/provider.dart';
 
 import '../shop/operators/product_summary_dto.dart';
 
@@ -19,6 +21,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   late Future <ProductSummary> productData;
   late Future <int> numberOfImages;
+  bool itemAdded = false;
 
 
   @override
@@ -30,6 +33,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
     return FutureBuilder<ProductSummary>(
       future: productData,
       builder: (context, snapshot) {
@@ -110,7 +114,15 @@ class _ProductPageState extends State<ProductPage> {
                               SizedBox(height: 20),
                               ElevatedButton(
                                 onPressed: () {
-                                  // TODO: Implement add to basket functionality
+
+                                  if(!cartProvider.isInCart(widget.productId))
+                                  {
+                                    CartElement item = CartElement(
+                                        productId: widget.productId,
+                                        productName: productSummary.name,
+                                    );
+                                    cartProvider.addToCart(item);
+                                  }
                                 },
                                 child: Text('Dem Warenkorb hinzufügen'),
                               ),
