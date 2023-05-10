@@ -21,8 +21,10 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget{
 
 class _TopBarState extends State<TopBar> {
   bool hoverstate = false;
+  OverlayEntry? _overlayEntry;
   @override
   Widget build(BuildContext context) {
+
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: AppBar(
@@ -54,8 +56,18 @@ class _TopBarState extends State<TopBar> {
                         alignment: Alignment.topRight,
                         children: [
                           MouseRegion(
-                            onEnter: (event) => setState(() => hoverstate = true),
-                            onExit: (event) => setState(() => hoverstate = false),
+                            onEnter: (event) {
+                              setState(() {
+                                hoverstate = true;
+                              });
+                              showCartPopup(context);
+                            },
+                            onExit: (event) {
+                              setState(() {
+                                hoverstate = false;
+                              });
+                              hideCartPopup();
+                            },
                             child: IconButton(
                               icon: Icon(Icons.shopping_cart, color: hoverstate ? schemeColorMistyRose: schemeColorGreen),
                               onPressed: (){},
@@ -79,6 +91,7 @@ class _TopBarState extends State<TopBar> {
                               ),
                             ),
                           ),
+
                         ],
                       );
                     }
@@ -101,4 +114,66 @@ class _TopBarState extends State<TopBar> {
       ),
     );
   }
+  void showCartPopup(BuildContext context) {
+    final RenderBox appBarRenderBox = context.findRenderObject() as RenderBox;
+    final Offset appBarOffset = appBarRenderBox.localToGlobal(Offset.zero); // Adjust the height according to your needs
+
+    _overlayEntry = OverlayEntry(
+      builder: (context) {
+        return Positioned(
+          top: appBarOffset.dy + kToolbarHeight + 10,
+          left: appBarOffset.dx - 300,
+          width: MediaQuery.of(context).size.width * 0.25,
+          height: 200,
+          child: Material(
+            elevation: 4,
+            child: SmallShoppingSummary(),
+          ),
+        );
+      },
+    );
+
+    Overlay.of(context)?.insert(_overlayEntry!);
+  }
+
+  void hideCartPopup() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+
+  @override
+  void dispose() {
+    hideCartPopup(); // Make sure to remove the popup overlay when the widget is disposed
+    super.dispose();
+  }
 }
+
+class SmallShoppingSummary extends StatefulWidget {
+  const SmallShoppingSummary({Key? key}) : super(key: key);
+
+  @override
+  State<SmallShoppingSummary> createState() => _SmallShoppingSummaryState();
+}
+
+class _SmallShoppingSummaryState extends State<SmallShoppingSummary> {
+  @override
+  Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    return ListView.builder(
+        itemCount: cartProvider.itemCount,
+        // Replace with the actual number of images
+        itemBuilder: (context, index) {
+          CartElement item = cartProvider.cartItems[index];
+          return ListTile(
+            leading: Image.asset(
+              '../assets/StartScreen.png',
+              width: 50,
+              height: 50,
+            ),
+            title: Text(item.productName),
+            subtitle: Text(item.productId),
+          );
+        });
+    }
+}
+
