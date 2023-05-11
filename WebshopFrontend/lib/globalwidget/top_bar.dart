@@ -1,16 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../home/view/pages/cart/cart.dart';
 import '../home/view/pages/cart/cart_items.dart';
 
-class TopBar extends StatefulWidget implements PreferredSizeWidget{
+class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final ItemScrollController? itemScrollController;
   final bool ueberUns;
   final String? title;
   final int? itemCount;
-  const TopBar({Key? key, this.itemScrollController, required this.ueberUns, this.title, this.itemCount}) : super(key: key);
+
+  const TopBar({
+    Key? key,
+    required this.ueberUns,
+    this.itemScrollController,
+    this.title,
+    this.itemCount,
+  }) : super(key: key);
 
   @override
   State<TopBar> createState() => _TopBarState();
@@ -20,11 +30,16 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget{
 }
 
 class _TopBarState extends State<TopBar> {
+
+  Timer? _popupTimer;
+  final Duration _popupHideDuration = Duration(seconds: 1);
+
+  bool popUpVisible = false;
   bool hoverstate = false;
   OverlayEntry? _overlayEntry;
+
   @override
   Widget build(BuildContext context) {
-
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: AppBar(
@@ -49,53 +64,61 @@ class _TopBarState extends State<TopBar> {
             ),
           SizedBox(width: 8),
           Consumer<CartProvider>( // Wrap the widget in Consumer
-                      builder: (context, cartProvider, _) {
-                        CartProvider cartProvider = Provider.of<CartProvider>(context);
-                        List<CartElement> cartItems = cartProvider.cartItems;
-                      return Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          MouseRegion(
-                            onEnter: (event) {
-                              setState(() {
-                                hoverstate = true;
-                              });
-                              showCartPopup(context);
-                            },
-                            onExit: (event) {
-                              setState(() {
-                                hoverstate = false;
-                              });
-                              hideCartPopup();
-                            },
-                            child: IconButton(
-                              icon: Icon(Icons.shopping_cart, color: hoverstate ? schemeColorMistyRose: schemeColorGreen),
-                              onPressed: (){},
-                            ),
-                          ),
-                              if (cartProvider.itemCount > 0) // Use productCount from the cartItems list
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Text(
-                              cartProvider.itemCount.toString(),
-                                style: TextStyle(
-                                  color: schemeColorGreen,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-
-                        ],
-                      );
-                    }
+            builder: (context, cartProvider, _) {
+              GlobalKey _mouseRegionKey = GlobalKey();
+              CartProvider cartProvider = Provider.of<CartProvider>(context);
+              List<CartElement> cartItems = cartProvider.cartItems;
+            return Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Builder(
+                  builder: (context) => MouseRegion(
+                    key: _mouseRegionKey,
+                    onEnter: (event) {
+                      setState(() {
+                        hoverstate = true;
+                      });
+                      if (!popUpVisible) {
+                        showCartPopup(context, cartItems);
+                      }
+                    },
+                    onExit: (event) {
+                      _popupTimer = Timer(_popupHideDuration, () {
+                        hideCartPopup();
+                      });
+                      setState(() {
+                        hoverstate = false;
+                      });
+                    },
+                    child: IconButton(
+                      icon: Icon(Icons.shopping_cart,
+                          color: hoverstate ? schemeColorMistyRose : schemeColorGreen),
+                      onPressed: () {},
+                    ),
                   ),
+                ),
+                    if (cartProvider.itemCount > 0) // Use productCount from the cartItems list
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                    cartProvider.itemCount.toString(),
+                      style: TextStyle(
+                        color: schemeColorGreen,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+
+              ],
+            );}
+          ),
           SizedBox(width: 8),
           IconButton(
             icon: Icon(
@@ -114,33 +137,67 @@ class _TopBarState extends State<TopBar> {
       ),
     );
   }
-  void showCartPopup(BuildContext context) {
+
+  void showCartPopup(BuildContext context, List<CartElement> cartItems) {
     final RenderBox appBarRenderBox = context.findRenderObject() as RenderBox;
     final Offset appBarOffset = appBarRenderBox.localToGlobal(Offset.zero); // Adjust the height according to your needs
 
+    const int maxVisibleItems = 3;
+    const double itemHeight = 56.0;
+    final double popupHeight = cartItems.length <= maxVisibleItems
+        ? cartItems.length * itemHeight
+        : maxVisibleItems * itemHeight;
+
+
     _overlayEntry = OverlayEntry(
       builder: (context) {
-        return Positioned(
+        popUpVisible = true;
+        if (cartItems.isNotEmpty) {
+          return Positioned(
           top: appBarOffset.dy + kToolbarHeight + 10,
           left: appBarOffset.dx - 300,
           width: MediaQuery.of(context).size.width * 0.25,
-          height: 200,
-          child: Material(
+          height: popupHeight +20,
+          child:Listener(
+            onPointerCancel: (_) {
+              setState(() {
+                hoverstate = true;
+              });
+            },
+            onPointerDown: (_) {
+              setState(() {
+                hoverstate = false;
+              });
+            },
+            child: HoverDetector(
+        onHover: (isHovered) {
+        if (isHovered) {
+        _popupTimer?.cancel();
+        } else {
+        _popupTimer = Timer(_popupHideDuration, () {
+        hideCartPopup();
+        });
+        }
+        },
+        child:Material(
             elevation: 4,
-            child: SmallShoppingSummary(),
+            child: HoverCart(),
           ),
-        );
+        )));
+        }else {
+          return SizedBox.shrink();
+        }
       },
     );
 
-    Overlay.of(context)?.insert(_overlayEntry!);
+    Overlay.of(context).insert(_overlayEntry!);
   }
-
   void hideCartPopup() {
+    popUpVisible= false;
+    _popupTimer?.cancel();
     _overlayEntry?.remove();
     _overlayEntry = null;
   }
-
   @override
   void dispose() {
     hideCartPopup(); // Make sure to remove the popup overlay when the widget is disposed
@@ -148,32 +205,38 @@ class _TopBarState extends State<TopBar> {
   }
 }
 
-class SmallShoppingSummary extends StatefulWidget {
-  const SmallShoppingSummary({Key? key}) : super(key: key);
+class HoverDetector extends StatefulWidget {
+  final ValueChanged<bool> onHover;
+  final Widget child;
+
+  HoverDetector({required this.onHover, required this.child});
 
   @override
-  State<SmallShoppingSummary> createState() => _SmallShoppingSummaryState();
+  _HoverDetectorState createState() => _HoverDetectorState();
 }
 
-class _SmallShoppingSummaryState extends State<SmallShoppingSummary> {
+class _HoverDetectorState extends State<HoverDetector> {
+  bool isHovered = false;
+
   @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    return ListView.builder(
-        itemCount: cartProvider.itemCount,
-        // Replace with the actual number of images
-        itemBuilder: (context, index) {
-          CartElement item = cartProvider.cartItems[index];
-          return ListTile(
-            leading: Image.asset(
-              '../assets/StartScreen.png',
-              width: 50,
-              height: 50,
-            ),
-            title: Text(item.productName),
-            subtitle: Text(item.productId),
-          );
+    return MouseRegion(
+      onEnter: (event) {
+        setState(() {
+          isHovered = true;
         });
-    }
+        widget.onHover(true);
+      },
+      onExit: (event) {
+        setState(() {
+          isHovered = false;
+        });
+        widget.onHover(false);
+      },
+      child: widget.child,
+    );
+  }
 }
+
+
 
