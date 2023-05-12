@@ -99,4 +99,9 @@ public class ShopController {
     ResponseEntity<?> countPictureByProductId(@PathVariable UUID id) {
         return ResponseEntity.ok(pictureService.countAllByProductModelId(id));
     }
+
+    @GetMapping("/productSummary/{id}")
+    ResponseEntity<?> findProductSummaryById(@PathVariable UUID id){
+        return new ResponseEntity<>(findProductService.findProjectedById(id), HttpStatus.OK);
+    }
 }

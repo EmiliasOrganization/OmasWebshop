@@ -16,7 +16,7 @@ import java.util.UUID;
 @Repository
 public interface ProductRepository extends JpaRepository<ProductModel, UUID> {
 
-
+    Optional <ProductSummary> findProjectedById(UUID id);
     List<ProductSummary> findAllProjectedBy();
 
     List<ProductSummary> findAllProjectedByCategory(Category category);

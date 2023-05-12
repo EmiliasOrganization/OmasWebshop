@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,20 +28,24 @@ public class FindProductService {
         return productRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Product with id: " + id + " not found!"));
     }
     @Transactional
+    public ProductSummary findProjectedById(UUID id) {
+        return productRepository.findProjectedById(id).orElseThrow(() -> new ElementNotFoundException("Product with id: " + id + " not found!"));
+    }
+    @Transactional
     public List<ProductSummary> findProductCategory(Category category) {
         return productRepository.findAllProjectedByCategory(category);
     }
+    @Transactional
     public List<ProductSummary> findProductBySubCategory(SubCategory subCategory) {
         return productRepository.findAllProjectedBySubCategory(subCategory);
     }
+    @Transactional
     public List<ProductSummary> findProductByCategoryAndSubCategory(Category category, SubCategory subCategory) {
         return productRepository.findAllProjectedByCategoryAndSubCategory(category, subCategory);
     }
-
     @Transactional
     public List<ProductSummary> findAllSummary() {
         return productRepository.findAllProjectedBy();
     }
-
 
 }
