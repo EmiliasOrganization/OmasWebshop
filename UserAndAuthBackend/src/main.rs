@@ -12,8 +12,6 @@ use controller::{register, internal_error, not_found};
 #[macro_use] extern crate rocket;
 use rocket::{Build, catchers, Rocket, routes};
 
-
-
 #[launch]
 fn rocket() -> Rocket<Build> {
     rocket::build()

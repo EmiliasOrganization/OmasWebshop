@@ -7,6 +7,7 @@ name = "UserAndAuthBackend"
 version = "0.1.0"
 dependencies = [
  "diesel",
+ "diesel_derives",
  "dotenv",
  "jsonwebtoken",
  "rocket",
@@ -205,6 +206,7 @@ dependencies = [
  "diesel_derives",
  "itoa",
  "pq-sys",
+ "uuid",
 ]
 
 [[package]]
