@@ -1,7 +1,7 @@
 
 use rocket::Request;
 use rocket::serde::json::Json;
-use crate::models::User;
+use crate::models::{NewUser};
 
 
 // catchers
@@ -18,8 +18,8 @@ pub fn not_found(req: &Request) -> String {
 
 // routes
 
-#[post("/create-user", data = "<body>", format = "json")]
-pub async fn create(body: Json<User>) -> Result<String, String>{
+#[post("/register", data = "<body>", format = "json")]
+pub async fn register(body: Json<NewUser<'_>>) -> Result<String, String>{
 
 
     Ok(format!("User {} created", body.username))
