@@ -1,7 +1,8 @@
-
+use diesel::RunQueryDsl;
 use rocket::Request;
 use rocket::serde::json::Json;
-use crate::models::{NewUser};
+use crate::models::{User as DbUser};
+use crate::db::establish_connection;
 
 
 // catchers
@@ -19,8 +20,25 @@ pub fn not_found(req: &Request) -> String {
 // routes
 
 #[post("/register", data = "<body>", format = "json")]
-pub async fn register(body: Json<NewUser<'_>>) -> Result<String, String>{
+pub async fn register(body: Json<DbUser>) -> Result<String, String>{
 
+    use crate::schema::users::dsl::*;
+
+    let connection = &mut establish_connection();
+
+     let new_user = DbUser{
+         username: body.username.to_string(),
+         surname: body.surname.to_string(),
+         firstname: body.firstname.to_string(),
+         password: body.password.to_string(),
+         email: body.email.to_string(),
+     };
+
+
+    diesel::insert_into(users)
+        .values(new_user)
+        .execute( connection)
+        .expect("Error saving new user");
 
     Ok(format!("User {} created", body.username))
 

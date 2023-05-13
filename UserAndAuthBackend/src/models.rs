@@ -2,21 +2,22 @@ use serde::{Deserialize, Serialize};
 use crate::schema::users;
 use diesel::prelude::*;
 
-#[allow(non_snake_case)]
-#[derive(Debug, Deserialize, Serialize, Clone, Insertable)]
+#[derive(Queryable, Debug, AsChangeset, Insertable, Serialize, Deserialize)]
 #[table_name = "users"]
-pub struct NewUser<'a>{
-    pub username: &'a str,
-    pub surname: &'a str,
-    pub firstname: &'a str,
-    pub email: &'a str,
-}
-
-#[derive(Queryable, Debug, AsChangeset)]
 pub struct User{
-    pub id: i32,
     pub username: String,
     pub surname: String,
     pub firstname: String,
+    pub password: String,
     pub email: String,
+}
+
+#[derive(Queryable, Debug, AsChangeset, Insertable, Serialize, Deserialize)]
+#[table_name = "addresses"]
+pub struct address{
+    pub street: String,
+    pub city: String,
+    pub state: String,
+    pub country: String,
+    pub zip: String,
 }
