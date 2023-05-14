@@ -11,7 +11,7 @@ spring:
       on-profile: dev
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/db1
+    url: jdbc:postgresql://130.61.188.61:5432/shop
     username: shop
     password: Start123
     driver-class-name: org.postgresql.Driver
@@ -28,7 +28,7 @@ spring:
       on-profile: docker-test
 
   datasource:
-    url: jdbc:postgresql://postgres:5432/db1
+    url: jdbc:postgresql://130.61.188.61:5432/shop
     username: shop
     password: Start123
     driver-class-name: org.postgresql.Driver
