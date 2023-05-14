@@ -2,9 +2,16 @@ use serde::{Deserialize, Serialize};
 use crate::schema::users;
 use crate::schema::addresses;
 use diesel::prelude::*;
+use diesel_derives::FromSqlRow;
 use uuid::Uuid;
 
 // Models
+
+#[derive(Queryable, Serialize, Deserialize)]
+pub struct Login {
+    pub username: String,
+    pub password: String,
+}
 
 #[derive(Deserialize, Serialize)]
 pub struct User {

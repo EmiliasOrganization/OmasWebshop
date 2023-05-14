@@ -1,15 +1,18 @@
-use diesel::associations::HasTable;
-use diesel::{OptionalExtension, QueryResult, RunQueryDsl};
+use diesel::{OptionalExtension, RunQueryDsl, Table};
 use rocket::http::Status;
 use rocket::Request;
-use rocket::response::status;
-use rocket::response::status::Conflict;
-use rocket::serde::json::{Json, to_string};
-use uuid::Uuid;
-use crate::models::{AddressTable, User, UserTable};
+use rocket::serde::json::{Json};
 use crate::db::establish_connection;
+use crate::models::{Login, User, UserTable};
+use crate::service::create_user_service;
 use crate::diesel::QueryDsl;
+use crate::rocket::futures::StreamExt;
+use std::iter::Iterator;
+use bcrypt::verify;
+use diesel::associations::HasTable;
+use uuid::Uuid;
 use crate::diesel::ExpressionMethods;
+use crate::schema::users::dsl;
 use crate::util::hash_password;
 
 
@@ -28,56 +31,51 @@ pub fn not_found(req: &Request) -> String {
 #[catch(409)]
 pub fn conflict() -> &'static str { "Username already exists" }
 
+#[catch(422)]
+pub fn missing_entity() -> &'static str { "Invalid input" }
+
+
 // routes
 
 #[post("/register", data = "<body>", format = "json")]
 pub async fn register(body: Json<User>) -> Result<String, Status>{
-
-    use crate::schema::users::dsl::*;
-
-    let connection = &mut establish_connection();
-
-     let new_user_entry = UserTable {
-         username: body.username.to_string(),
-         surname: body.surname.to_string(),
-         firstname: body.firstname.to_string(),
-         password: hash_password(&body.password).expect("Error hashing password"),
-         email: body.email.to_string(),
-     };
-
-    let insert_result = diesel::insert_into(users)
-        .values(&new_user_entry)
-        .returning(id)
-        .get_result::<Uuid>(connection);
-
-    match insert_result
-    {
-        Ok(insert_result) => {
-            let new_address_entry = AddressTable {
-                street: body.address.street.to_string(),
-                city: body.address.city.to_string(),
-                state: body.address.state.to_string(),
-                country: body.address.country.to_string(),
-                zip: body.address.zip.to_string(),
-                user_id: insert_result,
-            };
-
-            diesel::insert_into(crate::schema::addresses::table)
-                .values(&new_address_entry)
-                .execute(connection)
-                .expect("Something went wrong");
-
-            return Ok(format! ("User {} created", &body.username))},
-        Err(diesel::result::Error::DatabaseError(db_error, _)) => {
-            // Check if the error is due to a duplicate key violation
-            if let diesel::result::DatabaseErrorKind::UniqueViolation = db_error {
-                Err(Status::Conflict)
-            } else {
-                Err(Status::InternalServerError)
-            }
-        }
-        _ => Err(Status::InternalServerError),
-    }
-
+     create_user_service(body).await
 }
 
+#[post("/login", data = "<body>", format = "json")]
+pub async fn login(body: Json<Login>) -> Result<String, Status>{
+
+     use crate::schema::users::dsl::*;
+
+     let connection = &mut establish_connection();
+
+
+    let credentials: Option<Login> = users
+        .filter(username.eq(&body.username))
+        .select((username, password))
+        .first::<(String, String)>(connection)
+        .optional()
+        .map(|result| {
+            match result {
+                Some((query_username, query_password)) => Some(Login { username:query_username, password:query_password }),
+                None => None, // Handle the case when the username doesn't exist
+            }
+        })
+        .unwrap_or(None);
+
+    match credentials {
+        Some(login) => {
+            let hashed_password = hash_password(&body.password).expect("Error hashing password");
+            if verify(&hashed_password, &login.password).expect("Error verifying password") {
+                Ok(format!("User {} logged in", login.username))
+            } else {
+                // Handle incorrect password
+                Err(Status::Unauthorized)
+            }
+        }
+        None => {
+            // Handle username not found
+            Err(Status::NotFound)
+        }
+    }
+}
