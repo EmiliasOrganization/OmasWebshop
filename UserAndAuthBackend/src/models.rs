@@ -1,28 +1,49 @@
 use serde::{Deserialize, Serialize};
+use crate::schema::users;
+use crate::schema::addresses;
+use diesel::prelude::*;
+use uuid::Uuid;
 
-#[allow(non_snake_case)]
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct User{
-    pub id: String,
+// Models
+
+#[derive(Deserialize, Serialize)]
+pub struct User {
     pub username: String,
-    pub password: String,
-    pub address: Address,
     pub surname: String,
     pub firstname: String,
+    pub password: String,
     pub email: String,
+    pub address: Address,
 }
-
-#[allow(non_snake_case)]
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct Address{
+#[derive(Deserialize, Serialize)]
+pub struct Address {
     pub street: String,
     pub city: String,
     pub state: String,
+    pub country: String,
     pub zip: String,
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct Login{
+//Table Mapper
+
+#[derive(Queryable, Debug, AsChangeset, Insertable, Serialize, Deserialize)]
+#[diesel(table_name = users)]
+pub struct UserTable {
     pub username: String,
+    pub surname: String,
+    pub firstname: String,
     pub password: String,
+    pub email: String,
 }
+
+#[derive(Queryable,  Insertable)]
+#[diesel(table_name = addresses)]
+pub struct AddressTable {
+    pub street: String,
+    pub city: String,
+    pub state: String,
+    pub country: String,
+    pub zip: String,
+    pub user_id: Uuid,
+}
+
