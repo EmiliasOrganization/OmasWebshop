@@ -26,6 +26,7 @@ pub fn missing_entity() -> &'static str { "Invalid input" }
 // routes
 
 #[utoipa::path(
+    tag = "User Operations",
     context_path = "/api/user",
     request_body = User,
     responses(
@@ -42,6 +43,7 @@ pub async fn register(body: Json<User>) -> Result<String, Status>
 }
 
 #[utoipa::path(
+    tag = "Authentication",
     context_path = "/api/auth",
     request_body = Login,
     responses(

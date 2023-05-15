@@ -34,9 +34,12 @@ use crate::models::Address;
 fn rocket() -> Rocket<Build> {
 
 
-
     #[derive(OpenApi)]
     #[openapi(
+        info(
+            version = "0.0.2",
+            description = "Api for creating Users and authenticate them",
+        ),
         paths(
             login,
             register,
@@ -45,7 +48,8 @@ fn rocket() -> Rocket<Build> {
             schemas(Login, User, Address),
         ),
         tags(
-            (name = "Login", description = "Authentication")
+            (name = "Authentication", description = "Endpoints for User Authentication"),
+            (name = "User Operations", description = "Endpoints for User Operations"),
         ),
     )]
     struct ApiDoc;
