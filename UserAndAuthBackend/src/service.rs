@@ -1,7 +1,8 @@
+use bcrypt::verify;
 use rocket::http::Status;
 use rocket::serde::json::Json;
-use crate::models::{AddressTable, User, UserTable};
-use crate::repository::{create_address, create_user};
+use crate::models::{AddressTable, Login, User, UserTable};
+use crate::repository::{create_address, create_user, find_hashed_password};
 use crate::util::hash_password;
 
 pub async fn create_user_service(user: Json<User>) -> Result<String, Status>{
@@ -42,7 +43,20 @@ pub async fn create_user_service(user: Json<User>) -> Result<String, Status>{
         }
         _ => Err(Status::InternalServerError),
     }
+}
 
+pub async fn login_user_service(user_login: Json<Login>) -> Result<String, Status>{
 
+    let credentials = find_hashed_password(&user_login.username);
 
+    match credentials {
+        Some(login) => {
+            if verify(&user_login.password, &login.password).expect("Error verifying password") {
+                Ok(format!("User {} logged in", login.username))
+            } else {
+                Err(Status::Unauthorized)
+            }
+        }
+        None => Err(Status::NotFound),
+    }
 }

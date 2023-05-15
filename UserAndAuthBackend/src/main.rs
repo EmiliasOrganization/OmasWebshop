@@ -10,12 +10,15 @@ mod util;
 mod repository;
 mod service;
 
-use controller::{register,
-                    login,
-                 internal_error,
-                 not_found,
-                 conflict,
-                 missing_entity};
+use controller::{
+    register,
+    login,
+    internal_error,
+    not_found,
+    conflict,
+    missing_entity,
+    user_not_found,
+};
 
 #[macro_use] extern crate rocket;
 use rocket::{Build, catchers, Rocket, routes};
@@ -25,5 +28,6 @@ fn rocket() -> Rocket<Build> {
     rocket::build()
         .mount("/api/auth", routes![register, login])
         .register("/", catchers![internal_error, not_found, conflict, missing_entity])
+        .register("/api/auth/login", catchers![user_not_found])
 }
 
