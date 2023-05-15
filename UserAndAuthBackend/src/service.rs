@@ -1,6 +1,7 @@
 use bcrypt::verify;
 use rocket::http::Status;
 use rocket::serde::json::Json;
+use serde_json::json;
 use crate::models::{AddressTable, Login, User, UserTable};
 use crate::repository::{create_address, create_user, find_hashed_password};
 use crate::util::hash_password;
@@ -31,7 +32,11 @@ pub async fn create_user_service(user: Json<User>) -> Result<String, Status>{
 
             create_address(new_address_entry);
 
-            return Ok(format! ("User {} created", &user.username))},
+            let response = json!({
+                "username": &user.username,
+            });
+
+            return Ok(response.to_string())},
 
         Err(diesel::result::Error::DatabaseError(db_error, _)) => {
             // Check if the error is due to a duplicate key violation
