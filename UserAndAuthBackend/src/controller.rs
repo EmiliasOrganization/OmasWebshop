@@ -23,14 +23,16 @@ pub fn conflict() -> &'static str { "Username already exists" }
 #[catch(422)]
 pub fn missing_entity() -> &'static str { "Invalid input" }
 
-
 // routes
 
 #[utoipa::path(
     context_path = "/api/user",
     request_body = User,
     responses(
-        (status = 200, body = User)
+    (status = 200, description = "User created successfully", body = (String, String), example = json!({"username": "Jeff the Chef"})),
+    (status = 409, body = String, description = "Username is already taken", example = json!("Username already exists")),
+    (status = 500, body = String, description = "Server Error", example = json!("Whoops! Looks like we messed up.")),
+    (status = 422, body = String, description = "JSON incorrect", example = json!("Invalid input"))
     )
 )]
 #[post("/register", data = "<body>", format = "json")]
@@ -39,12 +41,14 @@ pub async fn register(body: Json<User>) -> Result<String, Status>
      create_user_service(body).await
 }
 
-
 #[utoipa::path(
     context_path = "/api/auth",
     request_body = Login,
     responses(
-        (status = 200, description = "Login successful", body = Address)
+        (status = 200, description = "Login successful", body = Address),
+        (status = 404, body = String, description = "User not found", example = json!("User not found !")),
+        (status = 500, body = String, description = "Server Error",  example = json!("Whoops! Looks like we messed up.")),
+        (status = 422, body = String, description = "JSON incorrect", example = json!("Invalid input"))
     )
 )]
 #[post("/login", data = "<body>", format = "json")]

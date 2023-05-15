@@ -43,7 +43,10 @@ fn rocket() -> Rocket<Build> {
         ),
         components(
             schemas(Login, User, Address),
-        )
+        ),
+        tags(
+            (name = "Login", description = "Authentication")
+        ),
     )]
     struct ApiDoc;
 
