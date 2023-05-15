@@ -6,7 +6,4 @@ pub fn hash_password(password: &str) -> Result<String,bcrypt::BcryptError> {
     bcrypt::hash(password, salt)
 }
 
-pub fn verify_password(password: &str, hash: &str) -> bool {
-    bcrypt::verify(password, hash).unwrap_or(false)
-}
 
