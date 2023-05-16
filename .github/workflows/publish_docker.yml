@@ -45,6 +45,13 @@ jobs:
          username: ${{ secrets.REGISTRY_USERNAME }}
          password: ${{ secrets.REGISTRY_PASSWORD }}
          
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+           JDBC_DATABASE_URL:  ${{ secrets.JDBC_DATABASE_URL }}
+           JDBC_DATABASE_USERNAME: ${{ secrets.JDBC_DATABASE_USERNAME }}
+           JDBC_DATABASE_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
+     
       - name: Build and push Frontend
         uses: docker/build-push-action@v3
         with:
@@ -73,46 +80,4 @@ jobs:
             exec:exec)
             
             docker push ${{ secrets.REGISTRY }}/backend:$MVN_VERSION
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
           
