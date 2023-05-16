@@ -13,7 +13,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y libpq5
 
 COPY --from=builder /app/target/release/UserAndAuthBackend .
-COPY .env .
+COPY ../.env .
 
 ENV ROCKET_ADDRESS=0.0.0.0
 

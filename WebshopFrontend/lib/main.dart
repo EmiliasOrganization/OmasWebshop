@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutterfrontend/home/view/pages/shop/category_buttons.dart';
 import 'package:flutterfrontend/home/view/pages/shop/shop_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
