@@ -2,7 +2,7 @@ FROM rust:latest as builder
 
 WORKDIR /app
 
-COPY . .
+COPY ./UserAndAuthBackend .
 
 RUN cargo build --release
 

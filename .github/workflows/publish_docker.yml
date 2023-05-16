@@ -60,7 +60,7 @@ jobs:
           push: true
           tags: ${{ secrets.REGISTRY }}/frontend
           
-      - name: Build and push Frontend
+      - name: Build and push User Backend
         uses: docker/build-push-action@v3
         with:
           context: .
