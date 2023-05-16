@@ -8,6 +8,8 @@ RUN cargo build --release
 
 FROM debian:buster-slim
 
+COPY ../.env .
+
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y libpq5

@@ -60,6 +60,14 @@ jobs:
           push: true
           tags: ${{ secrets.REGISTRY }}/frontend
           
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./UserAndAuthBackend/Dockerfile
+          push: true
+          tags: ${{ secrets.REGISTRY }}/userbackend
+          
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
