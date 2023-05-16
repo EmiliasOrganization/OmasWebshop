@@ -11,9 +11,9 @@ spring:
       on-profile: dev
 
   datasource:
-    url: jdbc:postgresql://130.61.188.61:5432/shop
-    username: shop
-    password: Start123
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
