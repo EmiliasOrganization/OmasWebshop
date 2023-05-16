@@ -9,11 +9,11 @@ spring:
   config:
     activate:
       on-profile: dev
-
+    import: optional:file:../.env [.properties]
   datasource:
-    url: jdbc:postgresql://localhost:5432/db1
-    username: shop
-    password: Start123
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -28,9 +28,9 @@ spring:
       on-profile: docker-test
 
   datasource:
-    url: jdbc:postgresql://postgres:5432/db1
-    username: shop
-    password: Start123
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
