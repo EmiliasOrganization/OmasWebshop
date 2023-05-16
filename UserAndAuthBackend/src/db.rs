@@ -1,5 +1,4 @@
 use diesel::prelude::*;
-use dotenv::dotenv;
 use std::env;
 use std::path::PathBuf;
 
