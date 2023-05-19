@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
 import '../home/view/pages/cart/cart.dart';
 import '../home/view/pages/cart/cart_items.dart';
+
 
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final ItemScrollController? itemScrollController;
@@ -90,11 +90,14 @@ class _TopBarState extends State<TopBar> {
                         hoverstate = false;
                       });
                     },
-                    child: IconButton(
-                      icon: Icon(Icons.shopping_cart,
-                          color: hoverstate ? schemeColorMistyRose : schemeColorGreen),
-                      onPressed: () {},
-                    ),
+                      child: IconButton(
+                        icon: Icon(Icons.shopping_cart,
+                            color: hoverstate ? schemeColorMistyRose : schemeColorGreen),
+                        onPressed: () {
+                          print('Test');
+                        // Navigator.pushNamed(context, '/shoppingCart');
+                        },
+                      ),
                   ),
                 ),
                     if (cartProvider.itemCount > 0) // Use productCount from the cartItems list
@@ -124,7 +127,9 @@ class _TopBarState extends State<TopBar> {
             icon: Icon(
                 Icons.person,
                 color: schemeColorGreen),
-            onPressed: (){},
+            onPressed: (){
+              print("Test");
+            },
           ),
           SizedBox(width: 8),
           IconButton(

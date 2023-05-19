@@ -38,11 +38,6 @@ class HoverCart extends StatefulWidget {
   State<HoverCart> createState() => _HoverCartState();
 }
 
-
-
-
-
-
 class _HoverCartState extends State<HoverCart> {
   @override
   Widget build(BuildContext context) {
