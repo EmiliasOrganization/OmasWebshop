@@ -68,67 +68,67 @@ class _TopBarState extends State<TopBar> {
               GlobalKey _mouseRegionKey = GlobalKey();
               CartProvider cartProvider = Provider.of<CartProvider>(context);
               List<CartElement> cartItems = cartProvider.cartItems;
-            return Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Builder(
-                  builder: (context) => MouseRegion(
-                    key: _mouseRegionKey,
-                    onEnter: (event) {
-                      setState(() {
-                        hoverstate = true;
-                      });
-                      if (!popUpVisible) {
-                        showCartPopup(context, cartItems);
-                      }
-                    },
-                    onExit: (event) {
-                      _popupTimer = Timer(_popupHideDuration, () {
-                        hideCartPopup();
-                      });
-                      setState(() {
-                        hoverstate = false;
-                      });
-                    },
-                      child: IconButton(
-                        icon: Icon(Icons.shopping_cart,
-                            color: hoverstate ? schemeColorMistyRose : schemeColorGreen),
-                        onPressed: () {
-                          print('Test');
-                        // Navigator.pushNamed(context, '/shoppingCart');
-                        },
-                      ),
-                  ),
-                ),
-                    if (cartProvider.itemCount > 0) // Use productCount from the cartItems list
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                    cartProvider.itemCount.toString(),
-                      style: TextStyle(
-                        color: schemeColorGreen,
-                        fontSize: 12,
-                      ),
+              return Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Builder(
+                    builder: (context) => MouseRegion(
+                      key: _mouseRegionKey,
+                      onEnter: (event) {
+                        setState(() {
+                          hoverstate = true;
+                        });
+                        if (!popUpVisible) {
+                          showCartPopup(context, cartItems);
+                        }
+                      },
+                      onExit: (event) {
+                        _popupTimer = Timer(_popupHideDuration, () {
+                          hideCartPopup();
+                        });
+                        setState(() {
+                          hoverstate = false;
+                        });
+                      },
+                        child:
+                        IconButton(
+                          icon: Icon(Icons.shopping_cart,
+                              color: schemeColorGreen,
+                              // color: hoverstate ? schemeColorMistyRose : schemeColorGreen
+                          ),
+                          onPressed: () {
+                          Navigator.pushNamed(context, '/shoppingCart');
+                          },
+                        ),
                     ),
                   ),
-                ),
-
-              ],
-            );}
-          ),
+                      if (cartProvider.itemCount > 0) // Use productCount from the cartItems list, Positioned is about the little number above the cart
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                      cartProvider.itemCount.toString(),
+                        style: TextStyle(
+                          color: schemeColorGreen,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );}
+            ),
           SizedBox(width: 8),
           IconButton(
             icon: Icon(
                 Icons.person,
                 color: schemeColorGreen),
             onPressed: (){
-              print("Test");
             },
           ),
           SizedBox(width: 8),
