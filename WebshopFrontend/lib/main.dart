@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/home/view/pages/shop/shop_screen.dart';
+import 'package:flutterfrontend/home/view/pages/shoppingcart/shoppingcart.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'home/view/pages/cart/cart.dart';
@@ -41,6 +42,7 @@ class WebShop extends StatelessWidget {
         '/cart': (context) => Cart(),
         '/login': (context) => Login(),
         '/checkout': (context) => Checkout(),
+        '/shoppingCart': (context) => ShoppingCart(),
       },
       onGenerateRoute: (RouteSettings settings) {
         if (settings.name!.startsWith('/product/')) {

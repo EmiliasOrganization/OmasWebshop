@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
 import '../home/view/pages/cart/cart.dart';
 import '../home/view/pages/cart/cart_items.dart';
+
 
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final ItemScrollController? itemScrollController;
@@ -68,63 +68,68 @@ class _TopBarState extends State<TopBar> {
               GlobalKey _mouseRegionKey = GlobalKey();
               CartProvider cartProvider = Provider.of<CartProvider>(context);
               List<CartElement> cartItems = cartProvider.cartItems;
-            return Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Builder(
-                  builder: (context) => MouseRegion(
-                    key: _mouseRegionKey,
-                    onEnter: (event) {
-                      setState(() {
-                        hoverstate = true;
-                      });
-                      if (!popUpVisible) {
-                        showCartPopup(context, cartItems);
-                      }
-                    },
-                    onExit: (event) {
-                      _popupTimer = Timer(_popupHideDuration, () {
-                        hideCartPopup();
-                      });
-                      setState(() {
-                        hoverstate = false;
-                      });
-                    },
-                    child: IconButton(
-                      icon: Icon(Icons.shopping_cart,
-                          color: hoverstate ? schemeColorMistyRose : schemeColorGreen),
-                      onPressed: () {},
+              return Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Builder(
+                    builder: (context) => MouseRegion(
+                      key: _mouseRegionKey,
+                      onEnter: (event) {
+                        setState(() {
+                          hoverstate = true;
+                        });
+                        if (!popUpVisible) {
+                          showCartPopup(context, cartItems);
+                        }
+                      },
+                      onExit: (event) {
+                        _popupTimer = Timer(_popupHideDuration, () {
+                          hideCartPopup();
+                        });
+                        setState(() {
+                          hoverstate = false;
+                        });
+                      },
+                        child:
+                        IconButton(
+                          icon: Icon(Icons.shopping_cart,
+                              color: schemeColorGreen,
+                              // color: hoverstate ? schemeColorMistyRose : schemeColorGreen
+                          ),
+                          onPressed: () {
+                          Navigator.pushNamed(context, '/shoppingCart');
+                          },
+                        ),
                     ),
                   ),
-                ),
-                    if (cartProvider.itemCount > 0) // Use productCount from the cartItems list
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                    cartProvider.itemCount.toString(),
-                      style: TextStyle(
-                        color: schemeColorGreen,
-                        fontSize: 12,
+                      if (cartProvider.itemCount > 0) // Use productCount from the cartItems list, Positioned is about the little number above the cart
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                      cartProvider.itemCount.toString(),
+                        style: TextStyle(
+                          color: schemeColorGreen,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),
-                ),
-
-              ],
-            );}
-          ),
+                ],
+              );}
+            ),
           SizedBox(width: 8),
           IconButton(
             icon: Icon(
                 Icons.person,
                 color: schemeColorGreen),
-            onPressed: (){},
+            onPressed: (){
+            },
           ),
           SizedBox(width: 8),
           IconButton(
