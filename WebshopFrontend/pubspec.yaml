@@ -20,10 +20,16 @@ dependencies:
   provider: ^6.0.0
   decimal: ^2.3.2
   url_strategy: ^0.2.0
+  shared_preferences: ^2.1.1
+  flutter_session_manager: ^1.0.3
+  hive:
+  hive_flutter:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator:
+  build_runner:
 
 
   flutter_lints: ^2.0.0

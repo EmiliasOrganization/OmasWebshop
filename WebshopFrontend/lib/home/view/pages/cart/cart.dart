@@ -1,9 +1,16 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/boxes.dart';
+import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
 import 'package:provider/provider.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../boxes.dart';
+import '../../../../boxes.dart';
 import '../../../../constats.dart';
 import 'cart_items.dart';
+import 'package:hive/hive.dart';
 
 class RoundetTextPictureProperties {
   final double pictureSizeWidth;
@@ -39,27 +46,47 @@ class HoverCart extends StatefulWidget {
 }
 
 class _HoverCartState extends State<HoverCart> {
+
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-
     return ListView.builder(
-        itemCount: cartProvider.itemCount,
-        // Replace with the actual number of images
-        itemBuilder: (context, index) {
-          CartElement item = cartProvider.cartItems[index];
+        itemCount: boxItemLists.length,
+        itemBuilder: (context, index){
+          ListItem listItem = boxItemLists.getAt(index);
+          // ListItem item = cartProvider.boxItemLists.getAt(index);
           return ListTile(
             leading: CachedNetworkImage(
-              imageUrl: '$apiPathPicture${item.productId}/image1',
+              imageUrl: '$apiPathPicture${listItem.id}/image1',
               placeholder: (context, url) =>
-                  CircularProgressIndicator(),
+                CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
               height: 50,
               width: 50,
               fit: BoxFit.fitHeight,),
-            title: Text(item.productName),
-            subtitle: Text(item.productId),
-          );
-        });
+            title: Text(listItem.name),
+            subtitle: Text(listItem.id),
+            );
+        }
+      );
+    // return ListView.builder(
+    //     itemCount: cartProvider.itemCount,
+    //     // Replace with the actual number of images
+    //     itemBuilder: (context, index) {
+    //wichtig, adaptieren zur varianle oben
+    //       CartElement item = cartProvider.cartItems[index];
+    //       return ListTile(
+    //         leading: CachedNetworkImage(
+    //           imageUrl: '$apiPathPicture${item.productId}/image1',
+    //           placeholder: (context, url) =>
+    //               CircularProgressIndicator(),
+    //           errorWidget: (context, url, error) => Icon(Icons.error),
+    //           height: 50,
+    //           width: 50,
+    //           fit: BoxFit.fitHeight,),
+    //         title: Text(item.productName),
+    //         subtitle: Text(item.productId),
+    //       );
+    //     });
   }
 }

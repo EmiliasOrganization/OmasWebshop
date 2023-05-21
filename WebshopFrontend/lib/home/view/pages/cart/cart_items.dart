@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:hive/hive.dart';
 
 class CartElement{
 
@@ -11,7 +14,6 @@ class CartElement{
   });
 }
 
-
 class CartProvider extends ChangeNotifier {
   static List<CartElement> _cartItems = [];
 
@@ -19,10 +21,10 @@ class CartProvider extends ChangeNotifier {
 
   int get itemCount => _cartItems.length;
 
-  void addToCart(CartElement item) {
-    _cartItems.add(item);
-    notifyListeners();
-  }
+  // void addToCart(CartElement item) {
+  //   _cartItems.add(item);
+  //   notifyListeners();
+  // }
 
   void removeFromCart(CartElement item) {
     _cartItems.remove(item);

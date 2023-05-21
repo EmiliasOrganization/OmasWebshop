@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../../../../constats.dart';
 
 
-
 class ShoppingCart extends StatelessWidget {
   const ShoppingCart({Key? key}) : super(key: key);
 
