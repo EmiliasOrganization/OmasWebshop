@@ -5,10 +5,12 @@ import 'package:flutterfrontend/globalwidget/top_bar.dart';
 import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
 import 'package:flutterfrontend/main.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../constats.dart';
 import 'package:flutterfrontend/boxes.dart';
 
 import '../cart/list_item.dart';
+
 
 class ShoppingCart extends StatelessWidget {
   const ShoppingCart({Key? key}) : super(key: key);
@@ -16,9 +18,11 @@ class ShoppingCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
     int screenHight = MediaQuery.of(context).size.height as int;
 
     var numberOfItemsInCart = boxItemLists.length;
+
     return
       CenteredView(
       child: Scaffold(
@@ -30,6 +34,7 @@ class ShoppingCart extends StatelessWidget {
             children: [
               SizedBox(
                 width: 50,
+
                 height: screenHight*1.0,
               ),
               Container(
@@ -64,6 +69,7 @@ class ShoppingCart extends StatelessWidget {
                     ),
                   ],
                 ),
+
               ),
               SizedBox(
                 width: 50,
@@ -71,6 +77,7 @@ class ShoppingCart extends StatelessWidget {
               ),
               Container(
                 width: 400,
+
                 height: 400,
                 color: Colors.blue,
                   child: Column(
@@ -78,10 +85,13 @@ class ShoppingCart extends StatelessWidget {
                       Text('Gesamtsumme'),
                     ],
                   )
+
               ),
               SizedBox(
                 width: 50,
               ),
+
+
             ],
           )
         ],),

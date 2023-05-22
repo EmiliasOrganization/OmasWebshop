@@ -1,4 +1,6 @@
+
 import 'package:decimal/decimal.dart';
+
 import 'package:hive/hive.dart';
 
 part 'list_item.g.dart';
@@ -15,4 +17,6 @@ class ListItem {
   String name;
 
 
+
 }
+
