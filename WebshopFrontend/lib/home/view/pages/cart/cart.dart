@@ -66,6 +66,7 @@ class _HoverCartState extends State<HoverCart> {
               fit: BoxFit.fitHeight,),
             title: Text(listItem.name),
             subtitle: Text(listItem.id),
+
             );
         }
       );

@@ -8,6 +8,7 @@ import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
 import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
 import 'package:flutterfrontend/home/view/pages/produkt/poduct_service.dart';
 import 'package:provider/provider.dart';
+import 'package:decimal/decimal.dart';
 
 import '../shop/operators/product_summary_dto.dart';
 
@@ -119,9 +120,8 @@ class _ProductPageState extends State<ProductPage> {
                                 onPressed: () {
                                   //setState neu dazu
                                   setState(() {
-                                    boxItemLists.put('key_${productSummary.name}', ListItem(id: widget.productId, name: productSummary.name));
+                                    boxItemLists.put('key_${productSummary.id}', ListItem(id: widget.productId, name: productSummary.name));
                                   });
-                                  print(boxItemLists.keys);
                                   if(!cartProvider.isInCart(widget.productId))
                                   {
                                     // CartElement item = CartElement(
