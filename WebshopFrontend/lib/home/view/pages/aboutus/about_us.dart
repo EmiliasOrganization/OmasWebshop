@@ -65,12 +65,14 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FloatingActionButton(
+                    heroTag: "btn1",
                     shape: CircleBorder(),
                     backgroundColor: Colors.white,
                     onPressed: () => _controller.previousPage(),
                     child: Icon(Icons.arrow_back_ios_rounded, color: schemeColorOrange, size:35),
                   ),
                   FloatingActionButton(
+                    heroTag: "btn2",
                     shape: CircleBorder(),
                     backgroundColor: Colors.white,
                     onPressed: () => _controller.nextPage(),

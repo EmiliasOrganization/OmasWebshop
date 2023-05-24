@@ -120,7 +120,7 @@ class _ProductPageState extends State<ProductPage> {
                                 onPressed: () {
                                   //setState neu dazu
                                   setState(() {
-                                    boxItemLists.put('key_${productSummary.id}', ListItem(id: widget.productId, name: productSummary.name));
+                                    boxItemLists.put('key_${productSummary.id}', ListItem(id: widget.productId, name: productSummary.name, description: '${productSummary.description}', price: '${productSummary.price}'));
                                   });
                                   if(!cartProvider.isInCart(widget.productId))
                                   {
