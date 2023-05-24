@@ -19,14 +19,17 @@ class ListItemAdapter extends TypeAdapter<ListItem> {
     return ListItem(
       id: fields[0] as String,
       name: fields[1] as String,
+
       description: fields[2] as dynamic,
       price: fields[3] as dynamic,
+
     );
   }
 
   @override
   void write(BinaryWriter writer, ListItem obj) {
     writer
+
       ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
@@ -36,6 +39,7 @@ class ListItemAdapter extends TypeAdapter<ListItem> {
       ..write(obj.description)
       ..writeByte(3)
       ..write(obj.price);
+
   }
 
   @override

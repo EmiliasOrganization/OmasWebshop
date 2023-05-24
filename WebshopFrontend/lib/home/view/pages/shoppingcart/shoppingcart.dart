@@ -3,24 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/globalwidget/top_bar.dart';
 import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
+
 import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
 import 'package:flutterfrontend/main.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../constats.dart';
 import 'package:flutterfrontend/boxes.dart';
 
 import '../cart/list_item.dart';
+
 
 class ShoppingCart extends StatelessWidget {
   const ShoppingCart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
     int screenHight = MediaQuery.of(context).size.height as int;
 
     var numberOfItemsInCart = boxItemLists.length;
+
     return
       CenteredView(
       child: Scaffold(
@@ -32,11 +37,13 @@ class ShoppingCart extends StatelessWidget {
             children: [
               SizedBox(
                 width: 50,
+
                 height: screenHight*1.0,
               ),
               Container(
                 width: 500,
                 height: 400,
+
                 color: Colors.white,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -62,6 +69,7 @@ class ShoppingCart extends StatelessWidget {
                       width: 500,
                       height: 350,
                       color: Colors.white,
+
                       child: ListView.builder(
                           itemCount: boxItemLists.length,
                           itemBuilder: (context, index){
@@ -76,14 +84,18 @@ class ShoppingCart extends StatelessWidget {
                                 width: 50,
                                 fit: BoxFit.fitHeight,),
                               title: Text(listItem.name),
+
                               subtitle: Text(listItem.description),
                               trailing: Text(listItem.price + '€'),
+
                             );
                           }
                       )
                     ),
                   ],
                 ),
+
+
               ),
               SizedBox(
                 width: 50,
@@ -91,6 +103,7 @@ class ShoppingCart extends StatelessWidget {
               ),
               Container(
                 width: 400,
+
                 height: 400,
                 color: Colors.white,
                   child: Column(
@@ -150,10 +163,12 @@ class ShoppingCart extends StatelessWidget {
                       )
                     ],
                   )
+
               ),
               SizedBox(
                 width: 50,
               ),
+
             ],
           )
         ],),
