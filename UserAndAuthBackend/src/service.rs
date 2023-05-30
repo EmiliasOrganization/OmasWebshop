@@ -1,12 +1,14 @@
 use bcrypt::verify;
-use rocket::http::Status;
+use diesel::result::Error as DieselError;
+use diesel::result::{DatabaseErrorKind};
+use rocket::http::{ContentType, Status};
 use rocket::serde::json::Json;
-use serde_json::json;
+use serde_json::{json, Value};
 use crate::models::{AddressTable, Login, User, UserTable};
 use crate::repository::{create_address, create_user, find_hashed_password};
 use crate::util::hash_password;
 
-pub async fn create_user_service(user: Json<User>) -> Result<String, Status>{
+pub async fn create_user_service(user: Json<User>) -> (Status, (ContentType, Value)){
 
     let new_user_entry = UserTable {
         username: user.username.to_string(),
@@ -36,17 +38,32 @@ pub async fn create_user_service(user: Json<User>) -> Result<String, Status>{
                 "username": &user.username,
             });
 
-            return Ok(response.to_string())},
+            return (Status::Ok, (ContentType::JSON, response))
+        }
+        Err(DieselError::DatabaseError(kind, info)) => {
+            match kind {
+                DatabaseErrorKind::UniqueViolation => {
+                    let error_message = if let Some(constraint) = info.constraint_name() {
 
-        Err(diesel::result::Error::DatabaseError(db_error, _)) => {
-            // Check if the error is due to a duplicate key violation
-            if let diesel::result::DatabaseErrorKind::UniqueViolation = db_error {
-                Err(Status::Conflict)
-            } else {
-                Err(Status::InternalServerError)
+                        match constraint {
+                            "users_username_key" => "Username already taken.",
+                            "users_email_key" => "Email already taken.",
+                            _ => info.constraint_name().unwrap(),
+                        }
+                    } else {
+                        "Unknown unique violation."
+                    };
+
+                    (Status::Conflict, (ContentType::JSON, json!({"error": error_message})))
+                }
+                _ => {
+                    (Status::InternalServerError, (ContentType::JSON, json!({"error": "Internal server error."})))
+                }
             }
         }
-        _ => Err(Status::InternalServerError),
+        _ => {
+            (Status::InternalServerError, (ContentType::JSON, json!({"error": "Internal server error."})))
+        }
     }
 }
 
