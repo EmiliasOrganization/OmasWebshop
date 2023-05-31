@@ -1,25 +1,31 @@
+
 import 'dart:html';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decimal/decimal.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/globalwidget/top_bar.dart';
 import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
+
 import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
 import 'package:flutterfrontend/main.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
 import '../../../../constats.dart';
 import 'package:flutterfrontend/boxes.dart';
 
 import '../cart/list_item.dart';
+
 
 class ShoppingCart extends StatelessWidget {
   const ShoppingCart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
     Decimal wholePrice = Decimal.parse('0');
@@ -29,6 +35,7 @@ class ShoppingCart extends StatelessWidget {
       ListItem price = boxItemLists.getAt(i);
       wholePrice = wholePrice + Decimal.parse(price.price);
     }
+
 
     return
       CenteredView(
@@ -41,11 +48,13 @@ class ShoppingCart extends StatelessWidget {
             children: [
               SizedBox(
                 width: 50,
+
                 height: screenHight*1.0,
               ),
               Container(
                 width: 500,
                 height: 400,
+
                 color: Colors.white,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -71,6 +80,7 @@ class ShoppingCart extends StatelessWidget {
                       width: 500,
                       height: 350,
                       color: Colors.white,
+
                       child: ListView.builder(
                           itemCount: boxItemLists.length,
                           itemBuilder: (context, index){
@@ -85,14 +95,17 @@ class ShoppingCart extends StatelessWidget {
                                 width: 50,
                                 fit: BoxFit.fitHeight,),
                               title: Text(listItem.name),
+
                               subtitle: Text(listItem.description),
                               trailing: Text(listItem.price + '€'),
+
                             );
                           }
                       )
                     ),
                   ],
                 ),
+
               ),
               SizedBox(
                 width: 50,
@@ -100,6 +113,7 @@ class ShoppingCart extends StatelessWidget {
               ),
               Container(
                 width: 400,
+
                 height: 400,
                 color: Colors.white,
                   child: Column(
@@ -126,10 +140,12 @@ class ShoppingCart extends StatelessWidget {
                         children: [
                           SizedBox(width: 15),
                           Text("Zwischensumme"),
+
                           Expanded(
                               child: Text(wholePrice.toString(),
                                   textAlign: TextAlign.right,),
                           ),
+
                           SizedBox(width: 15),
                         ],
                       ),
@@ -159,6 +175,7 @@ class ShoppingCart extends StatelessWidget {
                           ),
                           SizedBox(width: 15),
                         ],
+
                       ),
                       SizedBox(height: 100),
                       Row(
@@ -173,10 +190,12 @@ class ShoppingCart extends StatelessWidget {
                       )
                     ],
                   )
+
               ),
               SizedBox(
                 width: 50,
               ),
+
             ],
           )
         ],),
