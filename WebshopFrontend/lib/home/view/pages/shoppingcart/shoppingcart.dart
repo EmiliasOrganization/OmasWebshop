@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/globalwidget/top_bar.dart';
@@ -21,13 +22,12 @@ class ShoppingCart extends StatelessWidget {
   Widget build(BuildContext context) {
     const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
-    int wholePrice = 0;
+    Decimal wholePrice = Decimal.parse('0');
     int screenHight = MediaQuery.of(context).size.height as int;
     int numberOfItemsInCart = boxItemLists.length;
     for (int i = 0; i < numberOfItemsInCart; i++) {
       ListItem price = boxItemLists.getAt(i);
-      int test = int.parse(price.price);
-      wholePrice = wholePrice + test;
+      wholePrice = wholePrice + Decimal.parse(price.price);
     }
 
     return
@@ -127,7 +127,7 @@ class ShoppingCart extends StatelessWidget {
                           SizedBox(width: 15),
                           Text("Zwischensumme"),
                           Expanded(
-                              child: Text('(${wholePrice.toString()})',
+                              child: Text(wholePrice.toString(),
                                   textAlign: TextAlign.right,),
                           ),
                           SizedBox(width: 15),
