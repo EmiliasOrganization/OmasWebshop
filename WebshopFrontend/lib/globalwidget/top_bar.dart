@@ -106,7 +106,9 @@ class _TopBarState extends State<TopBar> {
                     ),
                   ),
 
+
                       if (boxItemLists.length > 0) // Use productCount from the cartItems list, Positioned is about the little number above the cart
+
 
 
                   Positioned(
@@ -119,7 +121,9 @@ class _TopBarState extends State<TopBar> {
                       ),
                       child: Text(
 
+
                       boxItemLists.length.toString(),
+
 
                         style: TextStyle(
                           color: schemeColorGreen,

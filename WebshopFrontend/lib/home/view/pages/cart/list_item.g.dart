@@ -20,8 +20,10 @@ class ListItemAdapter extends TypeAdapter<ListItem> {
       id: fields[0] as String,
       name: fields[1] as String,
 
+
       description: fields[2] as dynamic,
       price: fields[3] as dynamic,
+
 
     );
   }

@@ -1,4 +1,9 @@
+
+import 'dart:html';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decimal/decimal.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/globalwidget/top_bar.dart';
@@ -7,6 +12,7 @@ import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
 import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
 import 'package:flutterfrontend/main.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../constats.dart';
 import 'package:flutterfrontend/boxes.dart';
@@ -22,9 +28,14 @@ class ShoppingCart extends StatelessWidget {
 
     const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
+    Decimal wholePrice = Decimal.parse('0');
     int screenHight = MediaQuery.of(context).size.height as int;
+    int numberOfItemsInCart = boxItemLists.length;
+    for (int i = 0; i < numberOfItemsInCart; i++) {
+      ListItem price = boxItemLists.getAt(i);
+      wholePrice = wholePrice + Decimal.parse(price.price);
+    }
 
-    var numberOfItemsInCart = boxItemLists.length;
 
     return
       CenteredView(
@@ -95,7 +106,6 @@ class ShoppingCart extends StatelessWidget {
                   ],
                 ),
 
-
               ),
               SizedBox(
                 width: 50,
@@ -130,6 +140,12 @@ class ShoppingCart extends StatelessWidget {
                         children: [
                           SizedBox(width: 15),
                           Text("Zwischensumme"),
+
+                          Expanded(
+                              child: Text(wholePrice.toString(),
+                                  textAlign: TextAlign.right,),
+                          ),
+
                           SizedBox(width: 15),
                         ],
                       ),
@@ -160,6 +176,17 @@ class ShoppingCart extends StatelessWidget {
                           SizedBox(width: 15),
                         ],
 
+                      ),
+                      SizedBox(height: 100),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              onPressed: (){
+                                Navigator.pushNamed(context, '/shop');
+                              },
+                              child: Text('Zur Kasse')),
+                        ],
                       )
                     ],
                   )
