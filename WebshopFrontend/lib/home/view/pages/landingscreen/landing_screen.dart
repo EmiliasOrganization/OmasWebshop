@@ -23,6 +23,7 @@ class _LandingScreenState extends State<LandingScreen>{
     const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
 
+
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints){
           if(constraints.maxWidth > 800) {
@@ -35,8 +36,6 @@ class _LandingScreenState extends State<LandingScreen>{
     );
     //  return NormalSizePage(theme: theme);
   }
-
-
 }
 
   Widget buildSmallScreenLayout(final theme, final fontSize, final maxFontSizeHeadline, final maxFontSizeText, final ItemScrollController itemScrollController) {

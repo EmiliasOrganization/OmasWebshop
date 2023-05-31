@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/boxes.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/globalwidget/top_bar.dart';
 import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
+import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
 import 'package:flutterfrontend/home/view/pages/produkt/poduct_service.dart';
 import 'package:provider/provider.dart';
+import 'package:decimal/decimal.dart';
 
 import '../shop/operators/product_summary_dto.dart';
 
@@ -113,15 +116,21 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                               SizedBox(height: 20),
                               ElevatedButton(
+                                //mit onPressed wird Produkt in boxItemLists und als CartElement gespeichert
                                 onPressed: () {
+                                  //setState neu dazu
+                                  setState(() {
+
+                                    boxItemLists.put('key_${productSummary.id}', ListItem(id: widget.productId, name: productSummary.name, description: '${productSummary.description}', price: '${productSummary.price}'));
+                                  });
 
                                   if(!cartProvider.isInCart(widget.productId))
                                   {
-                                    CartElement item = CartElement(
-                                        productId: widget.productId,
-                                        productName: productSummary.name,
-                                    );
-                                    cartProvider.addToCart(item);
+                                    // CartElement item = CartElement(
+                                    //     productId: widget.productId,
+                                    //     productName: productSummary.name,
+                                    // );
+                                    // cartProvider.addToCart(item);
                                   }
                                 },
                                 child: Text('Dem Warenkorb hinzufügen'),

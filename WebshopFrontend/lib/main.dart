@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
 import 'package:flutterfrontend/home/view/pages/shop/shop_screen.dart';
+import 'package:flutterfrontend/home/view/pages/shoppingcart/shoppingcart.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'boxes.dart';
 import 'home/view/pages/cart/cart.dart';
 import 'home/view/pages/cart/cart_items.dart';
 import 'home/view/pages/checkout/checkout.dart';
@@ -10,8 +13,12 @@ import 'home/view/pages/homepage/homepage.dart';
 import 'constats.dart';
 import 'home/view/pages/login/login.dart';
 import 'home/view/pages/produkt/product_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async{
+  await Hive.initFlutter();
+  Hive.registerAdapter(ListItemAdapter());
+  boxItemLists = await Hive.openBox<ListItem>('listItemBox');
   setPathUrlStrategy();
   runApp(MultiProvider(
     providers: [
@@ -41,6 +48,7 @@ class WebShop extends StatelessWidget {
         '/cart': (context) => Cart(),
         '/login': (context) => Login(),
         '/checkout': (context) => Checkout(),
+        '/shoppingCart': (context) => ShoppingCart(),
       },
       onGenerateRoute: (RouteSettings settings) {
         if (settings.name!.startsWith('/product/')) {
