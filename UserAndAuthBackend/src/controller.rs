@@ -1,3 +1,5 @@
+use lettre::message::header::ContentType;
+use rocket::figment::value::Value;
 use rocket::http::Status;
 use rocket::Request;
 use rocket::serde::json::{Json};
@@ -37,7 +39,7 @@ pub fn missing_entity() -> &'static str { "Invalid input" }
     )
 )]
 #[post("/register", data = "<body>", format = "json")]
-pub async fn register(body: Json<User>) -> Result<String, Status>
+pub async fn register(body: Json<User>) -> (Status, (rocket::http::ContentType, serde_json::Value))
 {
      create_user_service(body).await
 }

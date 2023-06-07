@@ -44,8 +44,8 @@ pub async fn create_user_service(user: Json<User>) -> (Status, (ContentType, Val
             });
 
             let email = Message::builder()
-                .to("florian-home@web.de".parse().unwrap())
-                .from("dasflorix@gmail.com".parse().unwrap())
+                .to(user.email.parse().unwrap())
+                .from("noreply@homelabhost.de".parse().unwrap())
                 .subject("Wilkommen im Webshop")
                 .header(header::ContentType::TEXT_HTML)
                 .body(format!("<html>
