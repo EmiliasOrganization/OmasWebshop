@@ -170,7 +170,7 @@ class ShoppingCart extends StatelessWidget {
                           Text("Gesamtsumme (inkl. Mwst.)"),
                           Expanded(
                               child:
-                              Text("1.00 €",
+                              Text(wholePrice.toString(),
                             textAlign: TextAlign.right,)
                           ),
                           SizedBox(width: 15),
