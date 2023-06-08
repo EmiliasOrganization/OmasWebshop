@@ -16,15 +16,13 @@ pub fn create_user(user: UserTable) -> QueryResult<Uuid>
         .get_result::<Uuid>(connection);
 }
 
-pub fn update_verification_status(username: String)
+pub fn update_verification_status(find_username: String)
 {
     use crate::schema::users::dsl::*;
 
     let connection = &mut establish_connection_postgres();
 
-    let target_user = users.filter(username.eq(username));
-
-    update(target_user)
+    diesel::update(users.filter(username.eq(find_username)))
         .set(verified.eq(true))
         .execute(connection)
         .expect("Couldnt update user verification status");
