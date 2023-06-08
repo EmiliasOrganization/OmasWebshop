@@ -142,7 +142,7 @@ class ShoppingCart extends StatelessWidget {
                           Text("Zwischensumme"),
 
                           Expanded(
-                              child: Text(wholePrice.toString(),
+                              child: Text('$wholePrice€',
                                   textAlign: TextAlign.right,),
                           ),
 
@@ -170,7 +170,7 @@ class ShoppingCart extends StatelessWidget {
                           Text("Gesamtsumme (inkl. Mwst.)"),
                           Expanded(
                               child:
-                              Text(wholePrice.toString(),
+                              Text('$wholePrice€',
                             textAlign: TextAlign.right,)
                           ),
                           SizedBox(width: 15),
