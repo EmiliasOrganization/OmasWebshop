@@ -1,4 +1,4 @@
-
+use std::env;
 use bcrypt::verify;
 use diesel::result::Error as DieselError;
 use diesel::result::{DatabaseErrorKind};
@@ -8,7 +8,7 @@ use serde_json::{json, Value};
 use crate::db::{get_username, store_token, validate_token};
 use crate::models::{AddressTable, Login, User, UserTable};
 use crate::repository::{create_address, create_user, find_hashed_password, update_verification_status};
-use crate::util::{generate_email_token, hash_password};
+use crate::util::{generate_email_token, hash_password, load_env};
 use crate::email::{send_verification_mail};
 
 pub async fn register_user_service(user: Json<User>) -> (Status, (ContentType, Value)){
@@ -42,9 +42,12 @@ pub async fn register_user_service(user: Json<User>) -> (Status, (ContentType, V
             });
             let token = generate_email_token();
             store_token(&*token, user.username.to_string(), 86400 /* 24 hours */).expect("Cant store token for email verification");
+            load_env();
+
+            let ressource_server = env::var("RESSOURCE_SERVER").expect("RESSOURCE_SERVER must be set");
             let maildata = json!({
                 "name": &user.firstname,
-                "verification_link": token,
+                "verification_link": ressource_server + &token,
             });
             send_verification_mail(maildata);
 

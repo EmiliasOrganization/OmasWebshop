@@ -22,7 +22,7 @@ pub fn update_verification_status(find_username: String)
 
     let connection = &mut establish_connection_postgres();
 
-    diesel::update(users.filter(username.eq(find_username)))
+    update(users.filter(username.eq(find_username)))
         .set(verified.eq(true))
         .execute(connection)
         .expect("Couldnt update user verification status");

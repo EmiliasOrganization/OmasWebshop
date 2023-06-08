@@ -7,15 +7,12 @@ use rocket::http::Status;
 use rocket::tokio::task;
 use serde_json::Value;
 use crate::handlebars_template_creator::{create_template};
-
+use crate::util::load_env;
 
 
 pub fn send_verification_mail(data: Value) {
 
-    let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("../.env");
-
-    dotenv::from_path(path.as_path()).expect("Failed to load .env file");
+    load_env();
 
     let smtp_username = env::var("SMTP_USERNAME").expect("SMTP_USERNAME must be set");
     let smtp_password = env::var("SMTP_PASSWORD").expect("SMTP_PASSWORD must be set");
