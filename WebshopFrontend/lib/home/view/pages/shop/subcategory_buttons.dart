@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../constats.dart';
 
-
 class SubCategoryButtonList extends StatefulWidget {
   const SubCategoryButtonList({Key? key, required this.category, required this.onSubCategorySelected})
       : super(key: key);

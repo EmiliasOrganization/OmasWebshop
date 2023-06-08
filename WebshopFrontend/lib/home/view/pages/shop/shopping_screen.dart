@@ -6,6 +6,7 @@ import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_s
 import 'package:flutterfrontend/home/view/pages/shop/subcategory_buttons.dart';
 
 import '../../../../constats.dart';
+import 'package:decimal/decimal.dart';
 
 
 
