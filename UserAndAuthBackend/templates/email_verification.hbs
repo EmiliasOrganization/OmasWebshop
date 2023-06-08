@@ -1,28 +1,31 @@
 <!DOCTYPE html>
     <html lang="EN">
         <head>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
             <meta charset="UTF-8">
             <title>Email Verification</title>
+            {{> email_verification_style}}
 
-            <style>
-                .button {
-                    display: inline-block;
-                    padding: 10px 20px;
-                    background-color: #4CAF50;
-                    color: white;
-                    text-align: center;
-                    text-decoration: none;
-                    cursor: pointer;
-                    border-radius: 5px;
-                    border: none;
-                }
-            </style>
         </head>
         <body>
+        <div class="container">
+            <div class="banner">Email Verification</div>
             <h1>Email Verification</h1>
             <p>Hello {{name}},</p>
-            <p>Please click the following button to verify your email:</p>
+            <p>Please verify your email by clicking the button below:</p>
             <p><a class="button" href="{{verification_link}}">Verify Email</a></p>
-            <p>Thank you!</p>
+            <p>Alternatively, you can copy this URL to your browser:</p>
+            <p>{{verification_link}}</p>
+            <p>If you did not request this email, please ignore it.</p>
+            <p>Kind Regrads, Oma's Webshop Team</p>
+
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="far fa-envelope"></i></a>
+            </div>
+        </div>
         </body>
+
+</html>
     </html>

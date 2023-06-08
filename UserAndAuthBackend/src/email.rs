@@ -4,6 +4,7 @@ use lettre::{Message, SmtpTransport, Transport};
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
 use rocket::http::Status;
+use rocket::tokio::task;
 use serde_json::Value;
 use crate::handlebars_template_creator::{create_template};
 
@@ -31,16 +32,16 @@ pub fn send_verification_mail(data: Value) {
         .unwrap();
 
     let creds = Credentials::new(smtp_username, smtp_password.to_owned());
+    task::spawn(async move {
+        let mail_server = SmtpTransport::relay(&smtp_server)
+            .map_err(|_| Status::InternalServerError)
+            .unwrap()
+            .credentials(creds)
+            .build();
 
-    let mail_server = SmtpTransport::relay(&smtp_server)
-        .map_err(|_| Status::InternalServerError)
-        .unwrap()
-        .credentials(creds)
-        .build();
-
-    match mail_server.send(&email) {
-        Ok(_) => println!("Verification Email sent successfully!"),
-        Err(e) => println!("Could not send email: {:?}", e),
-    }
-
+        match mail_server.send(&email) {
+            Ok(_) => println!("Verification Email sent successfully!"),
+            Err(e) => println!("Could not send email: {:?}", e),
+        }
+    });
 }
