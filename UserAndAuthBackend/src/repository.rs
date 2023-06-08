@@ -1,4 +1,4 @@
-use diesel::{OptionalExtension, QueryDsl, QueryResult, RunQueryDsl};
+use diesel::{OptionalExtension, QueryDsl, QueryResult, RunQueryDsl, update};
 use uuid::Uuid;
 use crate::db::establish_connection_postgres;
 use crate::models::{AddressTable, Login, UserTable};
@@ -14,6 +14,20 @@ pub fn create_user(user: UserTable) -> QueryResult<Uuid>
         .values(&user)
         .returning(id)
         .get_result::<Uuid>(connection);
+}
+
+pub fn update_verification_status(username: String)
+{
+    use crate::schema::users::dsl::*;
+
+    let connection = &mut establish_connection_postgres();
+
+    let target_user = users.filter(username.eq(username));
+
+    update(target_user)
+        .set(verified.eq(true))
+        .execute(connection)
+        .expect("Couldnt update user verification status");
 }
 
 pub fn create_address(address: AddressTable)

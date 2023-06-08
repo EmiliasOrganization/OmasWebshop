@@ -26,21 +26,24 @@ fn establish_connection_redis() -> redis::RedisResult<redis::Connection> {
     Ok(con)
 }
 
-pub fn store_token(token: &str, ttl_seconds: usize) -> redis::RedisResult<()> {
+pub fn store_token(token: &str, username: String, ttl_seconds: usize) -> redis::RedisResult<()> {
     let mut con = establish_connection_redis()?;
-    let _: () = con.set("expected_token", token)?;
-    let _: () = con.expire("expected_token", ttl_seconds)?;
+    let _: () = con.set_ex(token,  username, ttl_seconds)?;
+
     Ok(())
 }
 
 pub fn validate_token(token: &str) -> redis::RedisResult<bool> {
-
-    let mut con =establish_connection_redis()?;
-
-    let key_exists: bool = redis::cmd("EXISTS")
-        .arg(format!("expected_token:{}", token))
-        .query(&mut con)?;
+    let mut con = establish_connection_redis()?;
+    let key_exists: bool = con.exists(token)?;
 
     Ok(key_exists)
+}
+
+pub fn get_username(token: &str) -> redis::RedisResult<Option<String>> {
+    let mut con = establish_connection_redis()?;
+    let username :Option<String> = con.get(token)?;
+
+    Ok(username)
 }
 

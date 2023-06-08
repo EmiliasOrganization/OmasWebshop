@@ -1,3 +1,4 @@
+#![feature(unwrap_infallible)]
 
 extern crate diesel;
 extern crate dotenv;
@@ -13,6 +14,7 @@ mod email;
 mod handlebars_template_creator;
 
 use controller::{
+    verify,
     register,
     login,
     internal_error,
@@ -28,6 +30,7 @@ use utoipa_swagger_ui::SwaggerUi;
 use utoipa::OpenApi;
 use crate::controller::__path_login;
 use crate::controller::__path_register;
+use crate::controller::__path_verify;
 use crate::models::Login;
 use crate::models::User;
 use crate::models::Address;
@@ -57,7 +60,7 @@ fn rocket() -> Rocket<Build> {
     struct ApiDoc;
 
     rocket::build()
-        .mount("/api/auth", routes![register, login])
+        .mount("/api/auth", routes![register, login, verify])
         .register("/", catchers![internal_error, not_found, conflict, missing_entity])
         .register("/api/auth/login", catchers![user_not_found])
         .mount("/", SwaggerUi::new("/swagger-ui/<_..>").url("/api-docs/openapi.json", ApiDoc::openapi()))

@@ -3,7 +3,7 @@ use rocket::Request;
 use rocket::serde::json::{Json};
 use serde_json::Value;
 use crate::models::{Login, User};
-use crate::service::{create_user_service, login_user_service};
+use crate::service::{register_user_service, login_user_service, verify_email_service};
 
 // catchers
 
@@ -40,7 +40,7 @@ pub fn missing_entity() -> &'static str { "Invalid input" }
 #[post("/register", data = "<body>", format = "json")]
 pub async fn register(body: Json<User>) -> (Status, (ContentType, Value))
 {
-     create_user_service(body).await
+     register_user_service(body).await
 }
 
 #[utoipa::path(
@@ -58,4 +58,21 @@ pub async fn register(body: Json<User>) -> (Status, (ContentType, Value))
 pub async fn login(body: Json<Login>) -> Result<String, Status>
 {
     login_user_service(body).await
+}
+
+
+#[utoipa::path(
+    tag = "User Operations",
+    context_path = "/api/auth",
+    responses(
+        (status = 200, description = "Verification successful", body = String),
+        (status = 500, body = String, description = "Server Error",  example = json!("Whoops! Looks like we messed up.")),
+        (status = 422, body = String, description = "JSON incorrect", example = json!("Invalid input"))
+    )
+)]
+#[get("/register/verify/<token>")]
+pub async fn verify(token: String) -> (Status, (ContentType, Value))
+{
+    format!("Token: {}", token);
+    verify_email_service(token).await
 }
