@@ -3,8 +3,9 @@ CREATE TABLE IF NOT EXISTS users (
    "username" VARCHAR NOT NULL UNIQUE,
    "surname" VARCHAR NOT NULL,
    "firstname" VARCHAR NOT NULL,
-   "email" VARCHAR NOT NULL,
-   "password" VARCHAR NOT NULL
+   "email" VARCHAR NOT NULL UNIQUE,
+   "password" VARCHAR NOT NULL,
+   "verified" BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE  IF NOT EXISTS addresses (

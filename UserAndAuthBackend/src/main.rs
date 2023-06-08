@@ -9,6 +9,8 @@ mod schema;
 mod util;
 mod repository;
 mod service;
+mod email;
+mod handlebars_template_creator;
 
 use controller::{
     register,

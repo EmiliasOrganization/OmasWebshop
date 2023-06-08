@@ -1,5 +1,3 @@
-use lettre::message::header::ContentType;
-use rocket::figment::value::Value;
 use rocket::http::Status;
 use rocket::Request;
 use rocket::serde::json::{Json};

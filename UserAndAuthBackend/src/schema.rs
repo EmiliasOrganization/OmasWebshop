@@ -22,6 +22,7 @@ diesel::table! {
         firstname -> Varchar,
         email -> Varchar,
         password -> Varchar,
+        verified -> Bool,
     }
 }
 

@@ -1,17 +1,14 @@
-use std::env;
-use std::path::PathBuf;
+
 use bcrypt::verify;
 use diesel::result::Error as DieselError;
-use lettre::transport::smtp::authentication::Credentials;
-use lettre::{Message, SmtpTransport, Transport};
 use diesel::result::{DatabaseErrorKind};
-use lettre::message::header;
 use rocket::http::{ContentType, Status};
 use rocket::serde::json::Json;
 use serde_json::{json, Value};
 use crate::models::{AddressTable, Login, User, UserTable};
 use crate::repository::{create_address, create_user, find_hashed_password};
 use crate::util::hash_password;
+use crate::email::{send_verification_mail};
 
 pub async fn create_user_service(user: Json<User>) -> (Status, (ContentType, Value)){
 
@@ -42,45 +39,11 @@ pub async fn create_user_service(user: Json<User>) -> (Status, (ContentType, Val
             let response = json!({
                 "username": &user.username,
             });
-
-            let email = Message::builder()
-                .to(user.email.parse().unwrap())
-                .from("noreply@homelabhost.de".parse().unwrap())
-                .subject("Wilkommen im Webshop")
-                .header(header::ContentType::TEXT_HTML)
-                .body(format!("<html>
-                <body>
-                    <h1>Hallo {} ,</h1>
-                    <p>Wilkommen auf unserem Webshop.</p>
-                    <p>Best regards,</p>
-                    <p>Florian</p>
-                </body>
-            </html>",
-                              user.firstname,))
-                .unwrap();
-
-            let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-            path.push("../.env");
-
-            dotenv::from_path(path.as_path()).expect("Failed to load .env file");
-
-            let smtp_username = env::var("SMTP_USERNAME").expect("SMTP_USERNAME must be set");
-            let smtp_password = env::var("SMTP_PASSWORD").expect("SMTP_PASSWORD must be set");
-            let smtp_server = env::var("SMTP_SERVER").expect("SMTP_SERVER must be set");
-
-
-            let creds = Credentials::new(smtp_username, smtp_password.to_owned());
-
-            let mail_server = SmtpTransport::relay(&smtp_server)
-                .map_err(|_| Status::InternalServerError)
-                .unwrap()
-                .credentials(creds)
-                .build();
-
-            match mail_server.send(&email) {
-                Ok(_) => println!("Email sent successfully!"),
-                Err(e) => println!("Could not send email: {:?}", e),
-            }
+            let maildata = json!({
+                "name": &user.firstname,
+                "verification_link": "google.com"
+            });
+            send_verification_mail(maildata);
 
             return (Status::Ok, (ContentType::JSON, response))
         }
