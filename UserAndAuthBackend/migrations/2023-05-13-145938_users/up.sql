@@ -20,3 +20,8 @@ CREATE TABLE  IF NOT EXISTS addresses (
    "updated_at" TIMESTAMP NOT NULL DEFAULT NOW(),
    CONSTRAINT "fk_user_id" FOREIGN KEY ("user_id") REFERENCES users("id") ON DELETE CASCADE
 );
+
+
+
+
+

@@ -15,6 +15,13 @@ diesel::table! {
 }
 
 diesel::table! {
+    registrationcodes (code) {
+        code -> Varchar,
+        created_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     users (id) {
         id -> Uuid,
         username -> Varchar,
@@ -30,5 +37,6 @@ diesel::joinable!(addresses -> users (user_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     addresses,
+    registrationcodes,
     users,
 );

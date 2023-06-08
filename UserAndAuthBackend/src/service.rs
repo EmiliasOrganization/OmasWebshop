@@ -5,9 +5,10 @@ use diesel::result::{DatabaseErrorKind};
 use rocket::http::{ContentType, Status};
 use rocket::serde::json::Json;
 use serde_json::{json, Value};
+use crate::db::store_token;
 use crate::models::{AddressTable, Login, User, UserTable};
 use crate::repository::{create_address, create_user, find_hashed_password};
-use crate::util::hash_password;
+use crate::util::{generate_email_token, hash_password};
 use crate::email::{send_verification_mail};
 
 pub async fn create_user_service(user: Json<User>) -> (Status, (ContentType, Value)){
@@ -39,9 +40,11 @@ pub async fn create_user_service(user: Json<User>) -> (Status, (ContentType, Val
             let response = json!({
                 "username": &user.username,
             });
+            let token = generate_email_token();
+            store_token(&*token, 86400 /* 24 hours */).expect("Cant store token");
             let maildata = json!({
                 "name": &user.firstname,
-                "verification_link": "google.com"
+                "verification_link": token,
             });
             send_verification_mail(maildata);
 
