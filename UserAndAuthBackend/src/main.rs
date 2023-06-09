@@ -3,18 +3,27 @@
 extern crate diesel;
 extern crate dotenv;
 
-mod db;
+mod config;
 mod models {
     pub mod login_model;
     pub mod address_model;
     pub mod user_model;
     pub mod response_model;
+    pub mod jwt_model;
+}
+mod services{
+    pub mod login_jwt_service;
+    pub mod registration_service;
+    pub mod reset_password_service;
+}
+mod utils{
+    pub mod email_validation_util;
+    pub mod hash_password_util;
+    pub mod jwt_util;
 }
 mod controller;
 mod schema;
-mod util;
 mod repository;
-mod service;
 mod email;
 mod handlebars_template_creator;
 

@@ -1,12 +1,12 @@
-use rocket::http::{ContentType, Status, CookieJar};
+use rocket::http::{CookieJar};
 use rocket::Request;
 use rocket::serde::json::{Json};
-use serde_json::Value;
 use crate::models::login_model::Login;
 use crate::models::response_model::{DefaultResponse, ResponseWithHeader};
 use crate::models::user_model::User;
+use crate::services::login_jwt_service::{login_user_service, verify_jwt_service};
+use crate::services::registration_service::{register_user_service, verify_email_service};
 
-use crate::service::{register_user_service, login_user_service, verify_email_service, verify_jwt_service};
 
 // catchers
 
@@ -41,7 +41,7 @@ pub fn missing_entity() -> &'static str { "Invalid input" }
     )
 )]
 #[post("/register", data = "<body>", format = "json")]
-pub async fn register(body: Json<User>) -> (Status, (ContentType, Value))
+pub async fn register(body: Json<User>) -> DefaultResponse
 {
      register_user_service(body).await
 }

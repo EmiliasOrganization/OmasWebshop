@@ -3,8 +3,6 @@ use diesel::prelude::*;
 use utoipa::ToSchema;
 
 
-
-
 #[derive(Queryable, Debug, Serialize, ToSchema, Deserialize)]
 pub struct Login {
 
@@ -13,10 +11,7 @@ pub struct Login {
     #[schema(example = "Ab123!")]
     pub password: String,
 
-
 }
-
-
 
 #[derive(Queryable, Debug, Serialize, Deserialize)]
 pub struct LoginResponse {

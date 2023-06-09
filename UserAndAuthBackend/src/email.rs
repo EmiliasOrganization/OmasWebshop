@@ -5,8 +5,8 @@ use lettre::transport::smtp::authentication::Credentials;
 use rocket::http::Status;
 use rocket::tokio::task;
 use serde_json::Value;
+use crate::config::load_env;
 use crate::handlebars_template_creator::{create_template};
-use crate::util::load_env;
 
 
 pub fn send_verification_mail(data: Value) {

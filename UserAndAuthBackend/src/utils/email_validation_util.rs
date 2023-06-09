@@ -1,26 +1,14 @@
-use diesel::prelude::*;
-use std::env;
+use rand::Rng;
 use redis::Commands;
-use crate::util::load_env;
+use crate::config::establish_connection_redis;
 
-//Database Connection Postgres
-
-pub fn establish_connection_postgres() -> PgConnection {
-
-    load_env();
-
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set in .env");
-
-    PgConnection::establish(&database_url).expect(&format!("Error connecting to {}", database_url))
-}
-
-//Redis Cache
-
-fn establish_connection_redis() -> redis::RedisResult<redis::Connection> {
-    let client = redis::Client::open("redis://127.0.0.1/")?;
-    let con = client.get_connection()?;
-
-    Ok(con)
+pub fn generate_email_token() -> String {
+    let token: String = rand::thread_rng()
+        .sample_iter(rand::distributions::Alphanumeric)
+        .take(20)
+        .map(char::from)
+        .collect();
+    token
 }
 
 pub fn store_email_token(token: &str, username: String, ttl_seconds: usize) -> redis::RedisResult<()> {
@@ -43,4 +31,3 @@ pub fn get_username(token: &str) -> redis::RedisResult<Option<String>> {
 
     Ok(username)
 }
-

@@ -1,5 +1,3 @@
-
-
 use rocket::http::{ContentType, Header,  Status};
 use rocket::response::Responder;
 use rocket::serde::json::Json;

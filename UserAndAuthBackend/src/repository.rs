@@ -1,6 +1,6 @@
 use diesel::{OptionalExtension, QueryDsl, QueryResult, RunQueryDsl, update};
 use uuid::Uuid;
-use crate::db::establish_connection_postgres;
+use crate::config::establish_connection_postgres;
 use crate::diesel::ExpressionMethods;
 use crate::models::address_model::AddressTable;
 use crate::models::login_model::LoginResponse;
