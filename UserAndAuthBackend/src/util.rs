@@ -24,7 +24,7 @@ pub fn generate_email_token() -> String {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Claims {
+pub struct Claims {
     sub: String,
     exp: usize,
     // Add any other fields you need
@@ -55,14 +55,17 @@ pub fn generate_jwt(username: String) -> Result<String, jsonwebtoken::errors::Er
     Ok(token)
 }
 
-fn validate_token(token: &str) -> Result<Claims, jsonwebtoken::errors::Error> {
+pub fn validate_jwt_token(token: &str) -> bool {
+    let secret = env::var("JWT_SECRET").expect("JWT_SECRET must be set in .env");
+
+    let secret_key = DecodingKey::from_secret(secret.as_ref());
+
     let validation = Validation::default();
 
-    let secret_key = DecodingKey::from_secret("your-secret-key".as_ref());
-
-    let decoded = decode::<Claims>(token, &secret_key, &validation)?;
-
-    Ok(decoded.claims)
+    match decode::<Claims>(token, &secret_key, &validation) {
+        Ok(_) => true, // Token is valid
+        Err(_) => false, // Token validation failed
+    }
 }
 
 

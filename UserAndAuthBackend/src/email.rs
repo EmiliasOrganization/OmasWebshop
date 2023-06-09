@@ -1,5 +1,4 @@
 use std::env;
-use std::path::PathBuf;
 use lettre::{Message, SmtpTransport, Transport};
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;

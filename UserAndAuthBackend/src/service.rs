@@ -2,14 +2,20 @@ use std::env;
 use bcrypt::verify;
 use diesel::result::Error as DieselError;
 use diesel::result::{DatabaseErrorKind};
-use rocket::http::{ContentType, Status};
+use diesel::row::NamedRow;
+use rocket::http::{ContentType, Cookie, CookieJar, Status};
+use rocket::Request;
 use rocket::serde::json::Json;
 use serde_json::{json, Value};
-use crate::db::{get_username, store_token, validate_token};
-use crate::models::{AddressTable, Login, User, UserTable};
+use crate::db::{get_username, store_email_token, validate_email_token};
 use crate::repository::{create_address, create_user, find_hashed_password, update_verification_status};
-use crate::util::{generate_email_token, generate_jwt, hash_password, load_env};
+use crate::util::{generate_email_token, generate_jwt, hash_password, load_env, validate_jwt_token};
 use crate::email::{send_verification_mail};
+use crate::models::address_model::AddressTable;
+use crate::models::login_model::Login;
+use crate::models::user_model::{User, UserTable};
+use crate::models::response_model::{DefaultResponse, ResponseWithHeader};
+
 
 pub async fn register_user_service(user: Json<User>) -> (Status, (ContentType, Value)){
 
@@ -41,7 +47,7 @@ pub async fn register_user_service(user: Json<User>) -> (Status, (ContentType, V
                 "username": &user.username,
             });
             let token = generate_email_token();
-            store_token(&*token, user.username.to_string(), 86400 /* 24 hours */).expect("Cant store token for email verification");
+            store_email_token(&*token, user.username.to_string(), 86400 /* 24 hours */).expect("Cant store token for email verification");
             load_env();
 
             let ressource_server = env::var("RESSOURCE_SERVER").expect("RESSOURCE_SERVER must be set");
@@ -51,7 +57,7 @@ pub async fn register_user_service(user: Json<User>) -> (Status, (ContentType, V
             });
             send_verification_mail(maildata);
 
-            return (Status::Ok, (ContentType::JSON, response))
+            (Status::Ok, (ContentType::JSON, response))
         }
         Err(DieselError::DatabaseError(kind, info)) => {
             match kind {
@@ -79,52 +85,83 @@ pub async fn register_user_service(user: Json<User>) -> (Status, (ContentType, V
         }
     }
 }
-pub async fn verify_email_service(token: String) -> (Status, (ContentType, Value)) {
-    let registered = validate_token(&*token).expect("Cant validate token");
+
+pub async fn verify_email_service(token: String) -> DefaultResponse {
+    let registered = validate_email_token(&*token).expect("Cant validate token");
+    let mut email_verified = false;
+    let mut status = Status::Unauthorized;
 
     if registered{
         let user:String = get_username(&*token).unwrap_or_default().unwrap_or_else(|| String::new());
         update_verification_status(user);
+        email_verified = true;
+        status = Status::Ok;
 
-
-        return (Status::Ok, (ContentType::JSON, json!({"message": "verified"})))
     }
-    else{
-        return (Status::NotFound, (ContentType::JSON, json!({"error": "Validation failed"})))
+    DefaultResponse{
+        status,
+        content_type: ContentType::JSON,
+        value: json!({"verified": email_verified})
     }
-
 }
 
-pub async fn login_user_service(user_login: Json<Login>) -> Result<String, Status>{
-
+pub async fn login_user_service(user_login: Json<Login>) -> ResponseWithHeader {
     let credentials = find_hashed_password(&user_login.username);
+    let mut status = Status::Unauthorized;
+    let mut verified = false;
+    let mut headers= vec![];
 
     match credentials {
         Some(login) => {
             if verify(&user_login.password, &login.password).expect("Error verifying password") {
-                if login.verified{
+                if login.verified {
                     let token = generate_jwt(login.username.to_owned()).expect("Cant generate JWT");
-                    Ok(json!({"verified": &token}).to_string())
+
+                    let cookie = Cookie::build("jwt-token", token)
+                        .http_only(true)
+                        .finish();
+
+                    headers = vec![
+                        ("Set-Cookie".to_string(), cookie.to_string()),
+                    ];
+                    verified = true;
+                    status = Status::Ok;
                 }
-                else{
-                    Err(Status::Forbidden)
-                }
-            } else {
-                Err(Status::Unauthorized)
             }
         }
-        None => Err(Status::NotFound),
+        None => status = Status::InternalServerError
+
+    }
+    ResponseWithHeader {
+        status,
+        headers,
+        content_type: ContentType::JSON,
+        value: json!({"verified": verified})
     }
 }
 
-pub async fn verify_jwt_service(token: String) -> (Status, (ContentType, Value)) {
-    let verified = validate_token(&*token).expect("Cant validate token");
+pub async fn verify_jwt_service(cookies: &CookieJar<'_>) -> DefaultResponse {
+    let token_cookie = cookies.get("jwt-token");
+    let mut jwt_verified = false;
+    let mut status =  Status::Unauthorized;
 
-    if verified{
-        return (Status::Ok, (ContentType::JSON, json!({"message": "verified"})))
-    }
-    else{
-        return (Status::Unauthorized, (ContentType::JSON, json!({"error": "Validation failed"})))
-    }
+    match token_cookie
+    {
+        Some(cookie) => {
+            let token = cookie.value();
 
+            if validate_jwt_token(token)
+            {
+                status = Status::Ok;
+                jwt_verified = true;
+            }
+        }
+        _ => {status = Status::NotFound}
+    }
+    DefaultResponse {
+        status,
+        content_type: ContentType::JSON,
+        value: json!({"verified": jwt_verified})
+    }
 }
+

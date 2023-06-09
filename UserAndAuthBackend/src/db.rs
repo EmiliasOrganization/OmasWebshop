@@ -1,6 +1,5 @@
 use diesel::prelude::*;
 use std::env;
-use std::path::PathBuf;
 use redis::Commands;
 use crate::util::load_env;
 
@@ -24,14 +23,14 @@ fn establish_connection_redis() -> redis::RedisResult<redis::Connection> {
     Ok(con)
 }
 
-pub fn store_token(token: &str, username: String, ttl_seconds: usize) -> redis::RedisResult<()> {
+pub fn store_email_token(token: &str, username: String, ttl_seconds: usize) -> redis::RedisResult<()> {
     let mut con = establish_connection_redis()?;
     let _: () = con.set_ex(token,  username, ttl_seconds)?;
 
     Ok(())
 }
 
-pub fn validate_token(token: &str) -> redis::RedisResult<bool> {
+pub fn validate_email_token(token: &str) -> redis::RedisResult<bool> {
     let mut con = establish_connection_redis()?;
     let key_exists: bool = con.exists(token)?;
 

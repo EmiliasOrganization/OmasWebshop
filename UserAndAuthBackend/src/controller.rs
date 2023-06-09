@@ -1,8 +1,11 @@
-use rocket::http::{ContentType, Status};
+use rocket::http::{ContentType, Status, CookieJar};
 use rocket::Request;
 use rocket::serde::json::{Json};
 use serde_json::Value;
-use crate::models::{Login, User};
+use crate::models::login_model::Login;
+use crate::models::response_model::{DefaultResponse, ResponseWithHeader};
+use crate::models::user_model::User;
+
 use crate::service::{register_user_service, login_user_service, verify_email_service, verify_jwt_service};
 
 // catchers
@@ -55,7 +58,7 @@ pub async fn register(body: Json<User>) -> (Status, (ContentType, Value))
     )
 )]
 #[post("/login", data = "<body>", format = "json")]
-pub async fn login(body: Json<Login>) -> Result<String, Status>
+pub async fn login(body: Json<Login>) -> ResponseWithHeader
 {
     login_user_service(body).await
 }
@@ -71,7 +74,7 @@ pub async fn login(body: Json<Login>) -> Result<String, Status>
     )
 )]
 #[get("/register/verify/<token>")]
-pub async fn verify(token: String) -> (Status, (ContentType, Value)) { verify_email_service(token).await }
+pub async fn verify_email(token: String) -> DefaultResponse { verify_email_service(token).await }
 
 #[utoipa::path(
     tag = "User Operations",
@@ -83,7 +86,7 @@ pub async fn verify(token: String) -> (Status, (ContentType, Value)) { verify_em
         (status = 422, body = String, description = "JSON incorrect", example = json!("Invalid input"))
     )
 )]
-#[post("/<webtoken>")]
-pub async fn verify_jwt(webtoken: String) -> (Status, (ContentType, Value)) { verify_jwt_service(webtoken).await }
+#[post("/jwt")]
+pub async fn verify_jwt(cookies: &CookieJar<'_>) -> DefaultResponse { verify_jwt_service(cookies).await }
 
 
