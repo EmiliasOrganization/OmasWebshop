@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
+import 'package:flutterfrontend/home/view/pages/registration/verify.dart';
 import 'package:flutterfrontend/home/view/pages/shop/shop_screen.dart';
 import 'package:flutterfrontend/home/view/pages/shoppingcart/shoppingcart.dart';
 import 'package:provider/provider.dart';
@@ -50,11 +51,18 @@ class WebShop extends StatelessWidget {
         '/checkout': (context) => Checkout(),
         '/shoppingCart': (context) => ShoppingCart(),
       },
+      /** dynamic routing */
       onGenerateRoute: (RouteSettings settings) {
         if (settings.name!.startsWith('/product/')) {
           final productId = settings.name!.split('/').last;
           return MaterialPageRoute(
             builder: (context) => ProductPage(productId: productId),
+          );
+        }
+        if (settings.name!.startsWith('/verify/')) {
+          final token = settings.name!.split('/').last;
+          return MaterialPageRoute(
+            builder: (context) => Verify(token: token),
           );
         }
         return null;
