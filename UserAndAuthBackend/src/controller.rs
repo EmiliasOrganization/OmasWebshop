@@ -3,7 +3,7 @@ use rocket::Request;
 use rocket::serde::json::{Json};
 use serde_json::Value;
 use crate::models::{Login, User};
-use crate::service::{register_user_service, login_user_service, verify_email_service};
+use crate::service::{register_user_service, login_user_service, verify_email_service, verify_jwt_service};
 
 // catchers
 
@@ -71,8 +71,19 @@ pub async fn login(body: Json<Login>) -> Result<String, Status>
     )
 )]
 #[get("/register/verify/<token>")]
-pub async fn verify(token: String) -> (Status, (ContentType, Value))
-{
-    format!("Token: {}", token);
-    verify_email_service(token).await
-}
+pub async fn verify(token: String) -> (Status, (ContentType, Value)) { verify_email_service(token).await }
+
+#[utoipa::path(
+    tag = "User Operations",
+    context_path = "/api/user",
+    responses(
+        (status = 200, description = "User found", body = String),
+        (status = 404, body = String, description = "User not found", example = json!("User not found !")),
+        (status = 500, body = String, description = "Server Error",  example = json!("Whoops! Looks like we messed up.")),
+        (status = 422, body = String, description = "JSON incorrect", example = json!("Invalid input"))
+    )
+)]
+#[post("/<webtoken>")]
+pub async fn verify_jwt(webtoken: String) -> (Status, (ContentType, Value)) { verify_jwt_service(webtoken).await }
+
+

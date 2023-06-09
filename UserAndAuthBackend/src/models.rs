@@ -14,6 +14,19 @@ pub struct Login {
     pub username: String,
     #[schema(example = "Ab123!")]
     pub password: String,
+
+
+}
+
+#[derive(Queryable, Debug, Serialize, Deserialize)]
+pub struct LoginResponse {
+
+    pub username: String,
+
+    pub password: String,
+
+    pub verified: bool,
+
 }
 
 #[derive(Deserialize, ToSchema, Serialize)]
@@ -68,4 +81,7 @@ pub struct AddressTable {
     pub zip: String,
     pub user_id: Uuid,
 }
+
+
+
 

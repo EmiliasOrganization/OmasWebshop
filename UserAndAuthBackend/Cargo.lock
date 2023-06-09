@@ -7,6 +7,7 @@ name = "UserAndAuthBackend"
 version = "0.1.0"
 dependencies = [
  "bcrypt",
+ "chrono",
  "diesel",
  "diesel_derives",
  "dotenv",

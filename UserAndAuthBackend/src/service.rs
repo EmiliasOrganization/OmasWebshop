@@ -8,7 +8,7 @@ use serde_json::{json, Value};
 use crate::db::{get_username, store_token, validate_token};
 use crate::models::{AddressTable, Login, User, UserTable};
 use crate::repository::{create_address, create_user, find_hashed_password, update_verification_status};
-use crate::util::{generate_email_token, hash_password, load_env};
+use crate::util::{generate_email_token, generate_jwt, hash_password, load_env};
 use crate::email::{send_verification_mail};
 
 pub async fn register_user_service(user: Json<User>) -> (Status, (ContentType, Value)){
@@ -102,11 +102,29 @@ pub async fn login_user_service(user_login: Json<Login>) -> Result<String, Statu
     match credentials {
         Some(login) => {
             if verify(&user_login.password, &login.password).expect("Error verifying password") {
-                Ok(format!("User {} logged in", login.username))
+                if login.verified{
+                    let token = generate_jwt(login.username.to_owned()).expect("Cant generate JWT");
+                    Ok(json!({"verified": &token}).to_string())
+                }
+                else{
+                    Err(Status::Forbidden)
+                }
             } else {
                 Err(Status::Unauthorized)
             }
         }
         None => Err(Status::NotFound),
     }
+}
+
+pub async fn verify_jwt_service(token: String) -> (Status, (ContentType, Value)) {
+    let verified = validate_token(&*token).expect("Cant validate token");
+
+    if verified{
+        return (Status::Ok, (ContentType::JSON, json!({"message": "verified"})))
+    }
+    else{
+        return (Status::Unauthorized, (ContentType::JSON, json!({"error": "Validation failed"})))
+    }
+
 }
