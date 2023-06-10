@@ -31,7 +31,7 @@ pub async fn login_user_service(user_login: Json<Login>) -> ResponseWithHeader {
                 }
             }
         }
-        None => status = Status::InternalServerError
+        None => {}
 
     }
     ResponseWithHeader {
@@ -42,24 +42,20 @@ pub async fn login_user_service(user_login: Json<Login>) -> ResponseWithHeader {
     }
 }
 
-pub async fn verify_jwt_service(cookies: &CookieJar<'_>) -> DefaultResponse {
+pub fn verify_jwt_service(cookies: &CookieJar<'_>) -> DefaultResponse {
     let token_cookie = cookies.get("jwt-token");
     let mut jwt_verified = false;
-    let mut status =  Status::Unauthorized;
+    let mut status = Status::Unauthorized;
 
-    match token_cookie
-    {
-        Some(cookie) => {
-            let token = cookie.value();
+    if let Some(cookie) = token_cookie {
+        let token = cookie.value();
 
-            if validate_jwt_token(token)
-            {
-                status = Status::Ok;
-                jwt_verified = true;
-            }
+        if validate_jwt_token(token) {
+            jwt_verified = true;
+            status = Status::Ok;
         }
-        _ => {status = Status::NotFound}
     }
+
     DefaultResponse {
         status,
         content_type: ContentType::JSON,

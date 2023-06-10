@@ -1,6 +1,6 @@
 use rocket::http::{CookieJar};
 use rocket::Request;
-use rocket::serde::json::{Json};
+use rocket::serde::json::Json;
 use crate::models::login_model::Login;
 use crate::models::response_model::{DefaultResponse, ResponseWithHeader};
 use crate::models::user_model::User;
@@ -80,13 +80,14 @@ pub async fn verify_email(token: String) -> DefaultResponse { verify_email_servi
     tag = "User Operations",
     context_path = "/api/user",
     responses(
-        (status = 200, description = "User found", body = String),
+        (status = 200, description = "Token Accepted", body = String),
         (status = 404, body = String, description = "User not found", example = json!("User not found !")),
         (status = 500, body = String, description = "Server Error",  example = json!("Whoops! Looks like we messed up.")),
-        (status = 422, body = String, description = "JSON incorrect", example = json!("Invalid input"))
     )
 )]
 #[post("/jwt")]
-pub async fn verify_jwt(cookies: &CookieJar<'_>) -> DefaultResponse { verify_jwt_service(cookies).await }
+pub async fn verify_jwt(cookies: &CookieJar<'_>) -> DefaultResponse { verify_jwt_service(cookies) }
+
+
 
 

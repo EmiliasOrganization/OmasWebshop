@@ -30,6 +30,9 @@ pub fn generate_jwt(username: String) -> Result<String, jsonwebtoken::errors::Er
 }
 
 pub fn validate_jwt_token(token: &str) -> bool {
+
+    load_env();
+
     let secret = env::var("JWT_SECRET").expect("JWT_SECRET must be set in .env");
 
     let secret_key = DecodingKey::from_secret(secret.as_ref());

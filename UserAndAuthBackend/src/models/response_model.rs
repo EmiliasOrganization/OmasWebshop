@@ -1,6 +1,6 @@
 use rocket::http::{ContentType, Header,  Status};
+use rocket::{Request, Response};
 use rocket::response::Responder;
-use rocket::serde::json::Json;
 use serde_json::{Value};
 
 pub struct DefaultResponse {
@@ -10,9 +10,15 @@ pub struct DefaultResponse {
 }
 
 impl<'r> Responder<'r, 'static> for DefaultResponse {
-    fn respond_to(self, req: &'r rocket::Request<'_>) -> rocket::response::Result<'static> {
-        let json_response = Json(self.value);
-        json_response.respond_to(req)
+    fn respond_to(self, _: &Request) -> rocket::response::Result<'static> {
+        let body = serde_json::to_string(&self.value).unwrap();
+        let response = Response::build()
+            .status(self.status)
+            .header(self.content_type)
+            .sized_body(body.len(), std::io::Cursor::new(body))
+            .finalize();
+
+        Ok(response)
     }
 }
 
@@ -24,18 +30,19 @@ pub struct ResponseWithHeader {
 }
 
 impl<'r> Responder<'r, 'static> for ResponseWithHeader {
-    fn respond_to(self, req: &'r rocket::Request<'_>) -> rocket::response::Result<'static> {
-        let json_response = Json(self.value);
-        let mut rocket_response = json_response.respond_to(req)?;
+    fn respond_to(self, _: &Request) -> rocket::response::Result<'static> {
+        let body = serde_json::to_string(&self.value).unwrap();
+        let mut response = Response::build()
+            .status(self.status)
+            .header(self.content_type)
+            .sized_body(body.len(), std::io::Cursor::new(body))
+            .finalize();
 
-        for header in self.headers {
-            let name = header.0.to_string();
-            let value = header.1.to_string();
-            let custom_header = Header::new(name, value);
-            rocket_response.set_header(custom_header);
+        for (key, value) in self.headers {
+            response.set_header(Header::new(key, value));
         }
 
-        Ok(rocket_response)
+        Ok(response)
     }
 }
 
