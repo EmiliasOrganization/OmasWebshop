@@ -35,8 +35,6 @@ class ShoppingCart extends StatelessWidget {
       ListItem price = boxItemLists.getAt(i);
       wholePrice = wholePrice + Decimal.parse(price.price);
     }
-
-
     return
       CenteredView(
       child: Scaffold(
@@ -80,12 +78,44 @@ class ShoppingCart extends StatelessWidget {
                       width: 500,
                       height: 350,
                       color: Colors.white,
-
                       child: ListView.builder(
                           itemCount: boxItemLists.length,
                           itemBuilder: (context, index){
                             ListItem listItem = boxItemLists.getAt(index);
                             return ListTile(
+                              trailing: IconButton(onPressed: (){
+                                showDialog(context: context,
+                                    useSafeArea: true,
+                                    builder: (context) => AlertDialog(
+                                      scrollable: true,
+                                      title: Text('Löschen'),
+                                      content: Text('Wollen Sie den Artikel aus dem Warenkorb entfernen?'),
+                                      actions: [
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red,
+                                          ),
+                                          onPressed: () {
+                                            boxItemLists.deleteAt(index);
+                                            Navigator.pop(context);
+                                            Navigator.pushReplacementNamed(context, '/shoppingCart');
+                                          },
+                                          child: const Text(
+                                            'Artikel löschen',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Abbrechen'),
+                                        ),
+                                      ],
+                                    ));
+                              }, icon: Icon(Icons.delete ,color: Colors.red)),
                               leading: CachedNetworkImage(
                                 imageUrl: '$apiPathPicture${listItem.id}/image1',
                                 placeholder: (context, url) =>
@@ -94,18 +124,20 @@ class ShoppingCart extends StatelessWidget {
                                 height: 50,
                                 width: 50,
                                 fit: BoxFit.fitHeight,),
-                              title: Text(listItem.name),
-
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(listItem.name),
+                                  Text(listItem.price + '€')
+                                ],
+                              ),
                               subtitle: Text(listItem.description),
-                              trailing: Text(listItem.price + '€'),
-
                             );
                           }
                       )
                     ),
                   ],
                 ),
-
               ),
               SizedBox(
                 width: 50,
