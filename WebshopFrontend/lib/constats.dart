@@ -16,13 +16,15 @@ const Color schemeColorGreen = Color(0xff4A6840);
 const Color schemeColorMistyRose= Color(0xFFF6DEE0);
 
 // Api Paths
-
+/**Shop Api */
 const String apiPathProductSummary = 'http://localhost:8080/api/shop/all';
 const String apiPathCategoryAndOrSubCategory = 'http://localhost:8080/api/shop/category';
 const String apiPathOnlySubCategory = 'http://localhost:8080/api/shop/subcategory';
 const String apiPathPicture = 'http://localhost:8080/api/shop/picture/';
 const String apiPathProductData = 'http://localhost:8080/api/shop/productSummary/';
 const String apiPathImageCount = 'http://localhost:8080/api/shop/picture/count/';
+/** Auth Api*/
+const String authApiVerify = 'http://localhost:8000/api/auth/register/verify';
 
 
 //LandingPage AboutUs Elements
