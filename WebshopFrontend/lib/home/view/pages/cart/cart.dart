@@ -49,7 +49,7 @@ class _HoverCartState extends State<HoverCart> {
 
   @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
     return ListView.builder(
         itemCount: boxItemLists.length,
         itemBuilder: (context, index){
