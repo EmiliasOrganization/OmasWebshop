@@ -1,9 +1,12 @@
-use rocket::http::{ContentType, Status};
+use rocket::http::{CookieJar};
 use rocket::Request;
-use rocket::serde::json::{Json};
-use serde_json::Value;
-use crate::models::{Login, User};
-use crate::service::{register_user_service, login_user_service, verify_email_service};
+use rocket::serde::json::Json;
+use crate::models::login_model::Login;
+use crate::models::response_model::{DefaultResponse, ResponseWithHeader};
+use crate::models::user_model::User;
+use crate::services::login_jwt_service::{login_user_service, verify_jwt_service};
+use crate::services::registration_service::{register_user_service, verify_email_service};
+
 
 // catchers
 
@@ -38,7 +41,7 @@ pub fn missing_entity() -> &'static str { "Invalid input" }
     )
 )]
 #[post("/register", data = "<body>", format = "json")]
-pub async fn register(body: Json<User>) -> (Status, (ContentType, Value))
+pub async fn register(body: Json<User>) -> DefaultResponse
 {
      register_user_service(body).await
 }
@@ -55,7 +58,7 @@ pub async fn register(body: Json<User>) -> (Status, (ContentType, Value))
     )
 )]
 #[post("/login", data = "<body>", format = "json")]
-pub async fn login(body: Json<Login>) -> Result<String, Status>
+pub async fn login(body: Json<Login>) -> ResponseWithHeader
 {
     login_user_service(body).await
 }
@@ -71,8 +74,20 @@ pub async fn login(body: Json<Login>) -> Result<String, Status>
     )
 )]
 #[get("/register/verify/<token>")]
-pub async fn verify(token: String) -> (Status, (ContentType, Value))
-{
-    format!("Token: {}", token);
-    verify_email_service(token).await
-}
+pub async fn verify_email(token: String) -> DefaultResponse { verify_email_service(token).await }
+
+#[utoipa::path(
+    tag = "User Operations",
+    context_path = "/api/user",
+    responses(
+        (status = 200, description = "Token Accepted", body = String),
+        (status = 404, body = String, description = "User not found", example = json!("User not found !")),
+        (status = 500, body = String, description = "Server Error",  example = json!("Whoops! Looks like we messed up.")),
+    )
+)]
+#[post("/jwt")]
+pub async fn verify_jwt(cookies: &CookieJar<'_>) -> DefaultResponse { verify_jwt_service(cookies) }
+
+
+
+

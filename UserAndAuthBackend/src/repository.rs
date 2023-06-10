@@ -1,8 +1,10 @@
 use diesel::{OptionalExtension, QueryDsl, QueryResult, RunQueryDsl, update};
 use uuid::Uuid;
-use crate::db::establish_connection_postgres;
-use crate::models::{AddressTable, Login, UserTable};
+use crate::config::establish_connection_postgres;
 use crate::diesel::ExpressionMethods;
+use crate::models::address_model::AddressTable;
+use crate::models::login_model::LoginResponse;
+use crate::models::user_model::UserTable;
 
 pub fn create_user(user: UserTable) -> QueryResult<Uuid>
 {
@@ -40,25 +42,25 @@ pub fn create_address(address: AddressTable)
         .expect("Something went wrong");
 }
 
-pub fn find_hashed_password(find_username: &String) -> Option<Login>
+pub fn find_hashed_password(find_username: &String) -> Option<LoginResponse>
 {
     use crate::schema::users::dsl::*;
 
     let connection = &mut establish_connection_postgres();
 
-    let credentials: Option<Login> = users
+    let credentials: Option<LoginResponse> = users
     .filter(username.eq(find_username))
-    .select((username, password))
-    .first::<(String, String)>(connection)
+    .select((username, password, verified))
+    .first::<(String, String, bool)>(connection)
     .optional()
     .map(|result| {
         match result {
-            Some((query_username, query_password)) => Some(Login { username:query_username, password:query_password }),
+            Some((query_username, query_password, query_verified)) => Some(LoginResponse { username:query_username, password:query_password, verified: query_verified }),
             None => None,
         }
     })
     .unwrap_or(None);
 
-    return credentials;
+    credentials
 }
 

@@ -3,18 +3,33 @@
 extern crate diesel;
 extern crate dotenv;
 
-mod db;
-mod models;
+mod config;
+mod models {
+    pub mod login_model;
+    pub mod address_model;
+    pub mod user_model;
+    pub mod response_model;
+    pub mod jwt_model;
+}
+mod services{
+    pub mod login_jwt_service;
+    pub mod registration_service;
+    pub mod reset_password_service;
+}
+mod utils{
+    pub mod email_validation_util;
+    pub mod hash_password_util;
+    pub mod jwt_util;
+}
 mod controller;
 mod schema;
-mod util;
 mod repository;
-mod service;
 mod email;
 mod handlebars_template_creator;
 
 use controller::{
-    verify,
+    verify_email,
+    verify_jwt,
     register,
     login,
     internal_error,
@@ -28,15 +43,13 @@ use controller::{
 use rocket::{Build, catchers, Request, Response, Rocket, routes};
 use rocket::fairing::{Fairing, Info, Kind};
 use rocket::http::Header;
-use rocket_cors::{AllowedHeaders, AllowedOrigins, Cors, Method};
 use utoipa_swagger_ui::SwaggerUi;
 use utoipa::OpenApi;
 use crate::controller::__path_login;
 use crate::controller::__path_register;
-use crate::controller::__path_verify;
-use crate::models::Login;
-use crate::models::User;
-use crate::models::Address;
+use crate::models::login_model::Login;
+use crate::models::user_model::User;
+use crate::models::address_model::Address;
 
 #[launch]
 fn rocket() -> Rocket<Build> {
@@ -63,7 +76,7 @@ fn rocket() -> Rocket<Build> {
     struct ApiDoc;
 
     rocket::build()
-        .mount("/api/auth", routes![register, login, verify])
+        .mount("/api/auth", routes![register, login, verify_email, verify_jwt])
         .register("/", catchers![internal_error, not_found, conflict, missing_entity])
         .register("/api/auth/login", catchers![user_not_found])
         .mount("/", SwaggerUi::new("/swagger-ui/<_..>").url("/api-docs/openapi.json", ApiDoc::openapi()))
