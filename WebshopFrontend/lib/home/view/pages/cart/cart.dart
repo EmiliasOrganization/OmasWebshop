@@ -54,7 +54,6 @@ class _HoverCartState extends State<HoverCart> {
         itemCount: boxItemLists.length,
         itemBuilder: (context, index){
           ListItem listItem = boxItemLists.getAt(index);
-          // ListItem item = cartProvider.boxItemLists.getAt(index);
           return ListTile(
             leading: CachedNetworkImage(
               imageUrl: '$apiPathPicture${listItem.id}/image1',
@@ -70,24 +69,5 @@ class _HoverCartState extends State<HoverCart> {
             );
         }
       );
-    // return ListView.builder(
-    //     itemCount: cartProvider.itemCount,
-    //     // Replace with the actual number of images
-    //     itemBuilder: (context, index) {
-    //wichtig, adaptieren zur varianle oben
-    //       CartElement item = cartProvider.cartItems[index];
-    //       return ListTile(
-    //         leading: CachedNetworkImage(
-    //           imageUrl: '$apiPathPicture${item.productId}/image1',
-    //           placeholder: (context, url) =>
-    //               CircularProgressIndicator(),
-    //           errorWidget: (context, url, error) => Icon(Icons.error),
-    //           height: 50,
-    //           width: 50,
-    //           fit: BoxFit.fitHeight,),
-    //         title: Text(item.productName),
-    //         subtitle: Text(item.productId),
-    //       );
-    //     });
   }
 }
