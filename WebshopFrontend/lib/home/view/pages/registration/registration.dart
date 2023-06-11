@@ -1,39 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfrontend/globalwidget/centered_view.dart';
-import 'package:flutterfrontend/globalwidget/top_bar.dart';
 
-class Register extends StatelessWidget {
-  const Register({Key? key}) : super(key: key);
+Future<void> registrationDialog(BuildContext context) {
+   const registrationWidth = 400.0;
+   const registrationHeight = 300.0;
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const  Text("Registrieren", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+        content: Container(
+          height: registrationHeight,
+          width: registrationWidth,
+          child: Column(
 
-  final registrationWidth = 400.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return CenteredView(
-      child: Scaffold(appBar: TopBar(ueberUns: false),
-          body: Center(
-            child: Container(
-              width: registrationWidth,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Registrieren", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          TextFormField(
-            autocorrect: false,
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: '*Vornamen',
-            ),
-          ),
-          TextFormField(
-            autocorrect: false,
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: '*Nachnamen',
-            ),
-          ),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: '*Vornamen',
+                ),
+              ),
+              TextFormField(
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: '*Nachnamen',
+                ),
+              ),
               TextFormField(
                 autocorrect: false,
                 decoration: const InputDecoration(
@@ -41,16 +38,15 @@ class Register extends StatelessWidget {
                   labelText: '*Benutzername',
                 ),
               ),
-              SizedBox(height: 25),
               TextFormField(
-                      obscureText: true,
+                obscureText: true,
                 autocorrect: false,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: '*Passwort',
-                      ),
-                    ),
-          SizedBox(height: 4),
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: '*Passwort',
+                ),
+              ),
+              SizedBox(height: 4),
               RichText(
                 text: TextSpan(
                   children: [
@@ -66,7 +62,6 @@ class Register extends StatelessWidget {
                       text: 'Das Passwort muss mindestest 10 Zeichen lang sein ',
                       style: TextStyle(
                         fontSize: 10,
-                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -80,14 +75,30 @@ class Register extends StatelessWidget {
                   labelText: '*Wiederhole dein Passwort:',
                 ),
               ),
-
-        ],
-      ),
-            ),
+            ],
           ),
-      ),
-    );
-  }
-
+        ),
+        actions: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Disable'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Enable'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
-

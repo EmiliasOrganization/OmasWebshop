@@ -1,9 +1,8 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterfrontend/boxes.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:flutterfrontend/globalwidget/count_button_with_popup.dart';
+import 'package:flutterfrontend/home/view/pages/registration/registration.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../home/view/pages/cart/cart_items.dart';
@@ -78,7 +77,7 @@ class _TopBarState extends State<TopBar> {
             icon: Icon(
                 Icons.person,
                 color: schemeColorGreen),
-            onPressed: (){},
+            onPressed: (){registrationDialog(context);},
           ),
           SizedBox(width: 8),
           IconButton(
