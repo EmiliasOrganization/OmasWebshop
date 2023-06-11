@@ -25,7 +25,7 @@ class ShoppingCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
     const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
     Decimal wholePrice = Decimal.parse('0');
@@ -96,6 +96,7 @@ class ShoppingCart extends StatelessWidget {
                                             backgroundColor: Colors.red,
                                           ),
                                           onPressed: () {
+                                            cartProvider.updateItemCount();
                                             boxItemLists.deleteAt(index);
                                             Navigator.pop(context);
                                             Navigator.pushReplacementNamed(context, '/shoppingCart');

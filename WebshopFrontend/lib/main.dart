@@ -46,7 +46,6 @@ class WebShop extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/shop': (context) => OnlyShopScreen(),
-        '/cart': (context) => Cart(),
         '/login': (context) => Login(),
         '/checkout': (context) => Checkout(),
         '/shoppingCart': (context) => ShoppingCart(),

@@ -28,15 +28,6 @@ class RoundetTextPictureProperties {
   });
 }
 
-class Cart extends StatelessWidget {
-  const Cart({Key? key}) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("Hello World");
-  }
-}
 
 class HoverCart extends StatefulWidget {
   const HoverCart({Key? key}) : super(key: key);
@@ -49,7 +40,6 @@ class _HoverCartState extends State<HoverCart> {
 
   @override
   Widget build(BuildContext context) {
-
     return ListView.builder(
         itemCount: boxItemLists.length,
         itemBuilder: (context, index){
