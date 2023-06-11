@@ -17,12 +17,12 @@ class CountButtonWithPopup extends StatefulWidget {
   _CountButtonWithPopupState createState() => _CountButtonWithPopupState();
 
 
-
 }
 
 class _CountButtonWithPopupState extends State<CountButtonWithPopup> with TickerProviderStateMixin {
 
   bool _isHovered = false;
+  bool popUpAlreadyVisible = false;
   List cartItems = boxItemLists.values.toList();
   OverlayEntry? _overlayEntry;
   Timer? _popupTimer;
@@ -49,7 +49,9 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
         setState(() {
           _isHovered = value;
           if (_isHovered) {
+            if(!popUpAlreadyVisible) {
               showCartPopup(context, cartItems);
+            }
           } else {
             _popupTimer = Timer(_popupHideDuration, () {
               hideCartPopup();
@@ -69,7 +71,8 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
                 MaterialPageRoute(builder: (context) => const ShoppingCart()),);
                   }, // Replace with your desired onPressed function
                 ),
-                Container(
+                if(boxItemLists.length > 0)
+                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
@@ -79,11 +82,10 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
                       color: schemeColorGreen,
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-
-
                     ),
                   ),
                 ),
+
               ],
             ),
 
@@ -95,7 +97,7 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
   void showCartPopup(BuildContext context, List cartItems) {
     final RenderBox appBarRenderBox = context.findRenderObject() as RenderBox;
     final Offset appBarOffset = appBarRenderBox.localToGlobal(Offset.zero); // Adjust the height according to your needs
-
+    popUpAlreadyVisible = true;
     const int maxVisibleItems = 3;
     const double itemHeight = 56.0;
     final double popupHeight = boxItemLists.length <= maxVisibleItems
@@ -107,10 +109,10 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
       builder: (context) {
         if (boxItemLists.isNotEmpty) {
           return Positioned(
-              top: appBarOffset.dy + kToolbarHeight + 10,
+              top: appBarOffset.dy + kToolbarHeight,
               left: appBarOffset.dx - 300,
-              width: MediaQuery.of(context).size.width * 0.25,
-              height: popupHeight +20,
+              width: MediaQuery.of(context).size.width * 0.38,
+              height: popupHeight + 20,
               child: HoverDetector(
                 onHover: (value) {
                   if (value) {
@@ -122,7 +124,7 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
                   }
                 },
                 child:Material(
-                      elevation: 4,
+                      elevation: 10,
                       child: HoverCart(),
                     ),
                   ),
@@ -136,7 +138,9 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
     Overlay.of(context).insert(_overlayEntry!);
   }
   void hideCartPopup() {
+    popUpAlreadyVisible = false;
     _overlayEntry?.remove();
+    _overlayEntry = null;
   }
 }
 
