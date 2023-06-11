@@ -31,16 +31,16 @@ pub async fn register_user_service(user: Json<User>) -> DefaultResponse{
     match insert_result
     {
         Ok(insert_result) => {
-            let new_address_entry = AddressTable {
-                street: user.address.street.to_owned(),
-                city: user.address.city.to_owned(),
-                state: user.address.state.to_owned(),
-                country: user.address.country.to_owned(),
-                zip: user.address.zip.to_owned(),
-                user_id: insert_result,
-            };
-
-            create_address(new_address_entry);
+            // let new_address_entry = AddressTable {
+            //     street: user.address.street.to_owned(),
+            //     city: user.address.city.to_owned(),
+            //     state: user.address.state.to_owned(),
+            //     country: user.address.country.to_owned(),
+            //     zip: user.address.zip.to_owned(),
+            //     user_id: insert_result,
+            // };
+            //
+            // create_address(new_address_entry);
 
             let token = generate_email_token();
 

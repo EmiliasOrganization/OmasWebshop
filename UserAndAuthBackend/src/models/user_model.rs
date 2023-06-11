@@ -18,7 +18,7 @@ pub struct User {
     #[schema(example = "jeff@chef.net")]
     pub email: String,
 
-    pub address: Address,
+    // pub address: Address,
 }
 
 //Database Model
