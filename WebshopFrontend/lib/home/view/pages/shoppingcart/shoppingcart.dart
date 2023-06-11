@@ -216,19 +216,17 @@ class ShoppingCart extends StatelessWidget {
                         children: [
                           ElevatedButton(
                               onPressed: (){
-                                Navigator.pushNamed(context, '/shop');
+                                Navigator.pushNamed(context, '/checkout');
                               },
                               child: Text('Zur Kasse')),
                         ],
                       )
                     ],
                   )
-
               ),
               SizedBox(
                 width: 50,
               ),
-
             ],
           )
         ],),
