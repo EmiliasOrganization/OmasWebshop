@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../../../../globalwidget/login_registration_button.dart';
+
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key, required this.itemScrollController}) : super(key: key);
@@ -68,6 +70,7 @@ class _LandingScreenState extends State<LandingScreen>{
                 ),
               ),
             ),
+
         ElevatedButton(
           child: (Text('Zum Laden')),
           onPressed: () {
