@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
+import 'package:flutterfrontend/home/view/pages/registration/registration.dart';
 import 'package:flutterfrontend/home/view/pages/registration/verify.dart';
 import 'package:flutterfrontend/home/view/pages/shop/shop_screen.dart';
 import 'package:flutterfrontend/home/view/pages/shoppingcart/shoppingcart.dart';
@@ -49,6 +50,7 @@ class WebShop extends StatelessWidget {
         '/login': (context) => Login(),
         '/checkout': (context) => Checkout(),
         '/shoppingCart': (context) => ShoppingCart(),
+        '/register': (context) => Register(),
       },
       /** dynamic routing */
       onGenerateRoute: (RouteSettings settings) {

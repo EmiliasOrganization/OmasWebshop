@@ -71,16 +71,14 @@ class _TopBarState extends State<TopBar> {
               },
             ),
           SizedBox(width: 8),
-          CountButtonWithPopup(
-          ),
-          //noch abändern
+          CountButtonWithPopup(),
+
           SizedBox(width: 8),
           IconButton(
             icon: Icon(
                 Icons.person,
                 color: schemeColorGreen),
-            onPressed: (){
-            },
+            onPressed: (){},
           ),
           SizedBox(width: 8),
           IconButton(
