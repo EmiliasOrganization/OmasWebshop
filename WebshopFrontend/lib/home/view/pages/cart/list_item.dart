@@ -21,7 +21,6 @@ class ListItem {
   @HiveField(1)
   String name;
 
-
   @HiveField(2)
   dynamic description;
 

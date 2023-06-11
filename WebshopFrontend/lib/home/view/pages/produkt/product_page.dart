@@ -117,22 +117,11 @@ class _ProductPageState extends State<ProductPage> {
                               ElevatedButton(
                                 //mit onPressed wird Produkt in boxItemLists und als CartElement gespeichert
                                 onPressed: () {
+                                  cartProvider.updateItemCount();
                                   //setState neu dazu
                                   setState(() {
-
-
                                     boxItemLists.put('key_${productSummary.id}', ListItem(id: widget.productId, name: productSummary.name, description: '${productSummary.description}', price: '${productSummary.price}'));
                                   });
-
-
-                                  if(!cartProvider.isInCart(widget.productId))
-                                  {
-                                    // CartElement item = CartElement(
-                                    //     productId: widget.productId,
-                                    //     productName: productSummary.name,
-                                    // );
-                                    // cartProvider.addToCart(item);
-                                  }
                                 },
                                 child: Text('Dem Warenkorb hinzufügen'),
                               ),
