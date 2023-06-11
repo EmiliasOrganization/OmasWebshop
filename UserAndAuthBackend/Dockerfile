@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY ./UserAndAuthBackend .
 
+RUN rustup default nightly
+
 RUN cargo build --release
 
 FROM debian:buster-slim
