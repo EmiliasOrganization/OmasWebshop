@@ -49,6 +49,7 @@ class WebShop extends StatelessWidget {
         '/login': (context) => Login(),
         '/checkout': (context) => Checkout(),
         '/shoppingCart': (context) => ShoppingCart(),
+
       },
       /** dynamic routing */
       onGenerateRoute: (RouteSettings settings) {
