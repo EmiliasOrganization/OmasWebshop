@@ -1,9 +1,9 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterfrontend/boxes.dart';
 import 'package:flutterfrontend/constats.dart';
-import 'package:flutterfrontend/globalwidget/count_button_with_popup.dart';
+import 'package:flutterfrontend/globalwidget/login_registration_button.dart';
+import 'package:flutterfrontend/globalwidget/popups/count_button_with_popup.dart';
+import 'package:flutterfrontend/globalwidget/popups/registration_popup.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../home/view/pages/cart/cart_items.dart';
@@ -71,17 +71,10 @@ class _TopBarState extends State<TopBar> {
               },
             ),
           SizedBox(width: 8),
-          CountButtonWithPopup(
-          ),
-          //noch abändern
+          CountButtonWithPopup(),
+
           SizedBox(width: 8),
-          IconButton(
-            icon: Icon(
-                Icons.person,
-                color: schemeColorGreen),
-            onPressed: (){
-            },
-          ),
+          LoginButton(),
           SizedBox(width: 8),
           IconButton(
               icon: Icon(
