@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 
 Future<void> registrationDialog(BuildContext context) {
    const registrationWidth = 400.0;
-   const registrationHeight = 300.0;
+   const registrationHeight = 400.0;
+
+    final firstNameController = TextEditingController();
+    final lastNameController = TextEditingController();
+    final usernameController = TextEditingController();
+    final passwordController = TextEditingController();
+    final passwordRepeatController = TextEditingController();
+    final emailController = TextEditingController();
+
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
@@ -18,6 +26,7 @@ Future<void> registrationDialog(BuildContext context) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                controller: firstNameController,
                 autocorrect: false,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -25,6 +34,7 @@ Future<void> registrationDialog(BuildContext context) {
                 ),
               ),
               TextFormField(
+                controller: lastNameController,
                 autocorrect: false,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -32,6 +42,7 @@ Future<void> registrationDialog(BuildContext context) {
                 ),
               ),
               TextFormField(
+                controller: usernameController,
                 autocorrect: false,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -39,6 +50,16 @@ Future<void> registrationDialog(BuildContext context) {
                 ),
               ),
               TextFormField(
+                controller: emailController,
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: '*Email',
+                ),
+              ),
+              SizedBox(height: 12),
+              TextFormField(
+                controller: passwordController,
                 obscureText: true,
                 autocorrect: false,
                 decoration: const InputDecoration(
@@ -68,6 +89,7 @@ Future<void> registrationDialog(BuildContext context) {
                 ),
               ),
               TextFormField(
+                controller: passwordRepeatController,
                 obscureText: true,
                 autocorrect: false,
                 decoration: const InputDecoration(
