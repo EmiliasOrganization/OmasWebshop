@@ -28,6 +28,7 @@ mod email;
 mod handlebars_template_creator;
 
 use controller::{
+    all_options,
     verify_email,
     verify_jwt,
     register,
@@ -76,7 +77,7 @@ fn rocket() -> Rocket<Build> {
     struct ApiDoc;
 
     rocket::build()
-        .mount("/api/auth", routes![register, login, verify_email, verify_jwt])
+        .mount("/api/auth", routes![all_options, register, login, verify_email, verify_jwt])
         .register("/", catchers![internal_error, not_found, conflict, missing_entity])
         .register("/api/auth/login", catchers![user_not_found])
         .mount("/", SwaggerUi::new("/swagger-ui/<_..>").url("/api-docs/openapi.json", ApiDoc::openapi()))

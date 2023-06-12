@@ -2,7 +2,6 @@ package de.webshop.webshopbackend.controller;
 
 import de.webshop.webshopbackend.Utils.ImageCompressionUtil;
 import de.webshop.webshopbackend.model.Category;
-import de.webshop.webshopbackend.model.PictureModel;
 import de.webshop.webshopbackend.model.ProductModel;
 import de.webshop.webshopbackend.model.SubCategory;
 import de.webshop.webshopbackend.service.*;

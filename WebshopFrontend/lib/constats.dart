@@ -25,6 +25,7 @@ const String apiPathProductData = 'http://localhost:8080/api/shop/productSummary
 const String apiPathImageCount = 'http://localhost:8080/api/shop/picture/count/';
 /** Auth Api*/
 const String authApiVerify = 'http://localhost:8000/api/auth/register/verify';
+const String authApiLogin = 'http://localhost:8000/api/auth/login';
 
 
 //LandingPage AboutUs Elements

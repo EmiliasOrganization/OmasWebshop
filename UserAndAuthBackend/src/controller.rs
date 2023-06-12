@@ -1,4 +1,4 @@
-use rocket::http::{CookieJar};
+use rocket::http::{CookieJar, Status};
 use rocket::Request;
 use rocket::serde::json::Json;
 use crate::models::login_model::Login;
@@ -28,6 +28,12 @@ pub fn conflict() -> &'static str { "Username already exists" }
 pub fn missing_entity() -> &'static str { "Invalid input" }
 
 // routes
+
+#[options("/<_..>")]
+pub fn all_options() -> Status{
+    Status::Ok
+    /* Intentionally left empty */
+}
 
 #[utoipa::path(
     tag = "User Operations",
