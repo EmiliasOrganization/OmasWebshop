@@ -10,7 +10,7 @@ pub struct User {
     #[schema(example = "Jeff the Chef")]
     pub username: String,
     #[schema(example = "Feffer")]
-    pub surname: String,
+    pub lastname: String,
     #[schema(example = "Jeff")]
     pub firstname: String,
     #[schema(example = "Ab123!")]
@@ -27,7 +27,7 @@ pub struct User {
 #[diesel(table_name = users)]
 pub struct UserTable {
     pub username: String,
-    pub surname: String,
+    pub lastname: String,
     pub firstname: String,
     pub password: String,
     pub email: String,

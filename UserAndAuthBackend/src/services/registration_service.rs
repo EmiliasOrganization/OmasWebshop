@@ -20,7 +20,7 @@ pub async fn register_user_service(user: Json<User>) -> DefaultResponse{
 
     let new_user_entry = UserTable {
         username: user.username.to_owned(),
-        surname: user.surname.to_owned(),
+        lastname: user.lastname.to_owned(),
         firstname: user.firstname.to_owned(),
         password: hash_password(&user.password).expect("Error hashing password"),
         email: user.email.to_owned(),
