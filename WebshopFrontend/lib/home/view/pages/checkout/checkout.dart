@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
-
+import '../../../../globalwidget/popups/login_popup.dart';
 import '../../../../globalwidget/top_bar.dart';
 
-class Checkout extends StatelessWidget {
-  const Checkout({Key? key}) : super(key: key);
+class Checkout extends StatefulWidget {
+  @override
+  _CheckoutState createState() => _CheckoutState();
+}
+
+class _CheckoutState extends State<Checkout> {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  String errorMessage = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +47,7 @@ class Checkout extends StatelessWidget {
                               child: Column(
                                 children: [
                                   TextFormField(
+                                    controller: usernameController,
                                     autocorrect: false,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -46,6 +55,7 @@ class Checkout extends StatelessWidget {
                                         border: UnderlineInputBorder()),
                                   ),
                                   TextFormField(
+                                    controller: passwordController,
                                     autocorrect: false,
                                     obscureText: true,
                                     decoration: InputDecoration(
@@ -70,7 +80,25 @@ class Checkout extends StatelessWidget {
                               Container(
                                   width: 200,
                                   child: ElevatedButton(
-                                      onPressed: (){},
+                                      onPressed: () async {
+                                        String username = usernameController.text;
+                                        String password = passwordController.text;
+                                        int result = await LoginCommunication().loginUser(username, password);
+                                        print(result);
+                                        if (result == 200) {
+                                          print('die Anmeldung war erfolgreich');
+                                        }
+                                        if (result == 401) {
+                                          setState(() {
+                                            errorMessage = 'Username or Password incorrect.';
+                                          });
+                                        }
+                                        else {
+                                          setState(() {
+                                            errorMessage = 'Something went wrong.';
+                                          });
+                                        }
+                                      },
                                       child: Text('Anmelden')
                                   )
                               ),
