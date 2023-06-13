@@ -128,7 +128,12 @@ class _ProductPageState extends State<ProductPage> {
                               SizedBox(height: 10),
                               ElevatedButton(
                                 onPressed: () {
-                                  // TODO: Implement quick checkout functionality
+                                  cartProvider.updateItemCount();
+                                  //setState neu dazu
+                                  setState(() {
+                                    boxItemLists.put('key_${productSummary.id}', ListItem(id: widget.productId, name: productSummary.name, description: '${productSummary.description}', price: '${productSummary.price}'));
+                                  });
+                                  Navigator.pushNamed(context, '/shoppingCart');
                                 },
                                 child: Text('Direkt zur Kasse'),
                               ),
