@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/constats.dart';
+import 'package:http/http.dart' as http;
+import '../../constats.dart';
 
 Future<void> registrationDialog(BuildContext context) {
    const registrationWidth = 400.0;
@@ -106,8 +110,28 @@ Future<void> registrationDialog(BuildContext context) {
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             child: const Text('Registrieren'),
-            onPressed: () {
-              Navigator.of(context).pop();
+            onPressed: () async {
+              String firstName = firstNameController.text;
+              String lastname = lastNameController.text;
+              String username = usernameController.text;
+              String password = passwordController.text;
+              String passwordRepeat = passwordRepeatController.text;
+              String email = emailController.text;
+              int result = await RegistrationCommunication().registerUser(firstName, lastname, username, password, passwordRepeat, email);
+              print(result);
+              if (result == 200) {
+                Navigator.of(context).pop();
+                print('Registrierung erfolgreich');
+              }
+              if (result == 401) {
+                print("error");
+                //TODO: check error if password and passwordRepeat aren't similar
+              }
+              // else {
+              //   setState(() {
+              //     errorMessage = 'Something went wrong.';
+              //   });
+              // }
             },
           ),
         ],
@@ -116,3 +140,25 @@ Future<void> registrationDialog(BuildContext context) {
   );
 }
 
+class RegistrationCommunication {
+  Future<int> registerUser(String firstName, String lastname, String username, String password, passwordRepeat, email) {
+    final body = jsonEncode({
+      'firstname': firstName,
+      'lastname': lastname,
+      'username': username,
+      'password': password,
+      'passwordRepeat': passwordRepeat,
+      'email': email,
+    });
+
+    return http.post(Uri.parse(authApiRegister),
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    ).then((response) {
+      return Future.value(response.statusCode);
+    }).catchError((error) {
+      print(error);
+      return Future.value(500);
+    });
+  }
+}
