@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import '../../../../globalwidget/popups/login_popup.dart';
 import '../../../../globalwidget/top_bar.dart';
+import 'package:flutterfrontend/globalwidget/popups/registration_popup.dart';
 
 class Checkout extends StatefulWidget {
   @override
@@ -125,7 +126,9 @@ class _CheckoutState extends State<Checkout> {
                                 Container(
                                     width: 200,
                                     child: ElevatedButton(
-                                        onPressed: (){},
+                                        onPressed: (){
+                                          registrationDialog(context);
+                                        },
                                         child: Text('Registrieren'))
                                 ),
                                 SizedBox(width: screenWidth*0.01),
