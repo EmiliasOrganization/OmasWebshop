@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.6</version>
+		<version>3.0.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.webshop</groupId>
@@ -58,13 +58,21 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.graalvm.buildtools</groupId>
+				<artifactId>native-maven-plugin</artifactId>
+				<configuration>
+					<imageName>webshopBackend</imageName>
+					<mainClass>de.webshop.webshopbackend.WebshopBackendApplication</mainClass>
+					<buildArgs>
+						--no-fallback
+					</buildArgs>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<image>
-						<name>homelabhost.de/webshop/backend:${project.version}</name>
-					</image>
-					<mainClass>de.webshop.webshopbackend.WebshopBackendApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
