@@ -48,7 +48,7 @@ class RoundetTextPicture extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(
-                child: Image.asset( properties.picture,
+                child: Image.asset(properties.picture,
                   fit: BoxFit.cover,
                 ),
               ),
