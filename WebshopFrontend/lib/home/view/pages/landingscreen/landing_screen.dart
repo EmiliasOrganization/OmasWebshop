@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../../globalwidget/login_registration_button.dart';
 
 
 class LandingScreen extends StatefulWidget {
@@ -95,7 +94,7 @@ class _LandingScreenState extends State<LandingScreen>{
           Expanded(
             flex: 1,
             child: Image.asset(
-              '../assets/StartScreen.png',
+              'assets/StartScreen.png',
               fit: BoxFit.cover,
             ),
           ),

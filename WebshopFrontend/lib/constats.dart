@@ -43,7 +43,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Taschen',
     category: Category.BAGS,
@@ -51,7 +51,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Kopfbedeckungen',
     category: Category.HATS,
@@ -59,7 +59,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Kinder',
     category: Category.CHILDREN
@@ -67,7 +67,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Socken',
     category: Category.SOCKS,
@@ -75,7 +75,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Kuscheltiere',
     category: Category.CUDDLY_TOYS,
@@ -83,7 +83,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Handschuhe',
     category: Category.GLOVES
@@ -91,7 +91,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Kissen & Decken',
     category: Category.CUSHIONS,
@@ -99,7 +99,7 @@ final List<RoundetTextPictureProperties> roundetTextPicturePropertiesList = [
   RoundetTextPictureProperties(
     pictureSizeHeight: pictureSizeHeight,
     pictureSizeWidth: pictureSizeWidth,
-    picture: '../assets/StartScreen.png',
+    picture: 'assets/StartScreen.png',
     routePath: '/shop',
     headLineText: 'Rucksäcke',
     category: Category.BACKPACKS
