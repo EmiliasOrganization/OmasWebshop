@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Configure SSH
         uses: webfactory/ssh-agent@v0.5.0
@@ -30,11 +30,23 @@ jobs:
             exit 0
           fi
       - name: Configure SSH
-        uses: webfactory/ssh-agent@v0.5.0
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
-        
-      - name: Deploy to Staging server via SSH
+          ssh-host: ${{secrets.REMOTE_SU_HOST}}
+          
+      - name: Copy compose file
+        env:
+         REMOTE_SU_HOST: ${{secrets.REMOTE_SU_HOST}}
+         REMOTE_SU_USER: ${{secrets.REMOTE_SU_USER}}
         run: |
-         sudo ssh ${{ secrets.SU_SERVER_CONNECTION }}
-         docker ps -a
+           scp docker-compose.yaml $REMOTE_SU_USER@$REMOTE_SU_HOST:
+           
+      - name: Stop Services
+        run: ssh ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}} 'docker compose down' || true
+        
+      - name: Pull newest images
+        run: ssh ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}} 'docker compose pull'
+      
+      - name: Restart Services
+        run: ssh ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}} 'docker compose up -d'
