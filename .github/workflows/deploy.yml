@@ -30,8 +30,9 @@ jobs:
       - name: Configure SSH
         uses: webfactory/ssh-agent@v0.5.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_KEY }}
         
       - name: Deploy to Staging server via SSH
         run: |
-          ssh user@your-server "cd /path/to/your/repository && git pull origin your-branch"
+         sudo ssh ${{ secrets.SU_SERVER_CONNECTION }}
+         docker ps -a
