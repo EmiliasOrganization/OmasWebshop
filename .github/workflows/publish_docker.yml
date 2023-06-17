@@ -44,26 +44,22 @@ jobs:
          registry: ${{ secrets.REGISTRY }}
          username: ${{ secrets.REGISTRY_USERNAME }}
          password: ${{ secrets.REGISTRY_PASSWORD }}
-         
-#       - name: Create .env file
-#         uses: SpicyPizza/create-envfile@v1.3.0
-#         with:
-#            JDBC_DATABASE_URL:  ${{ secrets.JDBC_DATABASE_URL }}
-#            JDBC_DATABASE_USERNAME: ${{ secrets.JDBC_DATABASE_USERNAME }}
-#            JDBC_DATABASE_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
-#            directory: .
-#            fail_on_empty: true
       
       - name: Create .env file
-        env:
-         JDBC_DATABASE_URL:  ${{ secrets.JDBC_DATABASE_URL }}
-         JDBC_DATABASE_USERNAME: ${{ secrets.JDBC_DATABASE_USERNAME }}
-         JDBC_DATABASE_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
         run: |
           touch .env
-          echo JDBC_DATABASE_URL="$JDBC_DATABASE_URL" >> .env
-          echo JDBC_DATABASE_USERNAME="$JDBC_DATABASE_USERNAME" >> .env
-          echo JDBC_DATABASE_PASSWORD="$JDBC_DATABASE_PASSWORD" >> .env
+          echo JDBC_DATABASE_URL=${{ secrets.JDBC_DATABASE_URL }} >> .env
+          echo JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} >> .env
+          echo JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} >> .env
+          
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+          
+          echo SMTP_SERVER=${{ secrets.SMTP_SERVER }} >> .env
+          echo SMTP_USERNAME=${{ secrets.SMTP_USERNAME }} >> .env
+          echo SMPT_PASSWORD=${{ secrets.SMPT_PASSWORD }} >> .env
+          
+          echo RESSOURCE_SERVER=${{ secrets.RESSOURCE_SERVER }} >> .env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
 
       - name: Build and push Frontend
         uses: docker/build-push-action@v3

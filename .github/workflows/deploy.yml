@@ -31,25 +31,17 @@ jobs:
           ssh-host: ${{secrets.REMOTE_SU_HOST}}
           
       - name: Create .env file
-        env:
-         REGISTRY:  ${{ secrets.REGISTRY }}
         run: |
           touch .env
-          echo REGISTRY="$REGISTRY" >> .env
+          echo REGISTRY=${{ secrets.REGISTRY }} >> .env
       
       - name: Copy .env file
-        env:
-         REMOTE_SU_HOST: ${{secrets.REMOTE_SU_HOST}}
-         REMOTE_SU_USER: ${{secrets.REMOTE_SU_USER}}
         run: |
-           scp .env $REMOTE_SU_USER@$REMOTE_SU_HOST:
+           scp .env ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}}:
       
       - name: Copy compose file
-        env:
-         REMOTE_SU_HOST: ${{secrets.REMOTE_SU_HOST}}
-         REMOTE_SU_USER: ${{secrets.REMOTE_SU_USER}}
         run: |
-           scp docker-compose.yaml $REMOTE_SU_USER@$REMOTE_SU_HOST:
+           scp docker-compose.yaml ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}}:
            
       - name: Stop Services
         run: ssh ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}} 'docker compose down' || true
