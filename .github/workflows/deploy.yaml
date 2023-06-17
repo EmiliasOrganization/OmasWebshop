@@ -1,0 +1,29 @@
+name: Nightly Deployment
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Check for changes in dev branch
+        id: check_changes
+        run: |
+          git fetch
+          CHANGED_FILES=$(git diff --name-only origin/dev)
+
+          if [[ -z "$CHANGED_FILES" ]]; then
+            echo "No changes in dev branch. Exiting..."
+            exit 0
+          fi
