@@ -1,6 +1,7 @@
 version: "3.8"
 services:
     frontend:
+        env_file: .env
         image: ${REGISTRY}/frontend
         ports:
         - "80:80"
@@ -8,6 +9,7 @@ services:
         - userbackend
         - shopbackend
     userbackend:
+        env_file: .env
         image: ${REGISTRY}/userbackend
         ports:
         - "8000:8000"
@@ -18,6 +20,7 @@ services:
         - "6379:6379"
 
     shopbackend:
+        env_file: .env
         image: ${REGISTRY}/shopbackend
         ports:
         - "8080:8080"
