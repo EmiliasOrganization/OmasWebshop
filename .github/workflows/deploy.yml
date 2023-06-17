@@ -14,11 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Configure SSH
-        uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Check for changes in dev branch
         id: check_changes
         run: |
@@ -35,6 +30,20 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           ssh-host: ${{secrets.REMOTE_SU_HOST}}
           
+      - name: Create .env file
+        env:
+         REGISTRY:  ${{ secrets.REGISTRY }}
+        run: |
+          touch .env
+          echo REGISTRY="$REGISTRY" >> .env
+      
+      - name: Copy .env file
+        env:
+         REMOTE_SU_HOST: ${{secrets.REMOTE_SU_HOST}}
+         REMOTE_SU_USER: ${{secrets.REMOTE_SU_USER}}
+        run: |
+           scp .env $REMOTE_SU_USER@$REMOTE_SU_HOST:
+      
       - name: Copy compose file
         env:
          REMOTE_SU_HOST: ${{secrets.REMOTE_SU_HOST}}
