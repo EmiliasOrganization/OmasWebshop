@@ -57,7 +57,7 @@ jobs:
       - name: Compile Shop Backend for Sonar
         run: |
           cd WebshopBackend
-          mvn clean install
+          mvn clean install -DskipTests
           
           
       - name: SonarQube Scan Shop Backend
