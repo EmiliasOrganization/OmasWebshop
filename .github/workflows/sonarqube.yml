@@ -48,11 +48,6 @@ jobs:
         with:
          distribution: 'adopt'
          java-version: '17'
-     
-      - name: Configure SSL Certificate
-        run: |
-          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
-          export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$PWD/cert.pem"
          
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.5
@@ -68,6 +63,10 @@ jobs:
       - name: SonarQube Scan Shop Backend
         run: |
           cd WebshopBackend
+          
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
+          export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$PWD/cert.pem"
+          
           mvn  sonar:sonar \
               -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }} \
               -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
