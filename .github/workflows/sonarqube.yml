@@ -16,19 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-          
-      - name: SonarQube Scan on Frontend
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
-        with:
-          # Additional arguments for the sonarcloud scanner
-          args:
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=lib, pubspec.yaml
-            -Dsonar.projectBaseDir=./WebshopFrontend
       
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -48,6 +35,21 @@ jobs:
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
           
+          
+      - name: SonarQube Scan on Frontend
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+        with:
+          # Additional arguments for the sonarcloud scanner
+          args:
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.sources=lib, pubspec.yaml
+            -Dsonar.projectBaseDir=./WebshopFrontend
+            
+            
       - name: SonarQube Scan Shop Backend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -56,6 +58,7 @@ jobs:
         run: |
           cd WebshopBackend
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+        
         
       - name: SonarQube Scan on User Backend
         uses: sonarsource/sonarqube-scan-action@master
