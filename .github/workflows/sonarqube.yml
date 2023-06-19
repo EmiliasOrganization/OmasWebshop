@@ -59,17 +59,38 @@ jobs:
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          cd WebshopBackend
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=EmiliasOrganization_Webshop_AYjVRcXfIQsONddusQ6D
          
-      - name: Compile Shop Backend for Sonar
-        run: |
-          cd WebshopBackend
-          mvn clean install -DskipTests
+#        - name: Compile Shop Backend for Sonar
+#         run: |
+#           cd WebshopBackend
+#           mvn clean install -DskipTests
           
           
-      - name: SonarQube Scan Shop Backend
-        run: |
-          cd WebshopBackend
-          mvn sonar:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+#       - name: SonarQube Scan Shop Backend
+#         run: |
+#           cd WebshopBackend
+#           mvn sonar:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
         
       - name: SonarQube Scan on User Backend
         uses: sonarsource/sonarqube-scan-action@master
