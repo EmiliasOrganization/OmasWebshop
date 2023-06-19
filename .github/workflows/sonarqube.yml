@@ -57,7 +57,8 @@ jobs:
       - name: SonarQube Scan Shop Backend
         run: |
           cd WebshopBackend
-          export MAVEN_OPTS="-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
+          export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$PWD/cert.pem"
           mvn sonar:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=https://130.61.188.61 -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
         
         
