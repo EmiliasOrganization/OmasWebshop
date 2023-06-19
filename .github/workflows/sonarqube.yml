@@ -43,9 +43,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Install Certificate
-        run: echo " ${{ secrets.SONAR_ROOT_CERT }}" | sudo tee /usr/local/share/ca-certificates/sonarqube.crt && sudo update-ca-certificates
-      
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -60,6 +57,7 @@ jobs:
       - name: SonarQube Scan Shop Backend
         run: |
           cd WebshopBackend
+          export MAVEN_OPTS="-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
           mvn sonar:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=https://130.61.188.61 -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
         
         
