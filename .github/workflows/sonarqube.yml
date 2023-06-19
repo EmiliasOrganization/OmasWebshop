@@ -72,6 +72,6 @@ jobs:
           # Additional arguments for the sonarcloud scanner
           args:
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=UserAndAuthBackend/src
+            -Dsonar.sources=src
             -Dsonar.projectBaseDir=./UserAndAuthBackend
 
