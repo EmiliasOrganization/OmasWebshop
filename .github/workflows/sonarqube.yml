@@ -58,15 +58,16 @@ jobs:
         run: |
           cd WebshopBackend
           mvn clean install
-      
+      - name: Configure SonarQube
+        run: |
+          echo "<settings><pluginGroups><pluginGroup>org.sonarsource.scanner.maven</pluginGroup></pluginGroups></settings>" > $HOME/.m2/settings.xml
+          
       - name: SonarQube Scan Shop Backend
         run: |
           cd WebshopBackend
-          echo "<settings><pluginGroups><pluginGroup>org.sonarsource.scanner.maven</pluginGroup></pluginGroups></settings>" > $HOME/.m2/settings.xml
           echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
           export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$PWD/cert.pem"
           mvn sonar:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=https://130.61.188.61 -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
-        
         
       - name: SonarQube Scan on User Backend
         uses: sonarsource/sonarqube-scan-action@master
