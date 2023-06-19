@@ -40,7 +40,9 @@ jobs:
   Analysis:
     runs-on: ubuntu-latest
 
-    steps:  
+    steps:
+      - uses: actions/checkout@v3
+      
       - name: SonarQube Scan on Shop Backend
         uses: sonarsource/sonarqube-scan-action@master
         env:
