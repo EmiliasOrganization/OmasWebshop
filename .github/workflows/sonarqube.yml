@@ -53,12 +53,13 @@ jobs:
         uses: stCarolas/setup-maven@v4.5
         with:
           maven-version: 3.9.2
-#       - name: Set selfsinged Certificate
-#         shell: bash
-#         run: |
-#           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
-#           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
-#           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          
+      - name: Set selfsinged Certificate
+        shell: bash
+        run: |
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
+          openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
+          keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
           
       - name: Cache SonarQube packages
         uses: actions/cache@v1
@@ -72,7 +73,7 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
+      - name: SonarQube Scan Shop Backend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
