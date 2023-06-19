@@ -56,8 +56,9 @@ jobs:
       - name: Set selfsinged Certificate
         shell: bash
         run: |
-          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
-          keytool -import -noprompt -trustcacerts -file cert.pem -keystore ${{ steps.java.outputs.path }}/lib/security/cacerts -storepass {{ secrets.KEYSTORE_PASS }}
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
+          openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
+          keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore ${{ steps.java.outputs.path }}/lib/security/cacerts -storepass {{ secrets.KEYSTORE_PASS }}
          
       - name: Compile Shop Backend for Sonar
         run: |
@@ -68,9 +69,6 @@ jobs:
       - name: SonarQube Scan Shop Backend
         run: |
           cd WebshopBackend
-          
-          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
-          export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$PWD/cert.pem"
           
           mvn  sonar:sonar \
               -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }} \
