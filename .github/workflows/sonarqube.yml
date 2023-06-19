@@ -50,10 +50,9 @@ jobs:
          java-version: '17'
          
       - name: Set up Maven
-        uses: actions/setup-java@v2
+        uses: stCarolas/setup-maven@v4.5
         with:
-          java-version: '17'
-          maven-version: 'latest'
+          maven-version: 3.9.2
          
       - name: Compile Shop Backend for Sonar
         run: |
