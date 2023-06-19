@@ -53,6 +53,11 @@ jobs:
         uses: stCarolas/setup-maven@v4.5
         with:
           maven-version: 3.9.2
+      - name: Set selfsinged Certificate
+        shell: bash
+        run: |
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
+          keytool -import -noprompt -trustcacerts -file cert.pem -keystore ${{ steps.java.outputs.path }}/lib/security/cacerts
          
       - name: Compile Shop Backend for Sonar
         run: |
