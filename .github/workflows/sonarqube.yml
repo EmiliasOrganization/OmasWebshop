@@ -48,6 +48,11 @@ jobs:
         with:
          distribution: 'adopt'
          java-version: '17'
+     
+      - name: Configure SSL Certificate
+        run: |
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
+          export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$PWD/cert.pem"
          
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.5
@@ -59,12 +64,15 @@ jobs:
           cd WebshopBackend
           mvn clean install
           
+          
       - name: SonarQube Scan Shop Backend
         run: |
           cd WebshopBackend
-          echo "${{ secrets.SONAR_ROOT_CERT }}" > cert.pem
-          export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$PWD/cert.pem"
-          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=https://130.61.188.61 -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+          mvn  sonar:sonar \
+              -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }} \
+              -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+              -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+  # mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=https://130.61.188.61 -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
         
       - name: SonarQube Scan on User Backend
         uses: sonarsource/sonarqube-scan-action@master
