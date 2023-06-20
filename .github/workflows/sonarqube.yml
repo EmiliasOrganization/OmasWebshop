@@ -100,7 +100,9 @@ jobs:
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
       
       - name: Install Dart
-        run: sudo apt-get install dart
+        run: |
+         sudo apt-get update
+         sudo apt-get install dart
         
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
