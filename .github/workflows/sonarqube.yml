@@ -110,7 +110,7 @@ jobs:
         run: |
           cd WebshopFrontend
           flutter pub get
-          flutter analyze --no-fatal-warnings --no-fatal-infos
+          sonar-scanner
 
 #       - name: Add Flutter to PATH
 #         run: echo "${{ runner.workspace }}/flutter/bin" >> $GITHUB_PATH
