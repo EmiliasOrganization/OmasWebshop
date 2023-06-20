@@ -16,11 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-   #   - name: Set up JDK 17
-   #     uses: actions/setup-java@v3
-   #     with:
-   #      distribution: 'adopt'
-   #      java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+         distribution: 'adopt'
+         java-version: '17'
          
   #    - name: Set up Maven
   #      uses: stCarolas/setup-maven@v4.5
@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
-          sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
           
       - name: SonarQube Scan Shop Backend
         env:
@@ -51,22 +51,15 @@ jobs:
      
      steps:
       - uses: actions/checkout@v3
-      
-#      - name: Set up JDK 17
-#        uses: actions/setup-java@v3
-#        with:
-#         distribution: 'adopt'
-#         java-version: '17'
          
       - name: Set Sonarqube Server Certificate
         shell: bash
         run: |
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
-          sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit         
           
-          
-      - name: SonarQube Scan on User/Auth Backend
+      - name: SonarQube Scan User/Auth Backend
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_AUTH_BACKEND }}
@@ -93,8 +86,7 @@ jobs:
           mkdir $HOME/sonar-scanner
           curl -L -o sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${{ env.SONAR_SCANNER_VERSION }}-linux.zip"
           unzip sonar-scanner.zip -d $HOME/sonar-scanner
-#          echo "export PATH=\$PATH:\$HOME/sonar-scanner/sonar-scanner-${{ env.SONAR_SCANNER_VERSION }}-linux/bin" >> $HOME/.bashrc
-#          source $HOME/.bashrc
+          
 
       - name: Set Sonarqube Server Certificate
         run: |
@@ -107,7 +99,7 @@ jobs:
           channel: stable
           version: 3.10.4
           
-      - name: Build and Analyze
+      - name: SonarQube Scan Frontend
         run: |
          cd WebshopFrontend
          flutter pub get
