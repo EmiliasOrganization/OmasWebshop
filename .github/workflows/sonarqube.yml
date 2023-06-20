@@ -94,9 +94,8 @@ jobs:
 
       - name: Set Sonarqube Server Certificate
         run: |
-          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
-          openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
-          sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore truststore.jks -storepass changeit
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarqube.crt
+          sudo keytool -importcert -keystore $(jdk_switcher home 17)/lib/security/cacerts -storepass changeit -alias sonarqube -file sonarqube.crt
 
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v2
@@ -113,7 +112,7 @@ jobs:
             -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
             -v $(pwd):/usr/src \
             -w /usr/src \
-            -v $(pwd)/truststore.jks:/usr/lib/jvm/java-17-adoptopenjdk-amd64/lib/security/cacerts \
+            -v $(jdk_switcher home 17)/lib/security/cacerts:/usr/lib/jvm/java-17-adoptopenjdk-amd64/lib/security/cacerts \
             sonarsource/sonar-scanner-cli:latest \
             -Djavax.net.ssl.trustStore=/usr/lib/jvm/java-17-adoptopenjdk-amd64/lib/security/cacerts \
             -Djavax.net.ssl.trustStorePassword=changeit \
