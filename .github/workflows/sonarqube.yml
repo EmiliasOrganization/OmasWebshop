@@ -108,7 +108,7 @@ jobs:
           
       - name: Scan Frontend
         run: |
-         cd ./WenshopFrontend
+         cd ./WebshopFrontend
          flutter pub get
          sonar-scanner \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
