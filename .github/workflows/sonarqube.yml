@@ -99,12 +99,17 @@ jobs:
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
           
-           
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v2
         with:
           channel: stable
           version: 3.10.4
+          
+      - name: Install SonarScanner
+        run: |
+          curl -sL "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip" -o sonar-scanner-cli.zip
+          unzip sonar-scanner-cli.zip
+          echo "export PATH=\$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin" >> $GITHUB_ENV
           
       - name: Scan Frontend
         run: |
