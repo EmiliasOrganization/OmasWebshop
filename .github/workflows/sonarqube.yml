@@ -105,6 +105,17 @@ jobs:
         with:
           channel: stable
           version: 3.10.4
+          
+      - name: Scan Frontend
+        run: |
+         cd ./WenshopFrontend
+         flutter pub get
+         sonar-scanner \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN_FRONTEND }} \
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }} \
+          -Dsonar.sources=lib \
+          -Dsonar.exclusions="**/*.g.dart"
 
       - name: Set up SonarQube scanner
         uses: sonarsource/sonar-scanner-cli@master
