@@ -106,11 +106,7 @@ jobs:
           version: 3.10.4
       
       - name: Setup sonar scanner
-  # You may pin to the exact commit or the version.
-  # uses: jwidauer/setup-sonar-scanner@36c234128fb3494e85c07343c18fc359f5239c98
         uses: jwidauer/setup-sonar-scanner@v3
-        with:
-          sonar-server-url: ${{ secrets.SONAR_HOST_URL }}
           
       - name: Scan Frontend
         run: |
