@@ -111,7 +111,6 @@ jobs:
          args:
            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
            -Dsonar.sources=lib,pubspec.yaml
-           -Dsonar.projectBaseDir=./WebshopFrontend
             
         
 
