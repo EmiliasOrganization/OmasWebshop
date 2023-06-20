@@ -99,10 +99,6 @@ jobs:
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
       
-      - name: Install Dart
-        run: |
-         sudo apt-get update
-         sudo apt-get install dart
         
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -111,17 +107,15 @@ jobs:
           flutter-version: "3.0.0"
           channel: 'stable'   
           
-      - name: SonarQube Scan on Frontend
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
-         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-         SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
-        with:
-         # Additional arguments for the sonarcloud scanner
-         args:
-           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
-           -Dsonar.projectBaseDir=./WebshopFrontend
+      - name: SonarQube Analysis
+        run: |
+          cd WebshopFrontend
+          flutter pub global activate sonar
+          flutter pub global run sonar:sonar \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN_SHOP_BACKEND }} \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_AUTH_BACKEND }} \
+            -Dsonar.exclusions=**/*.g.dart,**/*.generated.dart
 
             
         
