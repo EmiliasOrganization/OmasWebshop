@@ -132,7 +132,7 @@ jobs:
         run: |
          cd ./WebshopFrontend
          flutter pub get
-         sonar-scanner \
+         /var/opt/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
           -Dsonar.login=${{ secrets.SONAR_TOKEN_FRONTEND }} \
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }} \
