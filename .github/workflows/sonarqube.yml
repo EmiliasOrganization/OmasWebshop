@@ -105,11 +105,10 @@ jobs:
         with:
           channel: stable
           version: 3.10.4
-      
-#       - name: Install Dart SDK
-#         uses: dart-lang/setup-dart@v1
-#         with:
-#           sdk: 'stable'
+          
+      - name: Add Flutter to PATH
+        run: echo "${{ runner.workspace }}/flutter/bin" >> $GITHUB_PATH
+
       - name: SonarQube Scan on User/Auth Backend
         uses: sonarsource/sonarqube-scan-action@master
         env:
@@ -122,12 +121,7 @@ jobs:
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
             -Dsonar.sources=lib
             -Dsonar.projectBaseDir=./WebshopFrontend
-#       - name: SonarQube Analysis
-#         run: |
-#           cd WebshopFrontend
-#           flutter pub get # just in case
-#           flutter test --machine --coverage > tests.output
-#           sonar-scanner
+
 
             
         
