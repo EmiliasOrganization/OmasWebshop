@@ -89,7 +89,7 @@ jobs:
       - name: Set Sonarqube Server Certificate
         run: |
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarqube.crt
-          echo "yes" | sudo keytool -importcert -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -alias sonarqube -file sonarqube.crt -cacerts
+          echo "yes" | sudo keytool -importcert -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -alias sonarqube -file sonarqube.crt
     
       - name: Setup Flutter SDK   
         uses: flutter-actions/setup-flutter@v2
