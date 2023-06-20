@@ -49,6 +49,7 @@ jobs:
   Check-Auth-Backend:
     # The type of runner that the job will run on
      runs-on: ubuntu-latest
+     
      steps:
       - uses: actions/checkout@v3
       
@@ -81,39 +82,42 @@ jobs:
 
 
   check-frontend:
+  
     runs-on: ubuntu-latest
-
+    env:
+      SONAR_SCANNER_VERSION: '4.6.2.2472'
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Install SonarScanner
+        run: |
+          mkdir $HOME/sonar-scanner
+          curl -L -o sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${{ env.SONAR_SCANNER_VERSION }}-linux.zip"
+          unzip sonar-scanner.zip -d $HOME/sonar-scanner
+          echo "export PATH=\$PATH:\$HOME/sonar-scanner/sonar-scanner-${{ env.SONAR_SCANNER_VERSION }}-linux/bin" >> $HOME/.bashrc
+          source $HOME/.bashrc
 
       - name: Set Sonarqube Server Certificate
         run: |
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarqube.crt
-          echo "yes" | sudo keytool -importcert -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -alias sonarqube -file sonarqube.crt
-    
+          echo "yes" | sudo keytool -importcert -keystore $HOME/sonar-scanner/sonar-scanner-${{ env.SONAR_SCANNER_VERSION }}-linux/jre/lib/security/cacerts -storepass changeit -alias sonarqube -file sonarqube.crt -noprompt
+
       - name: Setup Flutter SDK   
         uses: flutter-actions/setup-flutter@v2
         with:
           channel: stable
           version: 3.10.4
           
-    
-      - name: Scan Frontend
+      - name: Build and Analyze
         run: |
-          cd ./WebshopFrontend
-          flutter pub get
-          docker run --rm \
-          -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN_FRONTEND }} \
-          -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
-          -v $(pwd):/usr/src \
-          -w /usr/src \
-          -v $JAVA_HOME/lib/security/cacerts:/usr/lib/jvm/default-jvm/lib/security/cacerts \
-          sonarsource/sonar-scanner-cli:latest \
-          -Djavax.net.ssl.trustStore=/usr/lib/jvm/default-jvm/lib/security/cacerts \
-          -Djavax.net.ssl.trustStorePassword=changeit \
-          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }} \
-          -Dsonar.sources=lib \
-          -Dsonar.exclusions="**/*.g.dart"
+         cd WebshopFrontend
+         flutter pub get
+         sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }} \
+            -Dsonar.sources=lib \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN_FRONTEND }}
+       
  
 
 
