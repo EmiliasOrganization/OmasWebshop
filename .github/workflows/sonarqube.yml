@@ -105,23 +105,16 @@ jobs:
         with:
           channel: stable
           version: 3.10.4
-          
 
-#       - name: Add Flutter to PATH
-#         run: echo "${{ runner.workspace }}/flutter/bin" >> $GITHUB_PATH
-
-      - name: SonarQube Scan on User/Auth Backend
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+      - name: Set up SonarQube scanner
+        uses: sonarsource/sonar-scanner-cli@master
         with:
-          # Additional arguments for the sonarcloud scanner
-          args:
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
-            -Dsonar.sources=lib
-            -Dsonar.projectBaseDir=./WebshopFrontend
+          sonar-host-url: ${{ secrets.SONAR_HOST_URL }}
+          sonar-login: ${{ secrets.SONAR_TOKEN_FRONTEND }}
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
+          sonar-sources: ./WebshopFrontend/lib
+          sonar.exclusions: "**/*.g.dart"
+
 
 
             
