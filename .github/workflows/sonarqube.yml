@@ -84,9 +84,10 @@ jobs:
 
      runs-on: ubuntu-latest
      steps:
-      - uses: actions/checkout@v3
+      - name: Checkout files
+        uses: Bhacaz/checkout-files@v2
         with:
-          dir: ./WebshopFrontend
+         files: WebshopFrontend
       
          
       - name: Set Sonarqube Server Certificate
