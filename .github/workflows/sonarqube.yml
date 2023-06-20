@@ -110,13 +110,24 @@ jobs:
 #         uses: dart-lang/setup-dart@v1
 #         with:
 #           sdk: 'stable'
-          
-      - name: SonarQube Analysis
-        run: |
-          cd WebshopFrontend
-          flutter pub get # just in case
-          flutter test --machine --coverage > tests.output
-          sonar-scanner
+      - name: SonarQube Scan on User/Auth Backend
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+        with:
+          # Additional arguments for the sonarcloud scanner
+          args:
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
+            -Dsonar.sources=lib
+            -Dsonar.projectBaseDir=./WebshopFrontend
+#       - name: SonarQube Analysis
+#         run: |
+#           cd WebshopFrontend
+#           flutter pub get # just in case
+#           flutter test --machine --coverage > tests.output
+#           sonar-scanner
 
             
         
