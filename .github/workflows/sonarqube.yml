@@ -105,8 +105,11 @@ jobs:
           channel: stable
           version: 3.10.4
       
-      - name: Setup sonar scanner
-        uses: jwidauer/setup-sonar-scanner@v3
+      - name: Install SonarScanner
+        run: |
+          curl -sL "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip" -o sonar-scanner-cli.zip
+          unzip sonar-scanner-cli.zip
+          echo "export PATH=\$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin" >> $GITHUB_ENV
           
       - name: Scan Frontend
         run: |
