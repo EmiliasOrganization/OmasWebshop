@@ -114,7 +114,7 @@ jobs:
           # Additional arguments for the sonarcloud scanner
           args:
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
-            -Dsonar.projectBaseDir=./UserAndAuthBackend
+            -Dsonar.projectBaseDir=./WebshopFrontend
       
  
 
