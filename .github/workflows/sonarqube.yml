@@ -89,8 +89,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-         distribution: 'adopt'
-         java-version: '17'
+         distribution: 'zulu'
+         java-version: '12'
          
       - name: Set Sonarqube Server Certificate
         shell: bash
@@ -116,7 +116,7 @@ jobs:
          # Additional arguments for the sonarcloud scanner
          args:
            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
-           -Dsonar.projectBaseDir=WebshopFrontend
+           -Dsonar.projectBaseDir=./WebshopFrontend
 
             
         
