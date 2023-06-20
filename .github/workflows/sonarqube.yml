@@ -98,7 +98,13 @@ jobs:
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
-          
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # 11
+          flutter-version: "3.0.0"
+          channel: 'stable'   
           
       - name: SonarQube Scan on Frontend
         uses: sonarsource/sonarqube-scan-action@master
