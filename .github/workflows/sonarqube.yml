@@ -1,0 +1,117 @@
+name: SonarQube analysis
+
+on:
+  push:
+    branches: [ "dev", main ]
+  pull_request:
+    branches: [ "dev" ]
+  workflow_dispatch:
+
+permissions:
+  pull-requests: read 
+jobs:
+  
+  Check-Shop-Backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+         distribution: 'adopt'
+         java-version: '17'
+         
+          
+      - name: Set Sonarqube Server Certificate
+        shell: bash
+        run: |
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
+          openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
+          keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          
+      - name: SonarQube Scan Shop Backend
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SHOP_BACKEND }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          cd WebshopBackend
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_SHOP_BACKEND }}   
+          
+          
+          
+  Check-Auth-Backend:
+    # The type of runner that the job will run on
+     runs-on: ubuntu-latest
+     
+     steps:
+      - uses: actions/checkout@v3
+         
+      - name: Set Sonarqube Server Certificate
+        shell: bash
+        run: |
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
+          openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
+          sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit         
+          
+      - name: SonarQube Scan User/Auth Backend
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_AUTH_BACKEND }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+        with:
+          # Additional arguments for the sonarcloud scanner
+          args:
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_AUTH_BACKEND }}
+            -Dsonar.sources=src
+            -Dsonar.projectBaseDir=./UserAndAuthBackend
+
+
+  Check-Frontend:
+  
+    runs-on: ubuntu-latest
+    env:
+      SONAR_SCANNER_VERSION: '4.6.2.2472'
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install SonarScanner
+        run: |
+          mkdir $HOME/sonar-scanner
+          curl -L -o sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${{ env.SONAR_SCANNER_VERSION }}-linux.zip"
+          unzip sonar-scanner.zip -d $HOME/sonar-scanner
+          
+
+      - name: Set Sonarqube Server Certificate
+        run: |
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarqube.crt
+          echo "yes" | sudo keytool -importcert -keystore $HOME/sonar-scanner/sonar-scanner-${{ env.SONAR_SCANNER_VERSION }}-linux/jre/lib/security/cacerts -storepass changeit -alias sonarqube -file sonarqube.crt -noprompt
+
+      - name: Setup Flutter SDK   
+        uses: flutter-actions/setup-flutter@v2
+        with:
+          channel: stable
+          version: 3.10.4
+          
+      - name: SonarQube Scan Frontend
+        run: |
+         cd WebshopFrontend
+         flutter pub get
+         export PATH=$PATH:$HOME/sonar-scanner/sonar-scanner-${{ env.SONAR_SCANNER_VERSION }}-linux/bin
+         sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }} \
+            -Dsonar.sources=lib \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN_FRONTEND }}
+       
+ 
+
+
+
+
+
+            
+        
+
