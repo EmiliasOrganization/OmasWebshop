@@ -36,18 +36,18 @@ jobs:
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
           
           
-      - name: SonarQube Scan on Frontend
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
-        with:
-          # Additional arguments for the sonarcloud scanner
-          args:
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=lib,pubspec.yaml
-            -Dsonar.projectBaseDir=./WebshopFrontend
+#       - name: SonarQube Scan on Frontend
+#         uses: sonarsource/sonarqube-scan-action@master
+#         env:
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#           SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+#         with:
+#           # Additional arguments for the sonarcloud scanner
+#           args:
+#             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+#             -Dsonar.sources=lib,pubspec.yaml
+#             -Dsonar.projectBaseDir=./WebshopFrontend
             
             
       - name: SonarQube Scan Shop Backend
@@ -57,7 +57,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
           cd WebshopBackend
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_SHOP_BACKEND }}
         
         
       - name: SonarQube Scan on User Backend
@@ -69,7 +69,7 @@ jobs:
         with:
           # Additional arguments for the sonarcloud scanner
           args:
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_AUTH_BACKEND }}
             -Dsonar.sources=src
             -Dsonar.projectBaseDir=./UserAndAuthBackend
 
