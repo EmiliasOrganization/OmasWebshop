@@ -110,12 +110,9 @@ jobs:
       - name: SonarQube Analysis
         run: |
           cd WebshopFrontend
-          flutter pub global activate sonar
-          flutter pub global run sonar:sonar \
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN_SHOP_BACKEND }} \
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_AUTH_BACKEND }} \
-            -Dsonar.exclusions=**/*.g.dart,**/*.generated.dart
+          flutter pub get # just in case
+          flutter test --machine --coverage > tests.output
+          sonar-scanner
 
             
         
