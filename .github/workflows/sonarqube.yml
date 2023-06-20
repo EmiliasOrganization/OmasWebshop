@@ -103,13 +103,13 @@ jobs:
       - name: SonarQube Scan on Frontend
         uses: sonarsource/sonarqube-scan-action@master
         env:
-         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
         with:
          # Additional arguments for the sonarcloud scanner
          args:
-           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
            -Dsonar.sources=lib,pubspec.yaml
            -Dsonar.projectBaseDir=./WebshopFrontend
             
