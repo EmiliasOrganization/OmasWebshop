@@ -98,7 +98,11 @@ jobs:
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
-      
+          
+      - name: Install Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          dart-sdk: 'stable'
         
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
