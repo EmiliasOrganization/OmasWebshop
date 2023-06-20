@@ -8,13 +8,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: read # allows SonarQube to decorate PRs with analysis results
-
+  pull-requests: read 
 jobs:
-  Analysis:
+  
+  Check-Shop-Backend:
+   
     runs-on: ubuntu-latest
 
+    
     steps:
+     
       - uses: actions/checkout@v3
       
       - name: Set up JDK 17
@@ -28,12 +31,51 @@ jobs:
         with:
           maven-version: 3.9.2
           
-      - name: Set selfsinged Certificate
+      - name: Set Sonarqube Server Certificate
         shell: bash
         run: |
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          
+      - name: SonarQube Scan Shop Backend
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SHOP_BACKEND }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          cd WebshopBackend
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_SHOP_BACKEND }}   
+          
+          
+          
+  Check-Auth-Backend:
+    # The type of runner that the job will run on
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set Sonarqube Server Certificate
+        shell: bash
+        run: |
+          echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
+          openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
+          keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          
+          
+      - name: SonarQube Scan on User/Auth Backend
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_AUTH_BACKEND }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+        with:
+          # Additional arguments for the sonarcloud scanner
+          args:
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_AUTH_BACKEND }}
+            -Dsonar.sources=src
+            -Dsonar.projectBaseDir=./UserAndAuthBackend
+
           
           
 #       - name: SonarQube Scan on Frontend
@@ -49,27 +91,5 @@ jobs:
 #             -Dsonar.sources=lib,pubspec.yaml
 #             -Dsonar.projectBaseDir=./WebshopFrontend
             
-            
-      - name: SonarQube Scan Shop Backend
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SHOP_BACKEND }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: |
-          cd WebshopBackend
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_SHOP_BACKEND }}
         
-        
-      - name: SonarQube Scan on User Backend
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_AUTH_BACKEND }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
-        with:
-          # Additional arguments for the sonarcloud scanner
-          args:
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_AUTH_BACKEND }}
-            -Dsonar.sources=src
-            -Dsonar.projectBaseDir=./UserAndAuthBackend
 
