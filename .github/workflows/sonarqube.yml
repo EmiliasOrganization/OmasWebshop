@@ -112,6 +112,7 @@ jobs:
         run: |
          cd WebshopFrontend
          flutter pub get
+         export PATH=$PATH:$HOME/sonar-scanner/sonar-scanner-${{ env.SONAR_SCANNER_VERSION }}-linux/bin
          sonar-scanner \
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }} \
             -Dsonar.sources=lib \
