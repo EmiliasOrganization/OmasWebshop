@@ -89,8 +89,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-         distribution: 'zulu'
-         java-version: '12'
+         distribution: 'adopt'
+         java-version: '17'
          
       - name: Set Sonarqube Server Certificate
         shell: bash
@@ -99,6 +99,9 @@ jobs:
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
       
+      - name: Install Dart
+        run: sudo apt-get install dart
+        
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
