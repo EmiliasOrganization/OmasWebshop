@@ -110,6 +110,7 @@ jobs:
         run: |
           cd WebshopFrontend
           flutter pub get
+          flutter test — machine — coverage > tests.output
           sonar-scanner
 
 #       - name: Add Flutter to PATH
