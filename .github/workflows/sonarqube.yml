@@ -93,7 +93,7 @@ jobs:
           echo "${{ secrets.SONAR_ROOT_CERT }}" > sonarcert.pem
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           sudo chmod 666 $JAVA_HOME/lib/security/cacerts
-          yes | sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+          sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
           
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v2
