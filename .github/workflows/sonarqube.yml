@@ -94,7 +94,7 @@ jobs:
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           sudo chmod 666 $JAVA_HOME/lib/security/cacerts
           sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
-          
+          export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStore=$(pwd)/truststore.jks -Djavax.net.ssl.trustStorePassword=changeit"
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v2
         with:
