@@ -85,6 +85,8 @@ jobs:
      runs-on: ubuntu-latest
      steps:
       - uses: actions/checkout@v3
+        with:
+          dir: ./WebshopFrontend
       
          
       - name: Set Sonarqube Server Certificate
@@ -94,46 +96,27 @@ jobs:
           openssl x509 -outform der -in sonarcert.pem -out sonarcert.crt
           sudo chmod 666 $JAVA_HOME/lib/security/cacerts
           sudo keytool -import -noprompt -trustcacerts -alias SonarCube -file sonarcert.crt -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
-          export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStore=$(pwd)/truststore.jks -Djavax.net.ssl.trustStorePassword=changeit"
+
+
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v2
         with:
           channel: stable
           version: 3.10.4
-      
-      - name: Install SonarScanner
-        run: |
-         cd /tmp || exit
-          echo "Downloading sonar-scanner....."
-          if [ -d "/tmp/sonar-scanner-cli-4.7.0.2747-linux.zip" ];then
-              sudo rm /tmp/sonar-scanner-cli-4.7.0.2747-linux.zip
-          fi
-          wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-          echo "Download completed."
-
-          echo "Unziping downloaded file..."
-          unzip sonar-scanner-cli-4.7.0.2747-linux.zip
-          echo "Unzip completed."
-          rm sonar-scanner-cli-4.7.0.2747-linux.zip
-
-          echo "Installing to opt..."
-          if [ -d "/var/opt/sonar-scanner-4.7.0.2747-linux" ];then
-              sudo rm -rf /var/opt/sonar-scanner-4.7.0.2747-linux
-          fi
-          sudo mv sonar-scanner-4.7.0.2747-linux /var/opt
-
-          echo "Installation completed successfully."
           
-      - name: Scan Frontend
-        run: |
-         cd ./WebshopFrontend
-         flutter pub get
-         /var/opt/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN_FRONTEND }} \
-          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }} \
-          -Dsonar.sources=lib \
-          -Dsonar.exclusions="**/*.g.dart"
+      - name: SonarQube Scan on User/Auth Backend
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+        with:
+          # Additional arguments for the sonarcloud scanner
+          args:
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}
+      
+ 
+
 
 
 
