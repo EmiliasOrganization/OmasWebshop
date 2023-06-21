@@ -1,10 +1,20 @@
 # Artismanus
 Creation of webshop for handmade things
 
-# Services and Technologies
-Frontend -> Dart -> Flutter
-Shop Backend -> Spring Boot -> Java
-User Backend -> Rust -> Rocket
+## Services and Technologies <br />
+Frontend -> Dart -> Flutter  <br />
+Shop Backend -> Spring Boot -> Java <br />
+User Backend -> Rust -> Rocket  <br />
+
+## Installation process
+work in progress
+1. Install Docker / Docker Desktop
+2. Install Docker-Compose
+3. run Docker-Compose
+4. ...
+
+## Configuration
+
 
 ## Swagger
 Swagger User and Auth API: http://localhost:8000/swagger-ui/ <br />
