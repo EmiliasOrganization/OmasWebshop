@@ -3,7 +3,7 @@ Creation of webshop for handmade things
 
 ## Table of Contents
 
-- [Services and TEchnologies](#servicesandtechnologies)
+- [Services and Technologies](#servicesandtechnologies)
 - [Install](#install)
 - [Configuration](#configuration)
 - [Swagger](#Swagger)
