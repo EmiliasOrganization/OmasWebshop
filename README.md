@@ -30,4 +30,4 @@ Can be used while Running the Services locally Endpoints for the Services are li
 Swagger User and Auth API: http://localhost:8000/swagger-ui/ <br />
 Swagger Product API: http://localhost:8080/swagger-ui/index.html#/shop-controller/createPurchaseObject
 
-## Licence
+## License
