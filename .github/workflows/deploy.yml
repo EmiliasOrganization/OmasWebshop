@@ -1,0 +1,53 @@
+name: Nightly Deployment
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+    
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for changes in dev branch
+        id: check_changes
+        run: |
+          git fetch
+          CHANGED_FILES=$(git diff --name-only origin/dev)
+
+          if [[ -z "$CHANGED_FILES" ]]; then
+            echo "No changes in dev branch. Exiting..."
+            exit 0
+          fi
+      - name: Configure SSH
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+          ssh-host: ${{secrets.REMOTE_SU_HOST}}
+          
+      - name: Create .env file
+        run: |
+          touch .env
+          echo REGISTRY=${{ secrets.REGISTRY }} >> .env
+      
+      - name: Copy .env file
+        run: |
+           scp .env ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}}:
+      
+      - name: Copy compose file
+        run: |
+           scp docker-compose.yaml ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}}:
+           
+      - name: Stop Services
+        run: ssh ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}} 'docker compose down' || true
+        
+      - name: Pull newest images
+        run: ssh ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}} 'docker compose pull'
+      
+      - name: Restart Services
+        run: ssh ${{secrets.REMOTE_SU_USER}}@${{secrets.REMOTE_SU_HOST}} 'docker compose up -d'
