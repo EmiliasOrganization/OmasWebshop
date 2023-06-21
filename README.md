@@ -3,13 +3,13 @@ Creation of webshop for handmade things
 
 ## Table of Contents
 
+- [Services and TEchnologies](#servicesandtechnologies)
 - [Install](#install)
 - [Configuration](#configuration)
 - [Swagger](#Swagger)
-
-
-
 - [License](#license)
+
+
 ## Services and Technologies <br />
 Frontend -> Dart -> Flutter  <br />
 Shop Backend -> Spring Boot -> Java <br />
