@@ -18,7 +18,7 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: 345,
             width:  275,
             child: CachedNetworkImage(imageUrl: '$apiPathPicture${product.id}/image1',
@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
               fit: BoxFit.cover,),
           ),
           SizedBox(height: 5,),
-          Container(
+          SizedBox(
             width: 275,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

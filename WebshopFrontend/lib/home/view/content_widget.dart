@@ -16,7 +16,7 @@ class ContentsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return Container(
+    return SizedBox(
       height: screenHeight,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints)

@@ -6,23 +6,6 @@ import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
 
 import '../../../../constats.dart';
 
-class RoundetTextPictureProperties {
-  final double pictureSizeWidth;
-  final double pictureSizeHeight;
-  final String picture;
-  final String headLineText;
-  final String routePath;
-
-  const RoundetTextPictureProperties({
-    required this.pictureSizeWidth,
-    required this.pictureSizeHeight,
-    required this.picture,
-    required this.headLineText,
-    required this.routePath,
-  });
-}
-
-
 class HoverCart extends StatefulWidget {
   const HoverCart({Key? key}) : super(key: key);
 

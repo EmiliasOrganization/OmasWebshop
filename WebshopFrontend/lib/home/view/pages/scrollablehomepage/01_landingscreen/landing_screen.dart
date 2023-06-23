@@ -100,38 +100,36 @@ class _LandingScreenState extends State<LandingScreen>{
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      'Oma\'s Webshop',
-                      style: TextStyle(
-                        fontSize: fontSize.clamp(0, maxFontSizeHeadline),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  Text(
-                    'Dieser Text befindet sich in arbeit: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Oma\'s Webshop',
                     style: TextStyle(
-                      fontSize: fontSize.clamp(0, maxFontSizeText),
+                      fontSize: fontSize.clamp(0, maxFontSizeHeadline),
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Center(
-                    child: ElevatedButton(
-                      child: (Text('Zum Laden')),
-                      onPressed: () {
-                        itemScrollController.scrollTo(
-                            index: 1, duration: Duration(seconds: 1), curve: Curves.easeInOut);
-                      },
-                    ),
+                ),
+                SizedBox(height: 30),
+                Text(
+                  'Dieser Text befindet sich in arbeit: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+                  style: TextStyle(
+                    fontSize: fontSize.clamp(0, maxFontSizeText),
                   ),
-                ],
-              ),
+                ),
+                Center(
+                  child: ElevatedButton(
+                    child: (Text('Zum Laden')),
+                    onPressed: () {
+                      itemScrollController.scrollTo(
+                          index: 1, duration: Duration(seconds: 1), curve: Curves.easeInOut);
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 Future<void> loginDialog(BuildContext context) {
@@ -9,7 +9,7 @@ Future<void> loginDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: const  Text("Anmelden", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-        content: Container(
+        content: SizedBox(
           height: registrationHeight,
           width: registrationWidth,
           child: Column(

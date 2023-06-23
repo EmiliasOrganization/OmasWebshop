@@ -34,7 +34,7 @@ class Checkout extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               width: 400,
                               child: Column(
                                 children: [
@@ -67,7 +67,7 @@ class Checkout extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               SizedBox(width: 400),
-                              Container(
+                              SizedBox(
                                   width: 200,
                                   child: ElevatedButton(
                                       onPressed: (){},
@@ -94,14 +94,14 @@ class Checkout extends StatelessWidget {
                             SizedBox(height: screenHight*0.02),
                             Row(
                               children: [
-                                Container(
+                                SizedBox(
                                     width: 200,
                                     child: ElevatedButton(
                                         onPressed: (){},
                                         child: Text('Registrieren'))
                                 ),
                                 SizedBox(width: screenWidth*0.01),
-                                Container(
+                                SizedBox(
                                     width: 200,
                                     child: ElevatedButton(
                                         onPressed: (){},

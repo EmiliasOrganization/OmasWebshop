@@ -32,8 +32,7 @@ class WebShop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+
     return MaterialApp(
         title: 'Oma\'s Webshop',
         theme: ThemeData(

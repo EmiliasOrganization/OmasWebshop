@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 Future<void> registrationDialog(BuildContext context) {
@@ -9,7 +9,7 @@ Future<void> registrationDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: const  Text("Registrieren", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-        content: Container(
+        content: SizedBox(
           height: registrationHeight,
           width: registrationWidth,
           child: Column(

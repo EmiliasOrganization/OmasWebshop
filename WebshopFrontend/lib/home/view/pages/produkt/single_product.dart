@@ -56,7 +56,7 @@ class _ProductPageState extends State<ProductPage> {
                     children: [
                       SizedBox(height: double.infinity),
                       // Image Selection
-                      Container(
+                      SizedBox(
                         width: 90,
                         height: 600,
                         child: ListView.builder(
@@ -84,7 +84,7 @@ class _ProductPageState extends State<ProductPage> {
                         fit: BoxFit.fitHeight,),
                       SizedBox(width: 80),
                       // Product Details
-                      Container(
+                      SizedBox(
                         height: 600,
                         child: Padding(
                           padding: EdgeInsets.all(20),

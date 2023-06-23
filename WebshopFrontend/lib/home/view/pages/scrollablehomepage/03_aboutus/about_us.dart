@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -24,17 +23,15 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
 
   final List<Widget> imageSliders = imgList
       .map((item) => Container(
-    child: Container(
-      margin: EdgeInsets.all(5.0),
-      child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          child: Stack(
-            children: <Widget>[
-              Image.network(item, fit: BoxFit.cover, width: 1000.0),
-            ],
-          )),
-    ),
-  ))
+        margin: EdgeInsets.all(5.0),
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            child: Stack(
+              children: <Widget>[
+                Image.network(item, fit: BoxFit.cover, width: 1000.0),
+              ],
+            )),
+      ))
       .toList();
 
   @override

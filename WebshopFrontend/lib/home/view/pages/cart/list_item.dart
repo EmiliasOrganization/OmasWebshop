@@ -1,6 +1,5 @@
 
 
-import 'package:decimal/decimal.dart';
 import 'package:hive/hive.dart';
 
 

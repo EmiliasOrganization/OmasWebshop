@@ -1,5 +1,4 @@
 
-import 'dart:html';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decimal/decimal.dart';
@@ -9,10 +8,7 @@ import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/globalwidget/top_bar.dart';
 import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
 
-import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
-import 'package:flutterfrontend/main.dart';
 import 'package:provider/provider.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../constats.dart';
 import 'package:flutterfrontend/boxes.dart';
@@ -26,7 +22,6 @@ class ShoppingCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    const maxFontSizeHeadline = 30.0;
     const maxFontSizeText = 20.0;
     Decimal wholePrice = Decimal.parse('0');
     int screenHight = MediaQuery.of(context).size.height as int;
