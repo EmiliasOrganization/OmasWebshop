@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../constats.dart';
-import '../../../../globalwidget/roundet_text_picture.dart';
+import '../../../../../constats.dart';
+import '../../../../../globalwidget/roundet_text_picture.dart';
 
 class FirstShopScreen extends StatelessWidget {
 

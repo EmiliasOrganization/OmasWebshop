@@ -7,12 +7,10 @@ import 'package:flutterfrontend/home/view/pages/shoppingcart/shoppingcart.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'boxes.dart';
-import 'home/view/pages/cart/cart.dart';
 import 'home/view/pages/cart/cart_items.dart';
 import 'home/view/pages/checkout/checkout.dart';
-import 'home/view/pages/homepage/homepage.dart';
+import 'home/view/pages/scrollablehomepage/homepage_page_config.dart';
 import 'constats.dart';
-import 'home/view/pages/login/login.dart';
 import 'home/view/pages/produkt/product_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -46,7 +44,6 @@ class WebShop extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/shop': (context) => OnlyShopScreen(),
-        '/login': (context) => Login(),
         '/checkout': (context) => Checkout(),
         '/shoppingCart': (context) => ShoppingCart(),
 

@@ -6,9 +6,6 @@ import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_s
 import 'package:flutterfrontend/home/view/pages/shop/subcategory_buttons.dart';
 
 import '../../../../constats.dart';
-import 'package:decimal/decimal.dart';
-
-
 
 // Display the list of products in the UI
 class ProductListScreen extends StatefulWidget {

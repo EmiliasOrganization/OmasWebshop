@@ -1,16 +1,10 @@
-import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/boxes.dart';
 import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../boxes.dart';
-import '../../../../boxes.dart';
+
 import '../../../../constats.dart';
-import 'cart_items.dart';
-import 'package:hive/hive.dart';
 
 class RoundetTextPictureProperties {
   final double pictureSizeWidth;

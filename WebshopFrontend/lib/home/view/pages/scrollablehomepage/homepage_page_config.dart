@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage>{
                 itemBuilder: (BuildContext context, int index) {
                   return ContentsWidget(contentElements[index], itemScrollController: itemScrollController);
                 }),
-            // NavigationMenu(itemScrollController)
           ]),
         ),
       );
