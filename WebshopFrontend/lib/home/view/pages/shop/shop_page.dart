@@ -4,17 +4,20 @@ import 'package:flutterfrontend/home/view/pages/shop/product_cart.dart';
 import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
 import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_service.dart';
 import 'package:flutterfrontend/home/view/pages/shop/subcategory_buttons.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../constats.dart';
+import '../../../../globalwidget/top_bar.dart';
 
 // Display the list of products in the UI
-class ProductListScreen extends StatefulWidget {
+class ShopPage extends StatefulWidget {
   @override
-  _ProductListScreenState createState() => _ProductListScreenState();
+  _ShopPageState createState() => _ShopPageState();
 }
 
-class _ProductListScreenState extends State<ProductListScreen> {
+class _ShopPageState extends State<ShopPage> {
   late Future<List<ProductSummary>> _productListFuture;
+  ItemScrollController itemScrollController = ItemScrollController();
   late Category category = ModalRoute
       .of(context)!
       .settings
@@ -52,7 +55,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
     });
     _productListFuture = fetchProducts(category: newCategory, subCategory: newSubCategory);
-    return Row(
+    return Scaffold(
+        appBar: TopBar(itemScrollController: itemScrollController, ueberUns: false, title: 'Oma\'s Webshop',),
+       body: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
@@ -67,26 +72,24 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ],
         ),
         Expanded(
-          child: Container(
-              child: Column(
-                children: [
-                  Container(
-                    color: Colors.white,
-                    alignment: Alignment.bottomCenter,
-                      height: 90,
-                      child: SubCategoryButtonList(
-                        category: newCategory,
-                        onSubCategorySelected: _onSubCategorySelected, )),
-                  Expanded(
-                    child: ShopList(productListFuture: _productListFuture),
-                  ),
-                  Text(newSubCategory.toString()),
-                ],
-              )
+          child: Column(
+            children: [
+              Container(
+                color: Colors.white,
+                alignment: Alignment.bottomCenter,
+                  height: 90,
+                  child: SubCategoryButtonList(
+                    category: newCategory,
+                    onSubCategorySelected: _onSubCategorySelected, )),
+              Expanded(
+                child: ShopList(productListFuture: _productListFuture),
+              ),
+              Text(newSubCategory.toString()),
+            ],
           ),
         ),
-
       ],
+     )
     );
   }
 }
