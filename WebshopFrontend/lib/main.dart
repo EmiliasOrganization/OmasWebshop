@@ -2,18 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/home/view/pages/cart/list_item.dart';
 import 'package:flutterfrontend/home/view/pages/registration/verify.dart';
-import 'package:flutterfrontend/home/view/pages/shop/shop_screen.dart';
+import 'package:flutterfrontend/home/view/pages/shop/shop_page.dart';
 import 'package:flutterfrontend/home/view/pages/shoppingcart/shoppingcart.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'boxes.dart';
-import 'home/view/pages/cart/cart.dart';
 import 'home/view/pages/cart/cart_items.dart';
 import 'home/view/pages/checkout/checkout.dart';
-import 'home/view/pages/homepage/homepage.dart';
+import 'home/view/pages/scrollablehomepage/homepage_page_config.dart';
 import 'constats.dart';
-import 'home/view/pages/login/login.dart';
-import 'home/view/pages/produkt/product_page.dart';
+import 'home/view/pages/produkt/single_product.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async{
@@ -34,10 +32,9 @@ class WebShop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
+
     return MaterialApp(
-        title: 'Oma\'s Webshop',
+        title: title,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: schemeColorMistyRose),
@@ -45,8 +42,7 @@ class WebShop extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/shop': (context) => OnlyShopScreen(),
-        '/login': (context) => Login(),
+        '/shop': (context) => ShopPage(),
         '/checkout': (context) => Checkout(),
         '/shoppingCart': (context) => ShoppingCart(),
 

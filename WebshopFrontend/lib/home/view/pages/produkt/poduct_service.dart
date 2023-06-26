@@ -9,7 +9,7 @@ Future<ProductSummary> fetchProduct(String id) async {
 
   http.Response response;
 
-  response = await http.get(Uri.parse(apiPathProductData + id));
+  response = await http.get(Uri.parse('$shopApi/productSummary/$id'));
   if (response.statusCode == 200) {
     final dynamic json = jsonDecode(response.body);
     return ProductSummary(
@@ -28,7 +28,7 @@ Future<ProductSummary> fetchProduct(String id) async {
 Future<int>imageCount(String id) async {
   http.Response response;
 
-  response = await http.get(Uri.parse(apiPathImageCount + id));
+  response = await http.get(Uri.parse('$shopApi/count/$id'));
   if (response.statusCode == 200) {
     final dynamic count = response.body;
     return int.parse(count);

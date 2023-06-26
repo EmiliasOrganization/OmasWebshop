@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import 'pages/aboutus/about_us.dart';
-import 'pages/landingscreen/landing_screen.dart';
-import 'pages/shop/landing_shop_overview.dart';
-
+import 'pages/scrollablehomepage/01_landingscreen/landing_screen.dart';
+import 'pages/scrollablehomepage/02_shoppingElements/landing_shop_overview.dart';
+import 'pages/scrollablehomepage/03_aboutus/about_us.dart';
 
 class ContentsWidget extends StatelessWidget {
 
@@ -17,7 +16,7 @@ class ContentsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return Container(
+    return SizedBox(
       height: screenHeight,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints)

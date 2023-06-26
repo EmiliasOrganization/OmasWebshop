@@ -13,14 +13,14 @@ Future<List<ProductSummary>> fetchProducts({Category category = Category.EMPTY,S
 
   if(subCategory != SubCategory.EMPTY){
     if(category != Category.EMPTY){
-      response = await http.get(Uri.parse('$apiPathCategoryAndOrSubCategory/$categoryEnumName/$subCategoryEnumName'));
+      response = await http.get(Uri.parse('$shopApi/category/$categoryEnumName/$subCategoryEnumName'));
     }
-    else {response = await http.get(Uri.parse('$apiPathOnlySubCategory/$subCategoryEnumName'));}
+    else {response = await http.get(Uri.parse('$shopApi/subcategory/$subCategoryEnumName'));}
   } else
     if(category != Category.EMPTY){
-    response = await http.get(Uri.parse('$apiPathCategoryAndOrSubCategory/$categoryEnumName'));
+    response = await http.get(Uri.parse('$shopApi/category/$categoryEnumName'));
   }
-  else {response = await http.get(Uri.parse(apiPathProductSummary));}
+  else {response = await http.get(Uri.parse('$shopApi/all'));}
 
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
