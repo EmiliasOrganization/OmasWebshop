@@ -113,7 +113,7 @@ class ShoppingCart extends StatelessWidget {
                                     ));
                               }, icon: Icon(Icons.delete ,color: Colors.red)),
                               leading: CachedNetworkImage(
-                                imageUrl: '$apiPathPicture${listItem.id}/image1',
+                                imageUrl: '$shopApi/picture/${listItem.id}/image1',
                                 placeholder: (context, url) =>
                                     CircularProgressIndicator(),
                                 errorWidget: (context, url, error) => Icon(Icons.error),

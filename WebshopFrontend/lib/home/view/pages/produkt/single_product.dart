@@ -64,7 +64,7 @@ class _ProductPageState extends State<ProductPage> {
                           // Replace with the actual number of images
                           itemBuilder: (context, index) {
                             return CachedNetworkImage(
-                                imageUrl: '$apiPathPicture${widget
+                                imageUrl: '$shopApi/picture/${widget
                                     .productId}/image${index + 1}',
                                 placeholder: (context, url) =>
                                     CircularProgressIndicator(),
@@ -75,7 +75,7 @@ class _ProductPageState extends State<ProductPage> {
                       SizedBox(width: 20),
                       // Big Product Image
                       CachedNetworkImage(
-                        imageUrl: '$apiPathPicture${widget.productId}/image1',
+                        imageUrl: '$shopApi/picture/${widget.productId}/image1',
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),

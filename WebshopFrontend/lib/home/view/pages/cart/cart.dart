@@ -23,7 +23,7 @@ class _HoverCartState extends State<HoverCart> {
           ListItem listItem = boxItemLists.getAt(index);
           return ListTile(
             leading: CachedNetworkImage(
-              imageUrl: '$apiPathPicture${listItem.id}/image1',
+              imageUrl: '$shopApi/picture/${listItem.id}/image1',
               placeholder: (context, url) =>
                 CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
