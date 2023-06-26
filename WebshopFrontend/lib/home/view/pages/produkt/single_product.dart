@@ -56,7 +56,7 @@ class _ProductPageState extends State<ProductPage> {
                     children: [
                       SizedBox(height: double.infinity),
                       // Image Selection
-                      Container(
+                      SizedBox(
                         width: 90,
                         height: 600,
                         child: ListView.builder(
@@ -64,7 +64,7 @@ class _ProductPageState extends State<ProductPage> {
                           // Replace with the actual number of images
                           itemBuilder: (context, index) {
                             return CachedNetworkImage(
-                                imageUrl: '$apiPathPicture${widget
+                                imageUrl: '$shopApi/picture/${widget
                                     .productId}/image${index + 1}',
                                 placeholder: (context, url) =>
                                     CircularProgressIndicator(),
@@ -75,7 +75,7 @@ class _ProductPageState extends State<ProductPage> {
                       SizedBox(width: 20),
                       // Big Product Image
                       CachedNetworkImage(
-                        imageUrl: '$apiPathPicture${widget.productId}/image1',
+                        imageUrl: '$shopApi/picture/${widget.productId}/image1',
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
@@ -84,7 +84,7 @@ class _ProductPageState extends State<ProductPage> {
                         fit: BoxFit.fitHeight,),
                       SizedBox(width: 80),
                       // Product Details
-                      Container(
+                      SizedBox(
                         height: 600,
                         child: Padding(
                           padding: EdgeInsets.all(20),

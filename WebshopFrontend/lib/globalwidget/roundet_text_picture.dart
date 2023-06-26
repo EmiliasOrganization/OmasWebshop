@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 import '../constats.dart';
@@ -40,7 +40,7 @@ class RoundetTextPicture extends StatelessWidget {
             arguments: properties.category
         );
       },
-      child: Container(
+      child: SizedBox(
         width: properties.pictureSizeWidth,
         height: properties.pictureSizeHeight,
         child: ClipRRect(

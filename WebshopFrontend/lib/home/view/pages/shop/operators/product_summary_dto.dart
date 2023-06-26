@@ -9,8 +9,6 @@ class ProductSummary {
   String? subCategory;
   Decimal price;
 
-  // double price;
-
   ProductSummary({required this.name,  this.description, required this.id, this.category, this.subCategory, required this.price});
 
   factory ProductSummary.fromJson(Map<String, dynamic> json) {

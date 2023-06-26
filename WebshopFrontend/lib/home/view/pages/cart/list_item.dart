@@ -1,8 +1,6 @@
 
 
-import 'package:decimal/decimal.dart';
 import 'package:hive/hive.dart';
-
 
 part 'list_item.g.dart';
 
@@ -12,7 +10,12 @@ part 'list_item.g.dart';
 class ListItem {
 
 
-  ListItem({required this.id, required this.name, required this.description, required this.price});
+  ListItem({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.price
+  });
 
 
   @HiveField(0)

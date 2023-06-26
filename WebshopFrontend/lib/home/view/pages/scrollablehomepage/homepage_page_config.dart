@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutterfrontend/home/view/pages/cart/cart_items.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:vitality/models/ItemBehaviour.dart';
 import 'package:vitality/vitality.dart';
@@ -25,6 +24,7 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context)  =>
 
+  //set Page View
       CenteredView(
         child: Scaffold(
           appBar: TopBar(itemScrollController: itemScrollController, ueberUns: true ),
@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage>{
               Colors.grey,
             ],
             ),
+            //Set Scollcontroller
             ScrollablePositionedList.builder(
                 minCacheExtent: 0,
                 itemCount: 3,
@@ -51,7 +52,6 @@ class _HomePageState extends State<HomePage>{
                 itemBuilder: (BuildContext context, int index) {
                   return ContentsWidget(contentElements[index], itemScrollController: itemScrollController);
                 }),
-            // NavigationMenu(itemScrollController)
           ]),
         ),
       );

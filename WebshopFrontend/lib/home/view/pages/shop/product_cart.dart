@@ -18,16 +18,16 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: 345,
             width:  275,
-            child: CachedNetworkImage(imageUrl: '$apiPathPicture${product.id}/image1',
+            child: CachedNetworkImage(imageUrl: '$shopApi/picture/${product.id}/image1',
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,),
           ),
           SizedBox(height: 5,),
-          Container(
+          SizedBox(
             width: 275,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

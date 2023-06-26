@@ -43,7 +43,7 @@ class _CheckoutState extends State<Checkout> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               width: 400,
                               child: Column(
                                 children: [
@@ -78,7 +78,7 @@ class _CheckoutState extends State<Checkout> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               SizedBox(width: 400),
-                              Container(
+                              SizedBox(
                                   width: 200,
                                   child: ElevatedButton(
                                       onPressed: () async {
@@ -123,7 +123,7 @@ class _CheckoutState extends State<Checkout> {
                             SizedBox(height: screenHight*0.02),
                             Row(
                               children: [
-                                Container(
+                                SizedBox(
                                     width: 200,
                                     child: ElevatedButton(
                                         onPressed: (){
@@ -132,7 +132,7 @@ class _CheckoutState extends State<Checkout> {
                                         child: Text('Registrieren'))
                                 ),
                                 SizedBox(width: screenWidth*0.01),
-                                Container(
+                                SizedBox(
                                     width: 200,
                                     child: ElevatedButton(
                                         onPressed: (){},
