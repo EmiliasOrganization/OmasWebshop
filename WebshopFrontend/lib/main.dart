@@ -34,7 +34,7 @@ class WebShop extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-        title: 'Oma\'s Webshop',
+        title: title,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: schemeColorMistyRose),

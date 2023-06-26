@@ -83,16 +83,7 @@ Future<void> registrationDialog(BuildContext context) {
             style: TextButton.styleFrom(
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            child: const Text('Disable'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Enable'),
+            child: const Text('Registrieren'),
             onPressed: () {
               Navigator.of(context).pop();
             },

@@ -56,7 +56,7 @@ class _ShopPageState extends State<ShopPage> {
     });
     _productListFuture = fetchProducts(category: newCategory, subCategory: newSubCategory);
     return Scaffold(
-        appBar: TopBar(itemScrollController: itemScrollController, ueberUns: false, title: 'Oma\'s Webshop',),
+        appBar: TopBar(itemScrollController: itemScrollController, ueberUns: false, title: true,),
        body: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

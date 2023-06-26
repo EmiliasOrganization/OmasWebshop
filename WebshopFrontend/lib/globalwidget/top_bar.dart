@@ -11,7 +11,7 @@ import '../home/view/pages/cart/cart_items.dart';
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final ItemScrollController? itemScrollController;
   final bool ueberUns;
-  final String? title;
+  final bool? title;
   final int? itemCount;
 
   const TopBar({
@@ -50,7 +50,7 @@ class _TopBarState extends State<TopBar> {
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: AppBar(
-        title: widget.title != null ? Text(widget.title!) : null,
+        title: widget.title == true ? Text(title) : null,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4),
           child: Container(

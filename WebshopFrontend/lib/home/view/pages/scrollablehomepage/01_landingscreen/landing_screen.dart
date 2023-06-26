@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/constats.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 
@@ -53,7 +54,7 @@ class _LandingScreenState extends State<LandingScreen>{
             ),
             SizedBox(height: 30),
             Text(
-              'Oma\'s Webshop',
+              title,
               style: TextStyle(
                 fontSize: fontSize.clamp(0, maxFontSizeHeadline) * 0.8,
                 fontWeight: FontWeight.bold,
@@ -106,7 +107,7 @@ class _LandingScreenState extends State<LandingScreen>{
               children: <Widget>[
                 Center(
                   child: Text(
-                    'Oma\'s Webshop',
+                    title,
                     style: TextStyle(
                       fontSize: fontSize.clamp(0, maxFontSizeHeadline),
                       fontWeight: FontWeight.bold,
