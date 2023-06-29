@@ -44,12 +44,9 @@ class _TopBarState extends State<TopBar> {
     Provider.of<CartProvider>(context);
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight),
-      child: AppBar(
+    return  AppBar(
         title: widget.title == true ? Text(title) : null,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4),
@@ -82,7 +79,6 @@ class _TopBarState extends State<TopBar> {
               ), onPressed: () {}
           ),
         ],
-      ),
     );
   }
 }

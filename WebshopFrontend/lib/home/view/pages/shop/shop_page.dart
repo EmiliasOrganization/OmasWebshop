@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterfrontend/globalwidget/centered_view.dart';
 import 'package:flutterfrontend/home/view/pages/shop/category_buttons.dart';
 import 'package:flutterfrontend/home/view/pages/shop/product_cart.dart';
 import 'package:flutterfrontend/home/view/pages/shop/operators/product_summary_dto.dart';
@@ -55,41 +56,43 @@ class _ShopPageState extends State<ShopPage> {
 
     });
     _productListFuture = fetchProducts(category: newCategory, subCategory: newSubCategory);
-    return Scaffold(
-        appBar: TopBar(itemScrollController: itemScrollController, ueberUns: false, title: true,),
-       body: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 40),
-              child: ButtonList(
-                  category: category,
-                  onCategorySelected: _onCategorySelected),),
-            //  ShopList(productListFuture: _productListFuture),
-          ],
-        ),
-        Expanded(
-          child: Column(
+    return CenteredView(
+      child: Scaffold(
+          appBar: TopBar(itemScrollController: itemScrollController, ueberUns: false, title: true,),
+         body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                color: Colors.white,
-                alignment: Alignment.bottomCenter,
-                  height: 90,
-                  child: SubCategoryButtonList(
-                    category: newCategory,
-                    onSubCategorySelected: _onSubCategorySelected, )),
-              Expanded(
-                child: ShopList(productListFuture: _productListFuture),
-              ),
-              Text(newSubCategory.toString()),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 40),
+                child: ButtonList(
+                    category: category,
+                    onCategorySelected: _onCategorySelected),),
+              //  ShopList(productListFuture: _productListFuture),
             ],
           ),
-        ),
-      ],
-     )
+          Expanded(
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.white,
+                  alignment: Alignment.bottomCenter,
+                    height: 90,
+                    child: SubCategoryButtonList(
+                      category: newCategory,
+                      onSubCategorySelected: _onSubCategorySelected, )),
+                Expanded(
+                  child: ShopList(productListFuture: _productListFuture),
+                ),
+                Text(newSubCategory.toString()),
+              ],
+            ),
+          ),
+        ],
+       )
+      ),
     );
   }
 }

@@ -42,17 +42,13 @@ class WebShop extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/shop': (context) => ShopPage(),
-        '/checkout': (context) => Checkout(),
-        '/shoppingCart': (context) => ShoppingCart(),
-
       },
       /** dynamic routing */
       onGenerateRoute: (RouteSettings settings) {
         if (settings.name!.startsWith('/product/')) {
           final productId = settings.name!.split('/').last;
-          return MaterialPageRoute(
-            builder: (context) => ProductPage(productId: productId),
+          return PageRouteBuilder(pageBuilder: (_, __, ___) =>
+              ProductPage(productId: productId),
           );
         }
         if (settings.name!.startsWith('/verify/')) {
@@ -61,7 +57,15 @@ class WebShop extends StatelessWidget {
             builder: (context) => Verify(token: token),
           );
         }
-        return null;
+        if (settings.name == '/shop') {
+          return PageRouteBuilder(pageBuilder: (_, __, ___) => ShopPage());
+        }
+        if (settings.name == '/checkout') {
+          return PageRouteBuilder(pageBuilder: (_, __, ___) => Checkout());
+        }
+        if (settings.name == '/shoppingCart') {
+          return PageRouteBuilder(pageBuilder: (_, __, ___) => ShoppingCart());
+        }
       },
     );
   }

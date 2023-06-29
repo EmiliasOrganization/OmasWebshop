@@ -67,8 +67,7 @@ class _CountButtonWithPopupState extends State<CountButtonWithPopup> with Ticker
                   icon: Icon(Icons.shopping_cart),
                   color: schemeColorGreen,
                   onPressed:() {
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ShoppingCart()),);
+                Navigator.pushNamed(context, '/shoppingCart');
                   }, // Replace with your desired onPressed function
                 ),
                 if(boxItemLists.length > 0)
