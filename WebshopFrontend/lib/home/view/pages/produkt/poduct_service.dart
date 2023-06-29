@@ -28,7 +28,7 @@ Future<ProductSummary> fetchProduct(String id) async {
 Future<int>imageCount(String id) async {
   http.Response response;
 
-  response = await http.get(Uri.parse('$shopApi/count/$id'));
+  response = await http.get(Uri.parse('$shopApi/picture/count/$id'));
   if (response.statusCode == 200) {
     final dynamic count = response.body;
     return int.parse(count);
