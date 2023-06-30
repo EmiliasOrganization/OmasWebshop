@@ -15,12 +15,12 @@ class LoginButton extends StatelessWidget {
           icon: Icon(Icons.person),
           color: schemeColorGreen,
           onPressed: () {
-            showPopupMenu(context);
+            showLoginRegistrationMenu(context);
           },
     );
   }
 
-  void showPopupMenu(BuildContext context) {
+  void showLoginRegistrationMenu(BuildContext context) {
     final RenderBox button = context.findRenderObject() as RenderBox;
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
 

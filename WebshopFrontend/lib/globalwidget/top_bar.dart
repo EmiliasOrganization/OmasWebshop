@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:flutterfrontend/globalwidget/login_registration_button.dart';
 import 'package:flutterfrontend/globalwidget/popups/count_button_with_popup.dart';
+import 'package:flutterfrontend/globalwidget/shoppingcart_popup_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../home/view/pages/cart/cart_items.dart';
@@ -66,8 +67,8 @@ class _TopBarState extends State<TopBar> {
               },
             ),
           SizedBox(width: 8),
+          ShoppingCartButton(),
           CountButtonWithPopup(),
-
           SizedBox(width: 8),
           LoginButton(),
           SizedBox(width: 8),
