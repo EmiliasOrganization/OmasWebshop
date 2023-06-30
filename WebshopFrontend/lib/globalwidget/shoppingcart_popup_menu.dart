@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../boxes.dart';
@@ -74,7 +75,7 @@ class ShoppingCartButton extends StatelessWidget {
             ),
             trailing: ElevatedButton(
               onPressed: () {
-                // Hier kannst du die Aktion definieren, die beim Drücken des Buttons ausgeführt wird
+                Navigator.pushNamed(context, '/shop');
               },
               child: Text('Zum Shop'),
             ),
@@ -82,10 +83,25 @@ class ShoppingCartButton extends StatelessWidget {
         ),
       );
     }
+    createElementTile(String name, String id){
+      return ListTile(
+        leading: CachedNetworkImage(
+          imageUrl: '$shopApi/picture/$id/image1',
+          placeholder: (context, url) =>
+              CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+          height: 50,
+          width: 50,
+          fit: BoxFit.fitHeight,),
+        title: Text(name),
+        subtitle: Text(id),
+
+      );
+    }
 
     getItems() async {
 
-      _itemList.addAll(boxItemLists.values.map((e) => PopupMenuItem<String>(value: e.id , child: Text(e.name),)).toList());
+      _itemList.addAll(boxItemLists.values.map((e) => PopupMenuItem<String>(value: e.id , child: createElementTile(e.name, e.id),)).toList());
       if(_itemList.length <= 1){
         _itemList.removeLast();
         emptyShoppingCart();
