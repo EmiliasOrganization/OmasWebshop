@@ -8,13 +8,34 @@ class ShoppingCartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  IconButton(
-      icon: Icon(Icons.shopping_cart),
-      color: schemeColorGreen,
-      onPressed: () {
-        showShoppingCartElements(context);
-      },
+    return  Stack(
+      alignment: Alignment.topRight,
+      children: [
+        IconButton(
+          icon: Icon(Icons.shopping_cart),
+          color: schemeColorGreen,
+          onPressed:() {
+            showShoppingCartElements(context);
+          },
+        ),
+        if(boxItemLists.length > 0)
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              boxItemLists.length.toString(),
+              style: TextStyle(
+                color: schemeColorGreen,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ),
+
+      ],
     );
+
   }
 
   showShoppingCartElements(BuildContext context) {
@@ -26,23 +47,49 @@ class ShoppingCartButton extends StatelessWidget {
     _itemList.add(
       PopupMenuItem<String>(
         value: 'checkout',
+        enabled: false,
         child: ListTile(
           leading: Text('Zur Kasse'),
           trailing: ElevatedButton(
-            onPressed: () {
-              // Handle the button click event here
-              // For example, navigate to the checkout screen
+            onPressed: ()
+            {
+              Navigator.pushNamed(context, '/shoppingCart');
             },
             child: Text('Bezahlen'),
           ),
         ),
-        enabled: false,
       ),
     );
+
+    emptyShoppingCart()
+    {
+      _itemList.add(
+        PopupMenuItem<String>(
+          value: 'checkout',
+          enabled: false,
+          child: ListTile(
+            title: Text(
+              'Dein Warenkorb ist leer. Füge Produkte hinzu.',
+              style: TextStyle(fontSize: 18),
+            ),
+            trailing: ElevatedButton(
+              onPressed: () {
+                // Hier kannst du die Aktion definieren, die beim Drücken des Buttons ausgeführt wird
+              },
+              child: Text('Zum Shop'),
+            ),
+          )
+        ),
+      );
+    }
 
     getItems() async {
 
       _itemList.addAll(boxItemLists.values.map((e) => PopupMenuItem<String>(value: e.id , child: Text(e.name),)).toList());
+      if(_itemList.length <= 1){
+        _itemList.removeLast();
+        emptyShoppingCart();
+      }
     }
 
     final RelativeRect position = RelativeRect.fromRect(
@@ -58,7 +105,6 @@ class ShoppingCartButton extends StatelessWidget {
       context: context,
       position: position,
       items: _itemList
-
     );
 
   }

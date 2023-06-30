@@ -68,7 +68,7 @@ class _TopBarState extends State<TopBar> {
             ),
           SizedBox(width: 8),
           ShoppingCartButton(),
-          CountButtonWithPopup(),
+         // CountButtonWithPopup(),
           SizedBox(width: 8),
           LoginButton(),
           SizedBox(width: 8),
