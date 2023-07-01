@@ -130,20 +130,6 @@ class ShoppingCartButton extends StatelessWidget {
           ),
         )
       );
-          // ListTile(
-          //   title: Text(
-          //     'Dein Warenkorb ist leer. Füge Produkte hinzu.',
-          //     style: TextStyle(fontSize: 18),
-          //   ),
-          //   trailing: ElevatedButton(
-          //     onPressed: () {
-          //       Navigator.pushNamed(context, '/shop');
-          //     },
-          //     child: Text('Zum Shop'),
-          //   ),
-          // )
-
-
     }
     createElementTile(String name, String id, String price){
       return ListTile(
@@ -171,7 +157,6 @@ class ShoppingCartButton extends StatelessWidget {
                 child: Text('Entfernen'))
           ],
         ),
-
       );
     }
 
@@ -196,7 +181,7 @@ class ShoppingCartButton extends StatelessWidget {
     getItems();
     showMenu<String>(
       clipBehavior: Clip.hardEdge,
-      constraints: BoxConstraints(minWidth: 500, maxWidth: 550,maxHeight: 250),
+      constraints: BoxConstraints(minWidth: 500, maxWidth: 550,maxHeight: 275),
       context: context,
       position: position,
       items: _itemList
