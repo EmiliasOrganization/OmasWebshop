@@ -16,7 +16,8 @@ class ShoppingCartButton extends StatelessWidget {
           icon: Icon(Icons.shopping_cart),
           color: schemeColorGreen,
           onPressed:() {
-            showShoppingCartElements(context);
+            //getElements(context);
+           showShoppingCartElements(context);
           },
         ),
         if(boxItemLists.length > 0)
@@ -47,6 +48,7 @@ class ShoppingCartButton extends StatelessWidget {
     // to Ckeckout List Element
     _itemList.add(
       PopupMenuItem<String>(
+
         value: 'checkout',
         enabled: false,
         child: ListTile(
@@ -99,7 +101,7 @@ class ShoppingCartButton extends StatelessWidget {
             TextButton(
               style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                      // overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                       overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.grey),
           ),
                 onPressed: ()
@@ -133,11 +135,91 @@ class ShoppingCartButton extends StatelessWidget {
 
     getItems();
     showMenu<String>(
+      clipBehavior: Clip.hardEdge,
+      constraints: BoxConstraints(minWidth: 350, maxWidth: 800,maxHeight: 250),
       context: context,
       position: position,
       items: _itemList
     );
 
-  }
 
+  }
+  getElements(BuildContext context)
+  {
+    CustomPopup(
+      items: [1, 2, 3, 4, 5, 6, 7, 8],
+      builderFunction: (context, item) {
+        return ListTile(
+            title: Text(item.toString()),
+            onTap: () {}
+        );
+      },
+    );
+  }
+}
+
+class CartPopUp extends StatefulWidget {
+
+  const CartPopUp({super.key});
+
+  @override
+  State<CartPopUp> createState() => _CartPopUpState();
+}
+
+class _CartPopUpState extends State<CartPopUp> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomPopup(
+            items: [1, 2, 3, 4, 5, 6, 7, 8],
+            builderFunction: (context, item) {
+              return ListTile(
+                  title: Text(item.toString()),
+                  onTap: () {}
+              );
+            },
+          );
+  }
+}
+
+
+class CustomPopup extends StatefulWidget {
+
+  CustomPopup({
+    required this.items,
+    required this.builderFunction,
+  });
+  
+  final List<dynamic> items;
+  final Function(BuildContext context, dynamic item) builderFunction;
+
+  @override
+  _CustomPopupState createState() => _CustomPopupState();
+}
+class _CustomPopupState extends State<CustomPopup> {
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        height: MediaQuery.of(context).size.height / 3,
+        width: MediaQuery.of(context).size.width / 3,
+        child: Card(
+          elevation: 3,
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: widget.items.length,
+              itemBuilder: (context, index) {
+                Widget item = widget.builderFunction(
+                  context,
+                  widget.items[index],
+                );
+                return item;
+              },
+            ),
+          ),
+        ),
+    );
+  }
 }
