@@ -83,7 +83,7 @@ class ShoppingCartButton extends StatelessWidget {
         ),
       );
     }
-    createElementTile(String name, String id){
+    createElementTile(String name, String id, String price){
       return ListTile(
         leading: CachedNetworkImage(
           imageUrl: '$shopApi/picture/$id/image1',
@@ -94,14 +94,28 @@ class ShoppingCartButton extends StatelessWidget {
           width: 50,
           fit: BoxFit.fitHeight,),
         title: Text(name),
-        subtitle: Text(id),
+        subtitle: Row(
+          children: [
+            TextButton(
+              style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      // overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+          ),
+                onPressed: ()
+            {
+                boxItemLists.delete(id);
+            },
+                child: Text('Entfernen'))
+          ],
+        ),
 
       );
     }
 
     getItems() async {
 
-      _itemList.addAll(boxItemLists.values.map((e) => PopupMenuItem<String>(value: e.id , child: createElementTile(e.name, e.id),)).toList());
+      _itemList.addAll(boxItemLists.values.map((e) => PopupMenuItem<String>(value: e.id , child: createElementTile(e.name, e.id, e.price),)).toList());
       if(_itemList.length <= 1){
         _itemList.removeLast();
         emptyShoppingCart();
@@ -112,6 +126,7 @@ class ShoppingCartButton extends StatelessWidget {
       Rect.fromPoints(
         button.localToGlobal(Offset(0, 50), ancestor: overlay),
         button.localToGlobal(button.size.bottomRight(Offset.zero), ancestor: overlay),
+
       ),
       Offset.zero & overlay.size,
     );
