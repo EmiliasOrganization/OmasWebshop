@@ -68,22 +68,82 @@ class ShoppingCartButton extends StatelessWidget {
     {
       _itemList.add(
         PopupMenuItem<String>(
-          value: 'checkout',
+          value: 'noProduct',
           enabled: false,
-          child: ListTile(
-            title: Text(
-              'Dein Warenkorb ist leer. Füge Produkte hinzu.',
-              style: TextStyle(fontSize: 18),
+          child: SizedBox(
+            width: double.infinity,
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: 1.0,
+                    child: Icon(
+                      Icons.shopping_cart,
+                      color: schemeColorGreen,
+                      size: 50,
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      'DEIN WARENKORB IST LEER',
+                      style: TextStyle(
+                        color: schemeColorGreen,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Text(
+                    'Finde schöne Produkte die zu dir passen.',
+                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                  ),
+                  SizedBox(height: 10,),
+                  OutlinedButton(
+                      onPressed: ()
+                  {
+                      Navigator.pushNamed(context, '/shop');
+                  },
+
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                      child: Text('Zum Shop', style: TextStyle(fontSize: 25),) ),
+
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02)
+                ],
+              ),
             ),
-            trailing: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/shop');
-              },
-              child: Text('Zum Shop'),
-            ),
-          )
-        ),
+          ),
+        )
       );
+          // ListTile(
+          //   title: Text(
+          //     'Dein Warenkorb ist leer. Füge Produkte hinzu.',
+          //     style: TextStyle(fontSize: 18),
+          //   ),
+          //   trailing: ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.pushNamed(context, '/shop');
+          //     },
+          //     child: Text('Zum Shop'),
+          //   ),
+          // )
+
+
     }
     createElementTile(String name, String id, String price){
       return ListTile(
@@ -136,90 +196,12 @@ class ShoppingCartButton extends StatelessWidget {
     getItems();
     showMenu<String>(
       clipBehavior: Clip.hardEdge,
-      constraints: BoxConstraints(minWidth: 350, maxWidth: 800,maxHeight: 250),
+      constraints: BoxConstraints(minWidth: 500, maxWidth: 550,maxHeight: 250),
       context: context,
       position: position,
       items: _itemList
     );
 
 
-  }
-  getElements(BuildContext context)
-  {
-    CustomPopup(
-      items: [1, 2, 3, 4, 5, 6, 7, 8],
-      builderFunction: (context, item) {
-        return ListTile(
-            title: Text(item.toString()),
-            onTap: () {}
-        );
-      },
-    );
-  }
-}
-
-class CartPopUp extends StatefulWidget {
-
-  const CartPopUp({super.key});
-
-  @override
-  State<CartPopUp> createState() => _CartPopUpState();
-}
-
-class _CartPopUpState extends State<CartPopUp> {
-  @override
-  Widget build(BuildContext context) {
-    return CustomPopup(
-            items: [1, 2, 3, 4, 5, 6, 7, 8],
-            builderFunction: (context, item) {
-              return ListTile(
-                  title: Text(item.toString()),
-                  onTap: () {}
-              );
-            },
-          );
-  }
-}
-
-
-class CustomPopup extends StatefulWidget {
-
-  CustomPopup({
-    required this.items,
-    required this.builderFunction,
-  });
-  
-  final List<dynamic> items;
-  final Function(BuildContext context, dynamic item) builderFunction;
-
-  @override
-  _CustomPopupState createState() => _CustomPopupState();
-}
-class _CustomPopupState extends State<CustomPopup> {
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-        duration: Duration(milliseconds: 300),
-        height: MediaQuery.of(context).size.height / 3,
-        width: MediaQuery.of(context).size.width / 3,
-        child: Card(
-          elevation: 3,
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: widget.items.length,
-              itemBuilder: (context, index) {
-                Widget item = widget.builderFunction(
-                  context,
-                  widget.items[index],
-                );
-                return item;
-              },
-            ),
-          ),
-        ),
-    );
   }
 }
