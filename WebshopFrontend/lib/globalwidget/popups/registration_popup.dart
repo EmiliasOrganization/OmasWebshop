@@ -25,7 +25,6 @@ Future<void> registrationDialog(BuildContext context) {
           height: registrationHeight,
           width: registrationWidth,
           child: Column(
-
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -84,7 +83,7 @@ Future<void> registrationDialog(BuildContext context) {
                       child: SizedBox(width: 5),
                     ),
                     TextSpan(
-                      text: 'Das Passwort muss mindestest 10 Zeichen lang sein ',
+                      text: 'Das Passwort muss mindestens 10 Zeichen lang sein ',
                       style: TextStyle(
                         fontSize: 10,
                       ),
@@ -101,6 +100,27 @@ Future<void> registrationDialog(BuildContext context) {
                   labelText: '*Wiederhole dein Passwort:',
                 ),
               ),
+              SizedBox(height: 4),
+              RichText(
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        baseline: TextBaseline.alphabetic,
+                        child: Icon(Icons.info_outline, size: 11,),
+                      ),
+                      WidgetSpan(
+                        child: SizedBox(width: 5),
+                      ),
+                      TextSpan(
+                        text: 'Das Passwort muss mindestens 10 Zeichen lang sein ',
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
@@ -119,6 +139,9 @@ Future<void> registrationDialog(BuildContext context) {
               String email = emailController.text;
               int result = await RegistrationCommunication().registerUser(firstName, lastname, username, password, passwordRepeat, email);
               print(result);
+              if (passwordRepeat != password){
+
+              }
               if (result == 200) {
                 Navigator.of(context).pop();
                 print('Registrierung erfolgreich');
