@@ -62,22 +62,43 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
     List <PopupMenuItem<String>> _itemList = [];
 
+    double sum = 0;
+
+    boxItemLists.values.toList().forEach((element) { sum += double.parse(element.price); });
+
+    //String price = sum.toString();
+
     // to Ckeckout List Element
     _itemList.add(
       PopupMenuItem<String>(
-
         value: 'checkout',
         enabled: false,
         child: ListTile(
-          title: Text('Dein Einkaufswagen', style: TextStyle(color: Colors.grey, fontSize: 14),),
-          subtitle: Text('${boxItemLists.length} Artikel hinzufgefügt', style: TextStyle(fontSize: 16),),
-          trailing: ElevatedButton(
-            onPressed: ()
-            {
-              Navigator.pushNamed(context, '/shoppingCart');
-            },
-            child: Text('Bezahlen'),
+          title: Text('Dein Einkaufswagen',
+            style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14),),
+          subtitle: Text('${boxItemLists.length} Artikel hinzufgefügt',
+            style: TextStyle(
+                fontSize: 16),),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('$sum €',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10,),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/shoppingCart');
+                },
+                child: Text('Zur Kasse'),
+              ),
+            ],
           ),
+
         ),
       ),
     );
