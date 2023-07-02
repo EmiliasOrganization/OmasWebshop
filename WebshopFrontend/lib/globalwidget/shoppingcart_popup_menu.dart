@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
 import '../boxes.dart';
@@ -62,13 +63,11 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
     List <PopupMenuItem<String>> _itemList = [];
 
-    double sum = 0;
-
-    boxItemLists.values.toList().forEach((element) { sum += double.parse(element.price); });
-
-    //String price = sum.toString();
+    Decimal sum = Decimal.zero;
+    boxItemLists.values.toList().forEach((element) { sum += Decimal.parse(element.price); });
 
     // to Ckeckout List Element
+
     _itemList.add(
       PopupMenuItem<String>(
         value: 'checkout',
