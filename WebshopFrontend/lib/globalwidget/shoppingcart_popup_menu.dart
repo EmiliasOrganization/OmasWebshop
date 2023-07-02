@@ -69,7 +69,8 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
         value: 'checkout',
         enabled: false,
         child: ListTile(
-          leading: Text('Zur Kasse'),
+          title: Text('Dein Einkaufswagen', style: TextStyle(color: Colors.grey, fontSize: 14),),
+          subtitle: Text('${boxItemLists.length} Artikel hinzufgefügt', style: TextStyle(fontSize: 16),),
           trailing: ElevatedButton(
             onPressed: ()
             {
@@ -171,9 +172,11 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
             {
                 boxItemLists.delete(id);
             },
-                child: Text('Entfernen'))
+                child: Text('Entfernen')),
           ],
+
         ),
+        trailing: Text('$price€', style: TextStyle(fontSize: 15),),
       );
     }
 
