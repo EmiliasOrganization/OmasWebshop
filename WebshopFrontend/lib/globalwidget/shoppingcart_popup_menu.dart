@@ -4,24 +4,40 @@ import 'package:flutter/material.dart';
 import '../boxes.dart';
 import '../constats.dart';
 
-class ShoppingCartButton extends StatelessWidget {
-  const ShoppingCartButton({super.key});
+class ShoppingCartButton extends StatefulWidget {
+
+  @override
+  _ShoppingCartButtonState createState() => _ShoppingCartButtonState();
+}
+
+class _ShoppingCartButtonState extends State<ShoppingCartButton>
+    with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return  Stack(
+    return Stack(
       alignment: Alignment.topRight,
       children: [
         IconButton(
           icon: Icon(Icons.shopping_cart),
           color: schemeColorGreen,
-          onPressed:() {
-            //getElements(context);
-           showShoppingCartElements(context);
+          onPressed: () {
+            showShoppingCartElements(context);
           },
         ),
-        if(boxItemLists.length > 0)
-          Container(
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 400),
+          switchInCurve: Curves.easeInOut,
+          switchOutCurve: Curves.easeInOut,
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return ScaleTransition(
+              scale: animation,
+              child: child,
+            );
+          },
+          child: boxItemLists.isNotEmpty
+              ? Container(
+            key: ValueKey<int>(boxItemLists.length),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
             ),
@@ -33,8 +49,9 @@ class ShoppingCartButton extends StatelessWidget {
                 fontSize: 14,
               ),
             ),
-          ),
-
+          )
+              : SizedBox.shrink(),
+        ),
       ],
     );
 
