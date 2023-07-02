@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfrontend/constats.dart';
 import 'package:flutterfrontend/globalwidget/login_registration_button.dart';
-import 'package:flutterfrontend/globalwidget/popups/count_button_with_popup.dart';
 import 'package:flutterfrontend/globalwidget/shoppingcart_popup_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import '../boxes.dart';
 import '../home/view/pages/cart/cart_items.dart';
 
 
@@ -28,9 +28,8 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-class _TopBarState extends State<TopBar> {
 
-  int itemCount = 0;
+class _TopBarState extends State<TopBar> {
 
   @override
   void initState() {

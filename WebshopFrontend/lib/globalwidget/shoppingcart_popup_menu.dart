@@ -7,12 +7,14 @@ import '../constats.dart';
 
 class ShoppingCartButton extends StatefulWidget {
 
+  const ShoppingCartButton({super.key});
   @override
   _ShoppingCartButtonState createState() => _ShoppingCartButtonState();
 }
 
 class _ShoppingCartButtonState extends State<ShoppingCartButton>
     with SingleTickerProviderStateMixin {
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,13 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
     Decimal sum = Decimal.zero;
     boxItemLists.values.toList().forEach((element) { sum += Decimal.parse(element.price); });
 
+    deleteListItem(int index) {
+      setState(() {
+        boxItemLists.deleteAt(
+            index); // Remove the element at the specified index
+      });
+    }
+
     // to Ckeckout List Element
 
     _itemList.add(
@@ -77,7 +86,7 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
             style: TextStyle(
                 color: Colors.grey,
                 fontSize: 14),),
-          subtitle: Text('${boxItemLists.length} Artikel hinzufgefügt',
+          subtitle: Text('${boxItemLists.length} Artikel hinzugefügt',
             style: TextStyle(
                 fontSize: 16),),
           trailing: Row(
@@ -169,7 +178,7 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
         )
       );
     }
-    createElementTile(String name, String id, String price){
+    createElementTile(String name, String id, String price, int index) {
       return ListTile(
         leading: CachedNetworkImage(
           imageUrl: '$shopApi/picture/$id/image1',
@@ -183,15 +192,18 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
         subtitle: Row(
           children: [
             TextButton(
-              style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                       overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.grey),
-          ),
-                onPressed: ()
-            {
-                boxItemLists.delete(id);
-            },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.transparent),
+                  overlayColor: MaterialStateProperty.all<Color>(
+                      Colors.transparent),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      Colors.grey),
+                ),
+                onPressed: () {
+                  deleteListItem(index);
+                  setState(() {});
+                },
                 child: Text('Entfernen')),
           ],
 
@@ -201,9 +213,15 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
     }
 
     getItems() async {
+      _itemList.addAll(boxItemLists.values.map((item) {
+        final index = boxItemLists.values.toList().indexOf(item);
+        return PopupMenuItem<String>(
+          value: item.id,
+          child: createElementTile(item.name, item.id, item.price, index),
+        );
+      }).toList());
 
-      _itemList.addAll(boxItemLists.values.map((e) => PopupMenuItem<String>(value: e.id , child: createElementTile(e.name, e.id, e.price),)).toList());
-      if(_itemList.length <= 1){
+      if (_itemList.length <= 1) {
         _itemList.removeLast();
         emptyShoppingCart();
       }
@@ -219,6 +237,7 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
     );
 
     getItems();
+
     showMenu<String>(
       clipBehavior: Clip.hardEdge,
       constraints: BoxConstraints(minWidth: 500, maxWidth: 550,maxHeight: 275),
@@ -226,7 +245,6 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton>
       position: position,
       items: _itemList
     );
-
 
   }
 }
