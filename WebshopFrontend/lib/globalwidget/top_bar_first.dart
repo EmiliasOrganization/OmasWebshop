@@ -46,13 +46,9 @@ class _TopBarFirstState extends State<TopBarFirst> {
   Widget build(BuildContext context) {
     return  AppBar(
       automaticallyImplyLeading: false,
-      title: Text(
-        title,
-          style: TextStyle(
-          fontFamily: 'Kodchasan',
-          fontWeight: FontWeight.bold,
-          fontSize: 27,
-        ),
+      title: Image.asset(
+        'ArtisManusLogo.png',
+        fit: BoxFit.fitHeight,
       ),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(4),

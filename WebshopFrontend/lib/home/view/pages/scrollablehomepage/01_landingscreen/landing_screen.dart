@@ -97,8 +97,8 @@ class _LandingScreenState extends State<LandingScreen>{
           Expanded(
             flex: 1,
             child: Image.asset(
-              'assets/StartScreen.png',
-              fit: BoxFit.cover,
+              'Strickperson.png',
+              fit: BoxFit.fitWidth,
             ),
           ),
           Expanded(

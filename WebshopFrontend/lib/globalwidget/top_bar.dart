@@ -46,7 +46,14 @@ class _TopBarState extends State<TopBar> {
   Widget build(BuildContext context) {
     return  AppBar(
         automaticallyImplyLeading: false,
-        title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontFamily: 'Kodchasan',
+          fontWeight: FontWeight.bold,
+          fontSize: 27,
+        ),
+      ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4),
           child: Container(
