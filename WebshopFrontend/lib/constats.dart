@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-const String title = 'ArtisManus';
+const String title = 'Artis Manus';
 
 //LandingPage Sites
 const List<String> contentElements = [

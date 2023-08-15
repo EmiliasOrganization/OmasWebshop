@@ -37,6 +37,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Kodchasan
+      fonts:
+        - asset: assets/fonts/Kodchasan-Regular.ttf
+        - asset: assets/fonts/Kodchasan-Bold.ttf
 
   assets:
     - assets/
