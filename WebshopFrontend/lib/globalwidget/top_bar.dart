@@ -46,19 +46,28 @@ class _TopBarState extends State<TopBar> {
   Widget build(BuildContext context) {
     return  AppBar(
         automaticallyImplyLeading: false,
-      title: Text(
-        title,
-        style: TextStyle(
-          fontFamily: 'Kodchasan',
-          fontWeight: FontWeight.bold,
-          fontSize: 27,
-        ),
+      title: Row(
+        children: [
+          Image.asset(
+            'ArtisManusLogoGanzKlein.png',
+            fit: BoxFit.fitHeight,
+          ),
+          SizedBox(width: 8),
+          Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'Kodchasan',
+              fontWeight: FontWeight.normal,
+              fontSize: 27,
+            ),
+          ),
+        ],
       ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4),
           child: Container(
             color: schemeColorGreen,
-            height: 2,
+            height: 1,
           ),
         ),
         backgroundColor: schemeColorOrange,

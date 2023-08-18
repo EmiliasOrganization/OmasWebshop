@@ -112,24 +112,26 @@ class _LandingScreenState extends State<LandingScreen>{
                     title,
                     style: TextStyle(
                       fontFamily: 'Kodchasan',
-                      fontSize: fontSize.clamp(0, maxFontSizeHeadline),
+                      fontSize: fontSize.clamp(0, 120),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
                 Center(
                   child: Text(
                     'Handgemacht um zu begeistern',
                     style: TextStyle(
                       fontFamily: 'Kodchasan',
-                      fontSize: fontSize.clamp(0, maxFontSizeText),
+                      fontSize: fontSize.clamp(0, 50),
                     ),
                   ),
                 ),
                 SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(200,60),
+                    ),
                     child: (Text('Zum Laden')),
                     onPressed: () {
                       itemScrollController.scrollTo(

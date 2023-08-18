@@ -24,8 +24,8 @@ class TopBarFirst extends StatefulWidget implements PreferredSizeWidget {
   @override
   State<TopBarFirst> createState() => _TopBarFirstState();
 
-  @override
-  Size get preferredSize => Size.fromHeight(75);
+ @override
+  Size get preferredSize => Size.fromHeight(78);
 }
 
 
@@ -45,16 +45,16 @@ class _TopBarFirstState extends State<TopBarFirst> {
   @override
   Widget build(BuildContext context) {
     return  AppBar(
+      toolbarHeight: 78,
       automaticallyImplyLeading: false,
       title: Image.asset(
-        'ArtisManusLogo.png',
-        fit: BoxFit.fitHeight,
-      ),
+        'ArtisManusLogoKlein.png',
+        fit: BoxFit.fitHeight),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(4),
         child: Container(
           color: schemeColorGreen,
-          height: 2,
+          height: 1,
         ),
       ),
       backgroundColor: schemeColorMistyRose,
@@ -68,18 +68,34 @@ class _TopBarFirstState extends State<TopBarFirst> {
                   index: 2, duration: Duration(seconds: 1), curve: Curves.easeInOut);
             },
           ),
-        SizedBox(width: 8),
-        ShoppingCartButton(),
-        // CountButtonWithPopup(),
-        SizedBox(width: 8),
-        LoginButton(),
-        SizedBox(width: 8),
-        IconButton(
-            icon: Icon(
-                Icons.mail,
-                color: schemeColorGreen
-            ), onPressed: () {}
+        SizedBox(width: 20),
+        Column(
+          children: [
+            ShoppingCartButton(),
+            Text("Warenkorb")
+          ],
         ),
+        // CountButtonWithPopup(),
+        SizedBox(width: 20),
+        Column(
+          children: [
+            LoginButton(),
+            Text("Profil")
+          ],
+        ),
+        SizedBox(width: 20),
+        Column(
+          children: [
+            IconButton(
+                icon: Icon(
+                    Icons.mail,
+                    color: schemeColorGreen
+                ), onPressed: () {}
+            ),
+            Text("Kontakt")
+          ],
+        ),
+        SizedBox(width: 20)
       ],
     );
   }
